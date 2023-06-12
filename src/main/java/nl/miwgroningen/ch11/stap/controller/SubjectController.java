@@ -20,6 +20,7 @@ public class SubjectController {
 
     @GetMapping( "/all")
     private String showSubjectOverview(Model model) {
+        model.addAttribute("allSubjects", subjectRepository.findAll());
         return "subjectOverview";
     }
 }
