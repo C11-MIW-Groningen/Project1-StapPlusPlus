@@ -5,6 +5,13 @@
   <title>Subject Overview</title>
 </head>
 <body>
-<h1>Subject overview</h1>
+    <h1>Vak overview</h1>
+
+    <table>
+        <tr th:each="subject : ${allSubjects}">
+            <td th:text="${subject.title}"></td>
+            <td th:text="${subject.duration}"></td>
+        </tr>
+    </table>
 </body>
 </html>

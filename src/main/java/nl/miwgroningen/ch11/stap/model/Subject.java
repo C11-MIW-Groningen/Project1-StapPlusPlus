@@ -19,4 +19,7 @@ public class Subject {
     @Id
     @GeneratedValue
     private Long subjectId;
+
+    private String title;
+    private int duration;
 }
