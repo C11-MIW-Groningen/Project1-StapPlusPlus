@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vak invoer</title>
+</head>
+<body>
+    <h1>Vak invoer</h1>
+
+    <form th:action="@{/subject/new}" method="post" th:object="${subject}">
+        <input type="hidden" th:field="*{subjectId}">
+        <table>
+            <tr>
+                <th>Vaknaam</th>
+                <th>Duur</th>
+            </tr>
+            <tr>
+                <td><label>
+                    <input type="text" th:field="*{title}">
+                </label></td>
+                <td><label>
+                    <input type="text" th:field="*{duration}">
+                </label></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Opslaan">
+    </form>
+</body>
+</html>

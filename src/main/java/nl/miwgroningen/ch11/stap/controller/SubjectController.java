@@ -1,10 +1,14 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
+import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -18,10 +22,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SubjectController {
     private final SubjectRepository subjectRepository;
 
-    @GetMapping( "/all")
+    @GetMapping("/all")
     private String showSubjectOverview(Model model) {
         model.addAttribute("allSubjects", subjectRepository.findAll());
         return "subjectOverview";
+    }
+
+    @GetMapping("/new")
+    private String showSubjectForm(Model model) {
+        model.addAttribute("subject", new Subject());
+
+        return "subjectForm";
+    }
+
+    @PostMapping("/new")
+    private String saveOrUpdateSubject(@ModelAttribute("subject") Subject subjectToSave, BindingResult result) {
+        if (!result.hasErrors()) {
+            subjectRepository.save(subjectToSave);
+        }
+
+        return "redirect:/subject/all";
     }
 }
 
