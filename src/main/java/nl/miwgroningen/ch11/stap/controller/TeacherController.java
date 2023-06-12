@@ -1,10 +1,14 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
+import nl.miwgroningen.ch11.stap.model.Teacher;
 import nl.miwgroningen.ch11.stap.repositories.TeacherRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -21,6 +25,17 @@ public class TeacherController {
 
     @GetMapping( "/all")
     private String showTeacherOverview(Model model) {
+        model.addAttribute("allTeachers", teacherRepository.findAll());
+        model.addAttribute("newAuthor", new Teacher());
         return "teacherOverview";
+    }
+
+    @PostMapping("/new")
+    private String saveOrUpdateTeacher(@ModelAttribute("newTeacher") Teacher teacher, BindingResult result) {
+        if (!result.hasErrors()) {
+            teacherRepository.save(teacher);
+        }
+
+        return "redirect:/teacher/all";
     }
 }

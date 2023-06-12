@@ -5,6 +5,20 @@
     <title>Teacher Overview</title>
 </head>
 <body>
-    <h1>Teacher overview</h1>
+    <h1>Docent Overview</h1>
+
+<table>
+    <tr>
+        <th>Voornaam</th>
+        <th>Tussenvoegsel</th>
+        <th>Achternaam</th>
+    </tr>
+
+    <tr th:each="teacher : ${allTeachers}">
+        <td th:text="${teacher.firstName}"></td>
+        <td th:text="${teacher.infixName}"></td>
+        <td th:text="${teacher.lastName}"></td>
+    </tr>
+</table>
 </body>
 </html>

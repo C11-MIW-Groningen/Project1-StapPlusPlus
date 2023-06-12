@@ -19,4 +19,8 @@ public class Teacher {
     @Id
     @GeneratedValue
     private Long teacherId;
+
+    private String firstName;
+    private String infixName;
+    private String lastName;
 }
