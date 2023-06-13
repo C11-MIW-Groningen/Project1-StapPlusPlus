@@ -15,7 +15,6 @@ import javax.persistence.Id;
 @Entity
 @Getter @Setter
 @Builder
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teacher {
