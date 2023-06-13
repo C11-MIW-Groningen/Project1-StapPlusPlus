@@ -7,10 +7,9 @@ import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Tristan Meinsma
@@ -38,11 +37,34 @@ public class SubjectController {
         return "subjectForm";
     }
 
+    @GetMapping("/edit/{subjectId}")
+    private String showEditSubjectForm(@PathVariable("subjectId") Long subjectId, Model model) {
+        Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
+
+        if (optionalSubject.isPresent()) {
+            model.addAttribute("subject", optionalSubject.get());
+            model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
+
+            return "subjectForm";
+        }
+
+        return "redirect:/subject/all";
+    }
+
     @PostMapping("/new")
     private String saveSubject(@ModelAttribute("subject") Subject subjectToSave, BindingResult result) {
         if (!result.hasErrors()) {
             subjectRepository.save(subjectToSave);
         }
+
+        return "redirect:/subject/all";
+    }
+
+    @GetMapping("/delete/{subjectId}")
+    private String deleteAuthor(@PathVariable("subjectId") Long subjectId) {
+        Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
+
+        optionalSubject.ifPresent(subjectRepository::delete);
 
         return "redirect:/subject/all";
     }
