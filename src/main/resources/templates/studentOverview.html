@@ -16,8 +16,8 @@
             <th>Achternaam</th>
             <th>Privé email</th>
             <th>School email</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Wijzig</th>
+            <th>Verwijder</th>
         </tr>
 
         <tr th:each="student : ${allStudents}">
@@ -26,8 +26,8 @@
             <td th:text="${student.lastName}"></td>
             <td th:text="${student.privateEmail}"></td>
             <td th:text="${student.schoolEmail}"></td>
-            <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Edit</a></td>
-            <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Delete</a></td>
+            <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>
+            <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Verwijder</a></td>
         </tr>
     </table>
 

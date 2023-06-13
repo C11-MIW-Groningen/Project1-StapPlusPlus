@@ -15,16 +15,16 @@
             <th>Voornaam</th>
             <th>Tussenvoegsel</th>
             <th>Achternaam</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Wijzig</th>
+            <th>Verwijder</th>
         </tr>
 
         <tr th:each="teacher : ${allTeachers}">
             <td th:text="${teacher.firstName}"></td>
             <td th:text="${teacher.infixName}"></td>
             <td th:text="${teacher.lastName}"></td>
-            <td><a th:href="@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})}">Edit</a></td>
-            <td><a th:href="@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})}">Delete</a></td>
+            <td><a th:href="@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})}">Wijzig</a></td>
+            <td><a th:href="@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})}">Verwijder</a></td>
         </tr>
     </table>
 
