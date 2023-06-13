@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class Student implements Comparable <Student>{
     @Id
     @GeneratedValue
     private Long studentId;
@@ -29,4 +29,8 @@ public class Student {
     private String privateEmail;
     private String schoolEmail;
 
+    @Override
+    public int compareTo(Student otherStudent) {
+        return this.lastName.compareTo(otherStudent.getLastName());
+    }
 }
