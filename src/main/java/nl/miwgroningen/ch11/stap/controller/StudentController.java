@@ -2,7 +2,6 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Student;
-import nl.miwgroningen.ch11.stap.model.Teacher;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +49,7 @@ public class StudentController {
     }
 
     @PostMapping("/new")
-    private String saveOrUpdateTeacher(@ModelAttribute("newStudent") Student student, BindingResult result) {
+    private String saveOrUpdateStudent(@ModelAttribute("newStudent") Student student, BindingResult result) {
         if (!result.hasErrors()) {
             studentRepository.save(student);
         }

@@ -1,15 +1,15 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
+import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.model.Teacher;
 import nl.miwgroningen.ch11.stap.repositories.TeacherRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * Author: Thijs Harleman
@@ -35,6 +35,30 @@ public class TeacherController {
         model.addAttribute("teacher", new Teacher());
 
         return "teacherForm";
+    }
+
+    @GetMapping("/edit/{teacherId}")
+    private String showEditTeacherForm(@PathVariable("teacherId") Long teacherId, Model model) {
+        Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
+
+        if (optionalTeacher.isPresent()) {
+            model.addAttribute("teacher", optionalTeacher.get());
+            model.addAttribute("allTeachers", teacherRepository.findAll());
+            return "teacherForm";
+        }
+
+        return "redirect:/teacher/all";
+    }
+
+    @GetMapping("/delete/{teacherId}")
+    private String deleteTeacher(@PathVariable("teacherId") Long teacherId) {
+        Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
+
+        if (optionalTeacher.isPresent()) {
+            teacherRepository.delete(optionalTeacher.get());
+        }
+
+        return "redirect:/teacher/all";
     }
 
     @PostMapping("/new")
