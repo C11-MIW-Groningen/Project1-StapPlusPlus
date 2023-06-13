@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Vak invoer</title>
+</head>
+<body>
+<h1>Docent invoer</h1>
+
+<form th:action="@{/teacher/new}" method="post" th:object="${teacher}">
+  <input type="hidden" th:field="*{teacherId}">
+  <table>
+    <tr>
+      <th>Voornaam</th>
+      <th>Tussenvoegsel</th>
+      <th>Achternaam</th>
+    </tr>
+    <tr>
+      <td><label>
+        <input type="text" th:field="*{firstName}">
+      </label></td>
+      <td><label>
+        <input type="text" th:field="*{infixName}">
+      </label></td>
+      <td><label>
+        <input type="text" th:field="*{lastName}">
+      </label></td>
+    </tr>
+  </table>
+
+  <input type="submit" value="Opslaan">
+</form>
+</body>
+</html>

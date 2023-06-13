@@ -26,8 +26,15 @@ public class TeacherController {
     @GetMapping( "/all")
     private String showTeacherOverview(Model model) {
         model.addAttribute("allTeachers", teacherRepository.findAll());
-        model.addAttribute("newAuthor", new Teacher());
+        model.addAttribute("newTeacher", new Teacher());
         return "teacherOverview";
+    }
+
+    @GetMapping("/new")
+    private String showTeacherForm(Model model) {
+        model.addAttribute("teacher", new Teacher());
+
+        return "teacherForm";
     }
 
     @PostMapping("/new")
