@@ -12,7 +12,10 @@
     <table>
         <tr th:each="subject : ${allSubjects}">
             <td th:text="${subject.title}"></td>
-            <td th:text="${subject.duration}"></td>
+            <td th:number="${subject.duration}"></td>
+            <td th:each="goal : ${subject.learningGoals}">
+                <p th:text="${goal.title}"></p>
+            </td>
         </tr>
     </table>
 </body>

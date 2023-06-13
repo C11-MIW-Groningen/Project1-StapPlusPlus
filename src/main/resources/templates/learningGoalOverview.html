@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesdoel overview</title>
+</head>
+<body>
+    <h1>Lesdoel overview</h1>
+
+    <a href="/goal/new">Lesdoel toevoegen</a>
+
+    <table>
+        <tr th:each="goal : ${allLearningGoals}">
+            <td th:text="${goal.title}"></td>
+            <td th:text="${goal.description}"></td>
+        </tr>
+    </table>
+</body>
+</html>

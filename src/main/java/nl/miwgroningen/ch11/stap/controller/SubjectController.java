@@ -2,6 +2,7 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Subject;
+import nl.miwgroningen.ch11.stap.repositories.LearningGoalRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class SubjectController {
     private final SubjectRepository subjectRepository;
+    private final LearningGoalRepository learningGoalRepository;
 
     @GetMapping("/all")
     private String showSubjectOverview(Model model) {
@@ -31,12 +33,13 @@ public class SubjectController {
     @GetMapping("/new")
     private String showSubjectForm(Model model) {
         model.addAttribute("subject", new Subject());
+        model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
 
         return "subjectForm";
     }
 
     @PostMapping("/new")
-    private String saveOrUpdateSubject(@ModelAttribute("subject") Subject subjectToSave, BindingResult result) {
+    private String saveSubject(@ModelAttribute("subject") Subject subjectToSave, BindingResult result) {
         if (!result.hasErrors()) {
             subjectRepository.save(subjectToSave);
         }

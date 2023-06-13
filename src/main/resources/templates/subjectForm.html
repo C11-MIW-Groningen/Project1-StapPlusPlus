@@ -13,14 +13,25 @@
             <tr>
                 <th>Vaknaam</th>
                 <th>Duur</th>
+                <th>Lesdoelen</th>
             </tr>
             <tr>
                 <td><label>
                     <input type="text" th:field="*{title}">
                 </label></td>
                 <td><label>
-                    <input type="text" th:field="*{duration}">
+                    <input type="number" th:field="*{duration}">
                 </label></td>
+                <td>
+                    <label>
+                        <select th:field="*{learningGoals}" multiple="multiple">
+                            <option th:each="goal : ${allLearningGoals}"
+                                    th:value="${goal.learningGoalId}"
+                                    th:text="${goal.title}">
+                            </option>
+                        </select>
+                    </label>
+                </td>
             </tr>
         </table>
 

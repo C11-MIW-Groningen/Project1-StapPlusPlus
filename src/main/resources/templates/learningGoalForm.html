@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesdoel invoer</title>
+</head>
+<body>
+    <h1>Lesdoel invoer</h1>
+
+    <form th:action="@{/goal/new}" method="post" th:object="${learningGoal}">
+        <input type="hidden" th:field="*{learningGoalId}">
+        <table>
+            <tr>
+                <th>Lesdoel naam</th>
+                <th>Omschrijving</th>
+            </tr>
+            <tr>
+                <td><label>
+                    <input type="text" th:field="*{title}">
+                </label></td>
+                <td><label>
+                    <input type="text" th:field="*{description}">
+                </label></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Opslaan">
+    </form>
+</body>
+</html>

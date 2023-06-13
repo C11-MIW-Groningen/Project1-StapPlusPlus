@@ -2,9 +2,8 @@ package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Author: Thijs Harleman
@@ -24,4 +23,7 @@ public class Subject {
 
     private String title;
     private int duration;
+
+    @ManyToMany
+    private List<LearningGoal> learningGoals;
 }
