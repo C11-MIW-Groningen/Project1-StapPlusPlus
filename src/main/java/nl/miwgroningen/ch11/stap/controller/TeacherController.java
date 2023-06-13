@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,7 +27,9 @@ public class TeacherController {
 
     @GetMapping( "/all")
     private String showTeacherOverview(Model model) {
-        model.addAttribute("allTeachers", teacherRepository.findAll());
+        List<Teacher> teachers = teacherRepository.findAll();
+        Collections.sort(teachers);
+        model.addAttribute("allTeachers", teachers);
         model.addAttribute("newTeacher", new Teacher());
         return "teacherOverview";
     }
