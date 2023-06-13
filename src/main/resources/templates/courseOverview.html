@@ -9,40 +9,42 @@
 
 <div class="container">
 
-
-
-
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="/images/Software%20Engineering.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Software Engineering</h5>
-      <p class="card-text">Informatie over de opleiding Software Engineering</p>
+  <div th:each="course : ${allCourses}">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="/images/Software%20Engineering.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${course.name}"></h5>
+        <p class="card-text" th:text="${course.description}"></p>
+      </div>
     </div>
   </div>
 
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="/images/Fucntioneel%20Beheer.jpeg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Functioneel Beheer</h5>
-      <p class="card-text">Informatie over de opleiding Functioneel Beheer</p>
-    </div>
-  </div>
 
-  <div class="container">
-    <h1>Kies een opleiding</h1>
-    <table class="table table-hover table-borderless">
-        <thead>
-          <tr>
-            <th>Naam</th>
-          </tr>
-        </thead>
-      <tbody>
-        <tr th:each="course : ${allCourses}">
-          <td th:text="${course.name}"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
+
+<!--  <div class="card" style="width: 18rem;">-->
+<!--    <img class="card-img-top" src="/images/Fucntioneel%20Beheer.jpeg" alt="Card image cap">-->
+<!--    <div class="card-body">-->
+<!--      <h5 class="card-title">Functioneel Beheer</h5>-->
+<!--      <p class="card-text">Informatie over de opleiding Functioneel Beheer</p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="container">-->
+<!--    <h1>Kies een opleiding</h1>-->
+<!--    <table class="table table-hover table-borderless">-->
+<!--        <thead>-->
+<!--          <tr>-->
+<!--            <th>Naam</th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+<!--      <tbody>-->
+<!--        <tr th:each="course : ${allCourses}">-->
+<!--          <td th:text="${course.name}"></td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
