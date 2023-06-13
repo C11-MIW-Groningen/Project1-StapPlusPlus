@@ -7,10 +7,9 @@ import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Tristan Meinsma
@@ -37,10 +36,34 @@ public class StudentController {
         return "studentForm";
     }
 
+    @GetMapping("/edit/{studentId}")
+    private String showEditStudentForm(@PathVariable("studentId") Long studentId, Model model) {
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+
+        if (optionalStudent.isPresent()) {
+            model.addAttribute("student", optionalStudent.get());
+            model.addAttribute("allStudents", studentRepository.findAll());
+            return "studentForm";
+        }
+
+        return "redirect:/student/all";
+    }
+
     @PostMapping("/new")
     private String saveOrUpdateTeacher(@ModelAttribute("newStudent") Student student, BindingResult result) {
         if (!result.hasErrors()) {
             studentRepository.save(student);
+        }
+
+        return "redirect:/student/all";
+    }
+
+    @GetMapping("/delete/{studentId}")
+    private String deleteStudent(@PathVariable("studentId") Long studentId) {
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+
+        if (optionalStudent.isPresent()) {
+            studentRepository.delete(optionalStudent.get());
         }
 
         return "redirect:/student/all";
