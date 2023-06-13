@@ -2,12 +2,15 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Student;
+import nl.miwgroningen.ch11.stap.model.Teacher;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,7 +26,9 @@ public class StudentController {
 
     @GetMapping("/all")
     private String showStudentOverview(Model model) {
-        model.addAttribute("allStudents", studentRepository.findAll());
+        List<Student> students = studentRepository.findAll();
+        Collections.sort(students);
+        model.addAttribute("allStudents", students);
         model.addAttribute("newStudent", new Student());
         return "studentOverview";
     }
