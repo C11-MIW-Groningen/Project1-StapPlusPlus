@@ -26,4 +26,7 @@ public class Course {
 
     @OneToMany
     private List<Subject> subjects;
+
+    private String imageUrl;
+    private String description;
 }

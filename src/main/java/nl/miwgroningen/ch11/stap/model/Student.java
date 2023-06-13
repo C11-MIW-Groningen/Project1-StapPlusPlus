@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 /**
  * Author: Thijs Harleman
@@ -28,6 +30,9 @@ public class Student implements Comparable <Student>{
 
     private String privateEmail;
     private String schoolEmail;
+
+    @ManyToMany
+    private List<Course> courses;
 
     @Override
     public int compareTo(Student otherStudent) {

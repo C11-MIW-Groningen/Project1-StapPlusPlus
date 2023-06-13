@@ -9,20 +9,39 @@
 
 <div class="container">
 
+
+
+
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="/images/Software%20Engineering.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Software Engineering</h5>
+      <p class="card-text">Informatie over de opleiding Software Engineering</p>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="/images/Fucntioneel%20Beheer.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Functioneel Beheer</h5>
+      <p class="card-text">Informatie over de opleiding Functioneel Beheer</p>
+    </div>
+  </div>
+
   <div class="container">
-    <h1>Course overview</h1>
+    <h1>Kies een opleiding</h1>
     <table class="table table-hover table-borderless">
-      <tr>
-        <th>Naam</th>
-      </tr>
-
-      <tr th:each="course : ${allCourses}">
-
-        <td th:text="${course.name}"></td>
-      </tr>
+        <thead>
+          <tr>
+            <th>Naam</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr th:each="course : ${allCourses}">
+          <td th:text="${course.name}"></td>
+        </tr>
+      </tbody>
     </table>
-
-    <a class="btn btn-outline-dark border-0" href="/student/new">Voeg nieuwe student toe</a>
   </div>
 </div>
 
