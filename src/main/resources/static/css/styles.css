@@ -19,3 +19,10 @@ body {
 #makeITWorkLogo {
     padding-left: 20px;
 }
+
+#courses-overview {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    margin-top: 10%;
+}
