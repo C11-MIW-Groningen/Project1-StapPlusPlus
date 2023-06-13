@@ -6,10 +6,9 @@ import nl.miwgroningen.ch11.stap.repositories.LearningGoalRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * Author: Thijs Harleman
@@ -36,11 +35,33 @@ public class LearningGoalController {
         return "learningGoalForm";
     }
 
+    @GetMapping("/edit/{learningGoalId}")
+    private String showEditLearningGoalForm(@PathVariable("learningGoalId") Long goalId, Model model) {
+        Optional<LearningGoal> optionalLearningGoal = learningGoalRepository.findById(goalId);
+
+        if (optionalLearningGoal.isPresent()) {
+            model.addAttribute("learningGoal", optionalLearningGoal.get());
+
+            return "learningGoalForm";
+        }
+
+        return "redirect:/goal/all";
+    }
+
     @PostMapping("/new")
     private String saveLearningGoal(@ModelAttribute("learningGoal") LearningGoal goalToSave, BindingResult result) {
         if (!result.hasErrors()) {
             learningGoalRepository.save(goalToSave);
         }
+
+        return "redirect:/goal/all";
+    }
+
+    @GetMapping("/delete/{learningGoalId}")
+    private String deleteAuthor(@PathVariable("learningGoalId") Long goalId) {
+        Optional<LearningGoal> optionalLearningGoal = learningGoalRepository.findById(goalId);
+
+        optionalLearningGoal.ifPresent(learningGoalRepository::delete);
 
         return "redirect:/goal/all";
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title>Put a title here</title>
+    <title>Vak invoer</title>
 </head>
 <body>
 
@@ -12,37 +12,35 @@
 
     <form th:action="@{/subject/new}" method="post" th:object="${subject}">
         <input type="hidden" th:field="*{subjectId}">
-        <table class="table table-light table-hover table-borderless">
-            <thead class="table-secondary">
-                <tr>
-                    <th>Vaknaam</th>
-                    <th>Duur</th>
-                    <th>Lesdoelen</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                <tr>
-                    <td><label>
-                        <input type="text" th:field="*{title}">
-                    </label></td>
-                    <td><label>
-                        <input type="number" min="1" th:field="*{duration}">
-                    </label></td>
-                    <td>
-                        <label>
-                            <select th:field="*{learningGoals}" multiple="multiple">
-                                <option th:each="goal : ${allLearningGoals}"
-                                        th:value="${goal.learningGoalId}"
-                                        th:text="${goal.title}">
-                                </option>
-                            </select>
-                        </label>
-                    </td>
-                </tr>
-            </tbody>
+        <table class="table table-borderless">
+            <tr>
+                <td>Vaknaam:</td>
+                <td><label>
+                    <input type="text" th:field="*{title}">
+                </label></td>
+            </tr>
+            <tr>
+                <td>Duur:</td>
+                <td><label>
+                    <input type="number" min="1" th:field="*{duration}">
+                </label></td>
+            </tr>
+            <tr>
+                <td>Lesdoelen:</td>
+                <td>
+                    <label>
+                        <select th:field="*{learningGoals}" multiple="multiple">
+                            <option th:each="goal : ${allLearningGoals}"
+                                    th:value="${goal.learningGoalId}"
+                                    th:text="${goal.title}">
+                            </option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
         </table>
 
-        <input type="submit" value="Opslaan">
+        <input class="btn btn-outline-dark border-0" type="submit" value="Opslaan">
     </form>
 </div>
 

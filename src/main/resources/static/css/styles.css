@@ -4,6 +4,14 @@ body {
     min-height:100vh;
 }
 
-h1 {
-    color: rebeccapurple;
+.btn {
+    background-color: #d8d8d8;
+}
+
+.navbar {
+    background-color: #96a5b0;
+}
+
+.footer {
+    background-color: #96a5b0;
 }

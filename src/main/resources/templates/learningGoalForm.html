@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title>Put a title here</title>
+    <title>Lesdoel invoer</title>
 </head>
 <body>
 
@@ -12,22 +12,22 @@
 
     <form th:action="@{/goal/new}" method="post" th:object="${learningGoal}">
         <input type="hidden" th:field="*{learningGoalId}">
-        <table>
+        <table class="table table-borderless">
             <tr>
-                <th>Lesdoel naam</th>
-                <th>Omschrijving</th>
+                <td>Lesdoel naam:</td>
+                <td><label>
+                    <input class="form-control border-dark" type="text" th:field="*{title}">
+                </label></td>
             </tr>
             <tr>
+                <td>Omschrijving:</td>
                 <td><label>
-                    <input type="text" th:field="*{title}">
-                </label></td>
-                <td><label>
-                    <input type="text" th:field="*{description}">
+                    <input class="form-control border-dark" type="text" th:field="*{description}">
                 </label></td>
             </tr>
         </table>
 
-        <input type="submit" value="Opslaan">
+        <input class="btn btn-outline-dark border-0" type="submit" value="Opslaan">
     </form>
 </div>
 
