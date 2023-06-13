@@ -25,5 +25,8 @@ public class Subject {
     private int duration;
 
     @ManyToMany
+    private List<Teacher> teachers;
+
+    @ManyToMany
     private List<LearningGoal> learningGoals;
 }
