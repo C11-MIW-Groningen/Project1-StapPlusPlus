@@ -12,30 +12,34 @@
 
     <form th:action="@{/subject/new}" method="post" th:object="${subject}">
         <input type="hidden" th:field="*{subjectId}">
-        <table>
-            <tr>
-                <th>Vaknaam</th>
-                <th>Duur</th>
-                <th>Lesdoelen</th>
-            </tr>
-            <tr>
-                <td><label>
-                    <input type="text" th:field="*{title}">
-                </label></td>
-                <td><label>
-                    <input type="number" th:field="*{duration}">
-                </label></td>
-                <td>
-                    <label>
-                        <select th:field="*{learningGoals}" multiple="multiple">
-                            <option th:each="goal : ${allLearningGoals}"
-                                    th:value="${goal.learningGoalId}"
-                                    th:text="${goal.title}">
-                            </option>
-                        </select>
-                    </label>
-                </td>
-            </tr>
+        <table class="table table-light table-hover table-borderless">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Vaknaam</th>
+                    <th>Duur</th>
+                    <th>Lesdoelen</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr>
+                    <td><label>
+                        <input type="text" th:field="*{title}">
+                    </label></td>
+                    <td><label>
+                        <input type="number" min="1" th:field="*{duration}">
+                    </label></td>
+                    <td>
+                        <label>
+                            <select th:field="*{learningGoals}" multiple="multiple">
+                                <option th:each="goal : ${allLearningGoals}"
+                                        th:value="${goal.learningGoalId}"
+                                        th:text="${goal.title}">
+                                </option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <input type="submit" value="Opslaan">
