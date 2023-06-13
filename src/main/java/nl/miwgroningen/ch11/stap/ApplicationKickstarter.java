@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationKickstarter implements CommandLineRunner {
     private static final String DEFAULT_USERNAME_ADMIN = "admin";
-    private static final String DEFAULT_PASSWORD_ADMIN = "admin";
+    private static final String DEFAULT_PASSWORD_ADMIN = "changethis";
     private final WebsiteUserRepository websiteUserRepository;
     private final PasswordEncoder passwordEncoder;
 
