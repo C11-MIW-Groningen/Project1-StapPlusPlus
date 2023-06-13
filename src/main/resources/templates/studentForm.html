@@ -2,18 +2,20 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Docent invoer</title>
+  <title>Student invoer</title>
 </head>
 <body>
-<h1>Docent invoer</h1>
+<h1>Student invoer</h1>
 
-<form th:action="@{/teacher/new}" method="post" th:object="${teacher}">
-  <input type="hidden" th:field="*{teacherId}">
+<form th:action="@{/student/new}" method="post" th:object="${student}">
+  <input type="hidden" th:field="*{studentId}">
   <table>
     <tr>
       <th>Voornaam</th>
       <th>Tussenvoegsel</th>
       <th>Achternaam</th>
+      <th>Privé Email</th>
+      <th>School Email</th>
     </tr>
     <tr>
       <td><label>
@@ -24,6 +26,12 @@
       </label></td>
       <td><label>
         <input type="text" th:field="*{lastName}">
+      </label></td>
+      <td><label>
+        <input type="text" th:field="*{privateEmail}">
+      </label></td>
+      <td><label>
+        <input type="text" th:field="*{schoolEmail}">
       </label></td>
     </tr>
   </table>

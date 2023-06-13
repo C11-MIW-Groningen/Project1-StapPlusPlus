@@ -2,6 +2,7 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Student;
+import nl.miwgroningen.ch11.stap.model.Teacher;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,13 @@ public class StudentController {
         model.addAttribute("allStudents", studentRepository.findAll());
         model.addAttribute("newStudent", new Student());
         return "studentOverview";
+    }
+
+    @GetMapping("/new")
+    private String showStudentForm(Model model) {
+        model.addAttribute("student", new Student());
+
+        return "studentForm";
     }
 
     @PostMapping("/new")

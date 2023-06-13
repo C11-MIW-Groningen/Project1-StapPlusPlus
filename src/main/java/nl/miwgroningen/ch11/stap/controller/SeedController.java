@@ -23,6 +23,9 @@ public class SeedController {
 
     @GetMapping("/seed")
     private String seedDatabase() {
+
+        deleteDatabase();
+
         Subject subject1 = Subject.builder()
                 .title("Programming")
                 .duration(8)
@@ -74,7 +77,12 @@ public class SeedController {
         studentRepository.save(student2);
 
 
-        return "redirect:/";
+        return "redirect:/subject/all";
+    }
 
+    private void deleteDatabase () {
+        studentRepository.deleteAll();
+        teacherRepository.deleteAll();
+        subjectRepository.deleteAll();
     }
 }
