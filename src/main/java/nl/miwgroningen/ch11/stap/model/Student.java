@@ -38,4 +38,12 @@ public class Student implements Comparable <Student>{
     public int compareTo(Student otherStudent) {
         return this.lastName.compareTo(otherStudent.getLastName());
     }
+
+    public String getDisplayName() {
+        if (infixName.equals("")) {
+            return String.format("%s %s", firstName, lastName);
+        } else {
+            return String.format("%s %s %s", firstName, infixName, lastName);
+        }
+    }
 }

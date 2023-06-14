@@ -19,7 +19,7 @@
         </tr>
 
         <tr th:each="student : ${allStudents}">
-            <td th:text="${student.firstName + ' ' + (student.infixName != null ? student.infixName + ' ' : '') + student.lastName}"></td>
+            <td th:text="${student.displayName}"></td>
             <td th:text="${student.privateEmail}"></td>
             <td th:text="${student.schoolEmail}"></td>
             <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>

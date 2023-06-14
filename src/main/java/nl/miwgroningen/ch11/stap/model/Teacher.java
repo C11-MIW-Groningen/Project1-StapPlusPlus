@@ -32,4 +32,12 @@ public class Teacher implements Comparable <Teacher> {
     public int compareTo(Teacher otherTeacher) {
         return this.lastName.compareTo(otherTeacher.getLastName());
     }
+
+    public String getDisplayName() {
+        if (infixName.equals("")) {
+            return String.format("%s %s", firstName, lastName);
+        } else {
+            return String.format("%s %s %s", firstName, infixName, lastName);
+        }
+    }
 }

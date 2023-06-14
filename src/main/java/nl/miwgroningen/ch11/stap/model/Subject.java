@@ -25,7 +25,7 @@ public class Subject {
     private int duration;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     private Teacher teacher;
 
     @ManyToMany

@@ -18,8 +18,7 @@
         </tr>
 
         <tr th:each="teacher : ${allTeachers}">
-
-            <td th:text="${teacher.firstName + ' ' + (teacher.infixName != null ? teacher.infixName + ' ' : '') + teacher.lastName}"></td>
+            <td th:text="${teacher.displayName}"></td>
             <td><a th:href="@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})}">Wijzig</a></td>
             <td><a th:href="@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})}">Verwijder</a></td>
         </tr>
