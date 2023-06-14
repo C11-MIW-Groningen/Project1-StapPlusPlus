@@ -16,11 +16,18 @@ h1 {
 }
 
 .btn {
-    background-color: #d8d8d8;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #eaeaea;
+}
+
+.btn-homepage {
+    margin-bottom: 10px;
+    background-color: #ff8f52;
 }
 
 .navbar {
-    background-color: #AED9FE;
+    background-color: #eaeaea;
 }
 
 .banner {
@@ -37,7 +44,7 @@ h1 {
 }
 
 .footer {
-    background-color: #AED9FE;
+    background-color: #eaeaea;
 }
 
 #makeITWorkLogo {

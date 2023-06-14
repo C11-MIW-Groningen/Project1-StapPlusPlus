@@ -23,7 +23,7 @@ public class Course {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Subject> subjects;
 
     private String imageUrl;
