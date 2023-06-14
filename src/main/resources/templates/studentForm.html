@@ -8,31 +8,37 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <h1>Student invoer</h1>
+    <h2>Student invoer</h2>
 
     <form th:action="@{/student/new}" method="post" th:object="${student}">
         <input type="hidden" th:field="*{studentId}">
-        <table class="table table-hover table-borderless">
+        <table class="table table-borderless">
             <tr>
                 <th>Voornaam</th>
-                <th>Tussenvoegsel</th>
-                <th>Achternaam</th>
-                <th>Privé Email</th>
-                <th>School Email</th>
-            </tr>
-            <tr>
                 <td><label>
                     <input type="text" th:field="*{firstName}">
                 </label></td>
+            </tr>
+            <tr>
+                <th>Tussenvoegsel</th>
                 <td><label>
                     <input type="text" th:field="*{infixName}">
                 </label></td>
+            </tr>
+            <tr>
+                <th>Achternaam</th>
                 <td><label>
                     <input type="text" th:field="*{lastName}">
                 </label></td>
+            </tr>
+            <tr>
+                <th>Privé Email</th>
                 <td><label>
                     <input type="text" th:field="*{privateEmail}">
                 </label></td>
+            </tr>
+            <tr>
+                <th>School Email</th>
                 <td><label>
                     <input type="text" th:field="*{schoolEmail}">
                 </label></td>

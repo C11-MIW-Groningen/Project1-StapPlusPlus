@@ -17,12 +17,7 @@
 </div>
 
 <div class="container">
-
-
     <div id="courses-overview">
-
-
-
         <div class="course" th:each="course : ${allCourses}">
             <div  class="card">
                 <a th:href="@{/course/details/{courseName}(courseName=${course.name})}">
@@ -35,7 +30,7 @@
                 </a>
             </div>
         </div>
-
+    </div>
 </div>
 
 

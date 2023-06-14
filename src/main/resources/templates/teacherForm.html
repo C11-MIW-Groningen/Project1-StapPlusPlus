@@ -8,23 +8,25 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-  <h1>Docent invoer</h1>
+  <h2>Docent invoer</h2>
 
   <form th:action="@{/teacher/new}" method="post" th:object="${teacher}">
       <input type="hidden" th:field="*{teacherId}">
-      <table class="table table-hover table-borderless">
+      <table class="table table-borderless">
           <tr>
               <th>Voornaam</th>
-              <th>Tussenvoegsel</th>
-              <th>Achternaam</th>
-          </tr>
-          <tr>
               <td><label>
                   <input type="text" th:field="*{firstName}">
               </label></td>
+          </tr>
+          <tr>
+              <th>Tussenvoegsel</th>
               <td><label>
                   <input type="text" th:field="*{infixName}">
               </label></td>
+          </tr>
+          <tr>
+              <th>Achternaam</th>
               <td><label>
                   <input type="text" th:field="*{lastName}">
               </label></td>
