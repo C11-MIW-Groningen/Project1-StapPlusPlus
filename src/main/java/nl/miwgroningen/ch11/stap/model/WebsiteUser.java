@@ -1,7 +1,6 @@
 package nl.miwgroningen.ch11.stap.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +20,9 @@ import java.util.List;
  */
 @Entity
 @Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebsiteUser implements UserDetails {
     @Id
     @GeneratedValue
