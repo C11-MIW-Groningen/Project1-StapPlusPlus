@@ -2,14 +2,8 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
-import nl.miwgroningen.ch11.stap.model.LearningGoal;
-import nl.miwgroningen.ch11.stap.model.Student;
-import nl.miwgroningen.ch11.stap.model.Subject;
-import nl.miwgroningen.ch11.stap.model.Teacher;
-import nl.miwgroningen.ch11.stap.repositories.LearningGoalRepository;
-import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
-import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
-import nl.miwgroningen.ch11.stap.repositories.TeacherRepository;
+import nl.miwgroningen.ch11.stap.model.*;
+import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -24,14 +18,15 @@ import java.util.Random;
 @Controller
 @RequiredArgsConstructor
 public class SeedController {
+    private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
     private static final int SEED_NUMBER_OF_STUDENTS = 30;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
-    private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
 
+    private final CourseRepository courseRepository;
     private final LearningGoalRepository learningGoalRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
@@ -39,20 +34,13 @@ public class SeedController {
 
     @GetMapping("/seed")
     private String seedDatabase() {
-        deleteDatabase();
         seedLearningGoals();
-        seedStudents();
         seedSubjects();
+        seedCourses();
+        seedStudents();
         seedTeachers();
 
         return "redirect:/subject/all";
-    }
-
-    private void deleteDatabase () {
-        subjectRepository.deleteAll();
-        learningGoalRepository.deleteAll();
-        studentRepository.deleteAll();
-        teacherRepository.deleteAll();
     }
 
     private List<LearningGoal> getRandomLearningGoals() {
@@ -60,20 +48,48 @@ public class SeedController {
         List<LearningGoal> randomLearningGoals = new ArrayList<>();
 
         for (int learningGoal = 0; learningGoal < random.nextInt(MAXIMUM_LEARNING_GOALS_PER_SUBJECT); learningGoal++) {
-            int randomLearningGoal = random.nextInt(learningGoalRepository.findAll().size() - 1);
+            int randomLearningGoal = random.nextInt(allLearningGoals.size() - 1);
             randomLearningGoals.add(allLearningGoals.get(randomLearningGoal));
         }
 
         return randomLearningGoals;
     }
 
+    private List<Subject> getRandomSubjects() {
+        List<Subject> allSubjects = subjectRepository.findAll();
+        List<Subject> randomSubjects = new ArrayList<>();
+
+        for (int subject = 0; subject < random.nextInt(allSubjects.size()); subject++) {
+            int randomSubject = random.nextInt(allSubjects.size() - 1);
+            randomSubjects.add(allSubjects.get(randomSubject));
+        }
+
+        return randomSubjects;
+    }
+
+    private void seedCourses() {
+        Course course1 = Course.builder()
+                .name("Software Engineering")
+                .description(faker.lorem().paragraph(2))
+                .imageUrl("/images/Software%20Engineering.jpg")
+                .subjects(getRandomSubjects())
+                .build();
+        courseRepository.save(course1);
+
+        Course course2 = Course.builder()
+                .name("Functioneel Beheer")
+                .description(faker.lorem().paragraph(2))
+                .imageUrl("/images/Fucntioneel%20Beheer.jpeg")
+                .subjects(getRandomSubjects())
+                .build();
+        courseRepository.save(course2);
+    }
+
     private void seedLearningGoals() {
         for (int learningGoal = 0; learningGoal < SEED_NUMBER_OF_LEARNING_GOALS; learningGoal++) {
             LearningGoal newLearningGoal = LearningGoal.builder()
-                    .title(faker.examplify("Lorem ipsum dolor"))
-                    .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
-                            "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud " +
-                            "exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+                    .title(faker.examplify(faker.lorem().sentence(2)))
+                    .description(faker.lorem().paragraph(4))
                     .build();
             learningGoalRepository.save(newLearningGoal);
         }
