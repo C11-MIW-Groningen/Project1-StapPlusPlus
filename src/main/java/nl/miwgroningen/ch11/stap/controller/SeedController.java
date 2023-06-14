@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,6 +24,8 @@ public class SeedController {
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
     private static final int SEED_NUMBER_OF_STUDENTS = 30;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
+    private static final int SEED_NUMBER_OF_COHORTS = 6;
+    private static final int SEED_NUMBER_OF_STUDENTS_PER_COHORT = 5;
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
@@ -33,6 +36,7 @@ public class SeedController {
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
     private final WebsiteUserRepository websiteUserRepository;
+    private final CohortRepository cohortRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -44,8 +48,9 @@ public class SeedController {
         seedCourses();
         seedStudents();
         seedWebsiteUsers();
+        seedCohorts();
 
-        return "redirect:/subject/all";
+        return "redirect:/";
     }
 
     private List<LearningGoal> getRandomLearningGoals() {
@@ -60,11 +65,25 @@ public class SeedController {
         return randomLearningGoals;
     }
 
+    private Student getRandomStudent() {
+        List<Student> allStudents = studentRepository.findAll();
+        int randomStudent = random.nextInt(allStudents.size() - 1);
+
+        return allStudents.get(randomStudent);
+    }
+
     private Teacher getRandomTeacher() {
         List<Teacher> allTeachers = teacherRepository.findAll();
         int randomTeacher = random.nextInt(allTeachers.size() - 1);
 
         return allTeachers.get(randomTeacher);
+    }
+
+    private Course getRandomCourse() {
+        List<Course> allCourses = courseRepository.findAll();
+        int randomCourse = random.nextInt(allCourses.size() - 1);
+
+        return allCourses.get(randomCourse);
     }
 
     private void seedCourses() {
@@ -152,5 +171,23 @@ public class SeedController {
                 .administrator(false)
                 .build();
         websiteUserRepository.save(websiteUser);
+    }
+
+    private void seedCohorts() {
+        for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
+
+            List<Student> students = new ArrayList<>();
+            for (int student = 0; student < SEED_NUMBER_OF_STUDENTS_PER_COHORT; student++) {
+                students.add(student, getRandomStudent());
+            }
+
+            Cohort newCohort = Cohort.builder()
+                    .number(cohort + 1)
+                    .startDate(LocalDate.of(2000 + cohort, 9, 1))
+                    .course(getRandomCourse())
+                    .students(students)
+                    .build();
+            cohortRepository.save(newCohort);
+        }
     }
 }
