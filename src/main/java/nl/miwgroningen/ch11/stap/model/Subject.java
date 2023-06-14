@@ -23,9 +23,10 @@ public class Subject {
 
     private String title;
     private int duration;
+    private String description;
 
-    @ManyToMany
-    private List<Teacher> teachers;
+    @ManyToOne
+    private Teacher teacher;
 
     @ManyToMany
     private List<LearningGoal> learningGoals;
