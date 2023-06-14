@@ -4,12 +4,36 @@ body {
     min-height:100vh;
 }
 
+h1 {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+    padding-bottom: 5%;
+}
+
 .btn {
     background-color: #d8d8d8;
 }
 
 .navbar {
     background-color: #cad7e0;
+}
+
+.banner {
+    /* intelliJ zegt path niet te herkennen, maar vindt hem wel */
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url("/images/banner-image-scaled.png");
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.banner-content {
+    width: 70%;
+    text-align: center;
 }
 
 .footer {
@@ -22,7 +46,10 @@ body {
 
 #courses-overview {
     display: flex;
-    justify-content: center;
-    gap: 10%;
-    margin-top: 10%;
+    /*margin-top: 10%;*/
+}
+
+.course {
+    flex: 50%;
+    margin: 5%;
 }
