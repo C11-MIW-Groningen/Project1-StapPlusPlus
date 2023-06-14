@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title>Course overview</title>
+    <title>Cursus overview</title>
 </head>
 <body>
 
@@ -10,12 +10,20 @@
         <a class="navbar-brand" href="/">
             <img id="makeITWorkLogo" src="/images/makeItWorkTransParent.png" width="40%" height="40%" alt="">
         </a>
-        <div id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/teacher/all">Docenten</a>
-                <a class="nav-item nav-link" href="/student/all">Studenten</a>
-                <a class="nav-item nav-link" href="/subject/all">Vakken</a>
-                <a class="nav-item nav-link" href="/goal/all">Leerdoelen</a>
+        <div class="container-fluid" id="navbarNavAltMarkup">
+            <div class="navbar-nav" sec:authorize="isAnonymous()">
+                <a class="nav-item nav-link" th:href="@{/login}">Log in</a>
+            </div>
+            <div class="navbar-nav" sec:authorize="isAuthenticated()">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/teacher/all">Docenten</a>
+                    <a class="nav-item nav-link" href="/student/all">Studenten</a>
+                    <a class="nav-item nav-link" href="/subject/all">Vakken</a>
+                    <a class="nav-item nav-link" href="/goal/all">Leerdoelen</a>
+                </div>
+                <div>
+                    <a class="nav-item nav-link" th:href="@{/logout}">Log out</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -35,7 +43,7 @@
         <div class="course" th:each="course : ${allCourses}">
             <div  class="card">
                 <a class="link-dark text-decoration-none" th:href="@{/course/details/{courseName}(courseName=${course.name})}">
-                    <img class="card-img-top" th:src="${course.imageUrl}" alt="Card image cap">
+                    <img class="card-img-top" th:src="${course.imageUrl}" alt="Card image cap" src="">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${course.name}"></h5>
                         <p class="card-text" th:text="${course.description}"></p>

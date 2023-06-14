@@ -2,9 +2,9 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
-import net.datafaker.Tea;
 import nl.miwgroningen.ch11.stap.model.*;
 import nl.miwgroningen.ch11.stap.repositories.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -32,6 +32,9 @@ public class SeedController {
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
+    private final WebsiteUserRepository websiteUserRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/seed")
     private String seedDatabase() {
@@ -40,6 +43,7 @@ public class SeedController {
         seedSubjects();
         seedCourses();
         seedStudents();
+        seedWebsiteUsers();
 
         return "redirect:/subject/all";
     }
@@ -139,5 +143,14 @@ public class SeedController {
             teacherRepository.save(newTeacher);
             infix = !infix;
         }
+    }
+
+    private void seedWebsiteUsers() {
+        WebsiteUser websiteUser = WebsiteUser.builder()
+                .username("user")
+                .password(passwordEncoder.encode("userPW"))
+                .administrator(false)
+                .build();
+        websiteUserRepository.save(websiteUser);
     }
 }

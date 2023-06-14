@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
                 .formLogin().and()
-                .logout().logoutSuccessUrl("/episode/all");
+                .logout().logoutSuccessUrl("/");
 
         return httpSecurity.build();
     }
