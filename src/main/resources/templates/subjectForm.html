@@ -26,6 +26,18 @@
                 </label></td>
             </tr>
             <tr>
+                <td>Docent:</td>
+                <td>
+                    <label>
+                        <select th:field="*{teacher}">
+                            <option th:each="teacher : ${allTeachers}"
+                                    th:value="${teacher.teacherId}"
+                                    th:text="${teacher.lastName}"></option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+            <tr>
                 <td>Lesdoelen:</td>
                 <td>
                     <label>
@@ -35,6 +47,14 @@
                                     th:text="${goal.title}">
                             </option>
                         </select>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Omschrijving:</td>
+                <td>
+                    <label>
+                        <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
                     </label>
                 </td>
             </tr>

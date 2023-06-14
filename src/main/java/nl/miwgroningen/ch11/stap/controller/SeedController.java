@@ -2,6 +2,7 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
+import net.datafaker.Tea;
 import nl.miwgroningen.ch11.stap.model.*;
 import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
@@ -35,10 +36,10 @@ public class SeedController {
     @GetMapping("/seed")
     private String seedDatabase() {
         seedLearningGoals();
+        seedTeachers();
         seedSubjects();
         seedCourses();
         seedStudents();
-        seedTeachers();
 
         return "redirect:/subject/all";
     }
@@ -55,16 +56,11 @@ public class SeedController {
         return randomLearningGoals;
     }
 
-    private List<Subject> getRandomSubjects() {
-        List<Subject> allSubjects = subjectRepository.findAll();
-        List<Subject> randomSubjects = new ArrayList<>();
+    private Teacher getRandomTeacher() {
+        List<Teacher> allTeachers = teacherRepository.findAll();
+        int randomTeacher = random.nextInt(allTeachers.size() - 1);
 
-        for (int subject = 0; subject < random.nextInt(allSubjects.size()); subject++) {
-            int randomSubject = random.nextInt(allSubjects.size() - 1);
-            randomSubjects.add(allSubjects.get(randomSubject));
-        }
-
-        return randomSubjects;
+        return allTeachers.get(randomTeacher);
     }
 
     private void seedCourses() {
@@ -72,7 +68,7 @@ public class SeedController {
                 .name("Software Engineering")
                 .description(faker.lorem().paragraph(2))
                 .imageUrl("/images/Software%20Engineering.jpg")
-                .subjects(getRandomSubjects())
+                .subjects(subjectRepository.findAll())
                 .build();
         courseRepository.save(course1);
 
@@ -80,7 +76,7 @@ public class SeedController {
                 .name("Functioneel Beheer")
                 .description(faker.lorem().paragraph(2))
                 .imageUrl("/images/Fucntioneel%20Beheer.jpeg")
-                .subjects(getRandomSubjects())
+                .subjects(subjectRepository.findAll())
                 .build();
         courseRepository.save(course2);
     }
@@ -88,8 +84,8 @@ public class SeedController {
     private void seedLearningGoals() {
         for (int learningGoal = 0; learningGoal < SEED_NUMBER_OF_LEARNING_GOALS; learningGoal++) {
             LearningGoal newLearningGoal = LearningGoal.builder()
-                    .title(faker.examplify(faker.lorem().sentence(2)))
-                    .description(faker.lorem().paragraph(4))
+                    .title(faker.lorem().sentence(2))
+                    .description(faker.lorem().paragraph(3))
                     .build();
             learningGoalRepository.save(newLearningGoal);
         }
@@ -115,26 +111,20 @@ public class SeedController {
     }
 
     private void seedSubjects() {
-        Subject subject1 = Subject.builder()
-                .title("Programming")
-                .duration(8)
-                .learningGoals(getRandomLearningGoals())
-                .build();
-        subjectRepository.save(subject1);
+        String[] subjects = {"Programming", "Databases", "Object Oriented Programming", "Intermediate Programming",
+        "Advanced Programming", "Design Patterns", "Scrum"};
 
-        Subject subject2 = Subject.builder()
-                .title("Databases")
-                .duration(8)
-                .learningGoals(getRandomLearningGoals())
-                .build();
-        subjectRepository.save(subject2);
+        for (String subject : subjects) {
+            Subject newSubject = Subject.builder()
+                    .title(subject)
+                    .duration(12 - random.nextInt(4))
+                    .description(faker.lorem().paragraph(2))
+                    .learningGoals(getRandomLearningGoals())
+                    .teacher((getRandomTeacher()))
+                    .build();
 
-        Subject subject3 = Subject.builder()
-                .title("Object Oriented Programming")
-                .duration(10)
-                .learningGoals(getRandomLearningGoals())
-                .build();
-        subjectRepository.save(subject3);
+            subjectRepository.save(newSubject);
+        }
     }
 
     private void seedTeachers() {

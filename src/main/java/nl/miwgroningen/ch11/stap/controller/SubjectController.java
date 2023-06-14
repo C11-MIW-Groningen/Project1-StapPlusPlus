@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.repositories.LearningGoalRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
+import nl.miwgroningen.ch11.stap.repositories.TeacherRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +21,9 @@ import java.util.Optional;
 @RequestMapping("/subject")
 @RequiredArgsConstructor
 public class SubjectController {
-    private final SubjectRepository subjectRepository;
     private final LearningGoalRepository learningGoalRepository;
+    private final SubjectRepository subjectRepository;
+    private final TeacherRepository teacherRepository;
 
     @GetMapping("/all")
     private String showSubjectOverview(Model model) {
@@ -33,6 +35,7 @@ public class SubjectController {
     private String showSubjectForm(Model model) {
         model.addAttribute("subject", new Subject());
         model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
+        model.addAttribute("allTeachers", teacherRepository.findAll());
 
         return "subjectForm";
     }
@@ -44,6 +47,7 @@ public class SubjectController {
         if (optionalSubject.isPresent()) {
             model.addAttribute("subject", optionalSubject.get());
             model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
+            model.addAttribute("allTeachers", teacherRepository.findAll());
 
             return "subjectForm";
         }

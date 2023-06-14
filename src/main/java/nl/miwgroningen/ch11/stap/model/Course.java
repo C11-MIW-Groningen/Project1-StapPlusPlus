@@ -2,10 +2,7 @@ package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -22,9 +19,11 @@ public class Course {
     @Id
     @GeneratedValue
     private Long courseId;
+
+    @Column(unique = true)
     private String name;
 
-    @OneToMany
+    @ManyToMany
     private List<Subject> subjects;
 
     private String imageUrl;
