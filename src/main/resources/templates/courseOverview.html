@@ -5,7 +5,21 @@
 </head>
 <body>
 
-<div th:replace="fragments/general :: navbar"></div>
+<div>
+    <nav class="navbar navbar-light navbar-expand-lg navbar-frontpage">
+        <a class="navbar-brand" href="/">
+            <img id="makeITWorkLogo" src="/images/makeItWorkTransParent.png" width="40%" height="40%" alt="">
+        </a>
+        <div id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/teacher/all">Docenten</a>
+                <a class="nav-item nav-link" href="/student/all">Studenten</a>
+                <a class="nav-item nav-link" href="/subject/all">Vakken</a>
+                <a class="nav-item nav-link" href="/goal/all">Leerdoelen</a>
+            </div>
+        </div>
+    </nav>
+</div>
 
 <div class="banner">
 
