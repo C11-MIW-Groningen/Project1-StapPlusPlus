@@ -29,6 +29,7 @@ public class SeedController {
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
+    private static final int SEED_NUMBER_MINIMUM_STUDENTS = 3;
 
     private final CourseRepository courseRepository;
     private final LearningGoalRepository learningGoalRepository;
@@ -61,15 +62,19 @@ public class SeedController {
             int randomLearningGoal = random.nextInt(allLearningGoals.size() - 1);
             randomLearningGoals.add(allLearningGoals.get(randomLearningGoal));
         }
-
         return randomLearningGoals;
     }
 
-    private Student getRandomStudent() {
+    private List<Student> getRandomStudents() {
         List<Student> allStudents = studentRepository.findAll();
-        int randomStudent = random.nextInt(allStudents.size() - 1);
+        List<Student> randomStudents = new ArrayList<>();
 
-        return allStudents.get(randomStudent);
+            for (int student = 0; student < random.nextInt(SEED_NUMBER_OF_STUDENTS_PER_COHORT)
+                    + SEED_NUMBER_MINIMUM_STUDENTS; student++) {
+                int randomStudent = random.nextInt(allStudents.size() - 1);
+                randomStudents.add(allStudents.get(randomStudent));
+            }
+        return randomStudents;
     }
 
     private Teacher getRandomTeacher() {
@@ -176,16 +181,11 @@ public class SeedController {
     private void seedCohorts() {
         for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
 
-            List<Student> students = new ArrayList<>();
-            for (int student = 0; student < SEED_NUMBER_OF_STUDENTS_PER_COHORT; student++) {
-                students.add(student, getRandomStudent());
-            }
-
             Cohort newCohort = Cohort.builder()
                     .number(cohort + 1)
                     .startDate(LocalDate.of(2000 + cohort, 9, 1))
                     .course(getRandomCourse())
-                    .students(students)
+                    .students(getRandomStudents())
                     .build();
             cohortRepository.save(newCohort);
         }
