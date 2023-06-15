@@ -9,15 +9,10 @@
 
 <div class="container">
 
-    <table class="table table-hover">
-        <tr class="table-secondary">
-            <th th:text="${shownCourse.name}">></th>
-        </tr>
-        <tr>
-            <td th:text="${shownCourse.description}"></td>
-        </tr>
-    </table>
+    <h2 th:text="${shownCourse.name}"></h2>
+    <p class="w-75" th:text="${shownCourse.description}"></p>
     <p></p>
+
     <table class="table table-hover table-borderless">
         <tr class="table-secondary">
             <th class="w-25">Vakken</th>

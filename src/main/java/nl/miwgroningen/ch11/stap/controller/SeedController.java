@@ -89,7 +89,7 @@ public class SeedController {
     private void seedCourses() {
         Course course1 = Course.builder()
                 .name("Software Engineering")
-                .description(faker.lorem().paragraph(2))
+                .description(faker.lorem().paragraph(3))
                 .imageUrl("/images/Software%20Engineering.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
@@ -97,7 +97,7 @@ public class SeedController {
 
         Course course2 = Course.builder()
                 .name("Functioneel Beheer")
-                .description(faker.lorem().paragraph(2))
+                .description(faker.lorem().paragraph(3))
                 .imageUrl("/images/Fucntioneel%20Beheer.jpeg")
                 .subjects(subjectRepository.findAll())
                 .build();

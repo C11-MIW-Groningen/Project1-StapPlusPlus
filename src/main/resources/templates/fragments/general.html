@@ -19,8 +19,11 @@
         <a class="navbar-brand" href="/">
             <img id="makeITWorkLogo" src="/images/makeItWorkTransParent.png" width="40%" height="40%" alt="">
         </a>
-        <div class="navbar-nav" sec:authorize="isAnonymous()">
-            <a class="nav-item nav-link" th:href="@{/login}">Log in</a>
+        <div class="container-fluid collapse navbar-collapse" sec:authorize="isAnonymous()">
+            <div class="navbar-nav"></div>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/login}">Log in</a>
+            </div>
         </div>
         <div class="container-fluid collapse navbar-collapse" id="navbarNavAltMarkup" sec:authorize="isAuthenticated()">
             <div class="navbar-nav">
