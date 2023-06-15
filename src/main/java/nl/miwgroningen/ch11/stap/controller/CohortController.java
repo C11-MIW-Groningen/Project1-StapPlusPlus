@@ -3,6 +3,7 @@ package nl.miwgroningen.ch11.stap.controller;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
+import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CohortController {
     private final CohortRepository cohortRepository;
+    private final StudentRepository studentRepository;
 
     @GetMapping("/")
     private String showCohortOverview(Model model) {
@@ -39,7 +41,7 @@ public class CohortController {
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
-            model.addAttribute("allCohorts", cohortRepository.findAll());
+            model.addAttribute("allStudents", studentRepository.findAll());
             return "cohortForm";
         }
 

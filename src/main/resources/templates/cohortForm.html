@@ -16,19 +16,24 @@
             <tr>
                 <th>Cohort nummer</th>
                 <td><label>
-                    <input type="text" th:field="*{number}">
+                    <input type="number" th:field="*{number}">
                 </label></td>
             </tr>
             <tr>
                 <th>Start Datum</th>
                 <td><label>
-                    <input type="text" th:field="*{startDate}">
+                    <input type="date" th:field="*{startDate}">
                 </label></td>
             </tr>
             <tr>
-                <th>StudentIDs (moet nog gefixt worden)</th>
+                <th>Studenten</th>
                 <td><label>
-                    <input type="text" th:field="*{students}">
+                    <select class="form-select" size="8" th:field="*{students}" multiple>
+                        <option th:each="student : ${allStudents}"
+                                th:value="${student.studentId}"
+                                th:text="${student.displayName}">
+                        </option>
+                    </select>
                 </label></td>
             </tr>
         </table>
