@@ -21,7 +21,7 @@ public class Cohort {
     @GeneratedValue
     private Long cohortId;
 
-    private int number;
+    private String number;
     private LocalDate startDate;
 
     @ManyToOne

@@ -182,7 +182,7 @@ public class SeedController {
         for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
 
             Cohort newCohort = Cohort.builder()
-                    .number(cohort + 1)
+                    .number(String.valueOf(cohort + 1))
                     .startDate(LocalDate.of(2000 + cohort, 9, 1))
                     .course(getRandomCourse())
                     .students(getRandomStudents())

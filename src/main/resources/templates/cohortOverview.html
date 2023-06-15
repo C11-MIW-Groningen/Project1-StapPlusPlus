@@ -19,7 +19,11 @@
         </tr>
 
         <tr th:each="cohort : ${allCohorts}">
-            <td th:text="${cohort.number}"></td>
+            <td >
+                <a  th:href="@{/cohort/details/{number}(number=${cohort.number})}"
+                    th:text="${cohort.number}">
+                </a>
+            </td>
             <td th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></td>
             <td th:text="${#lists.size(cohort.students)}"></td>
             <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
