@@ -25,12 +25,6 @@ public class SubjectController {
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
 
-    @GetMapping("/all")
-    private String showSubjectOverview(Model model) {
-        model.addAttribute("allSubjects", subjectRepository.findAll());
-        return "subjectOverview";
-    }
-
     @GetMapping("/new")
     private String showSubjectForm(Model model) {
         model.addAttribute("subject", new Subject());
@@ -52,7 +46,7 @@ public class SubjectController {
             return "subjectForm";
         }
 
-        return "redirect:/subject/all";
+        return "redirect:/";
     }
 
     @PostMapping("/new")
@@ -61,16 +55,16 @@ public class SubjectController {
             subjectRepository.save(subjectToSave);
         }
 
-        return "redirect:/subject/all";
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{subjectId}")
-    private String deleteAuthor(@PathVariable("subjectId") Long subjectId) {
+    private String deleteSubject(@PathVariable("subjectId") Long subjectId) {
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 
         optionalSubject.ifPresent(subjectRepository::delete);
 
-        return "redirect:/subject/all";
+        return "redirect:/";
     }
 }
 

@@ -13,18 +13,35 @@
     <p class="w-75" th:text="${shownCourse.description}"></p>
     <p></p>
 
-    <table class="table table-borderless">
-        <tr class="table-secondary">
-            <th>Vakken</th>
+    <table class="table">
+        <thead class="table-secondary">
+        <tr>
+            <th>Vak</th>
             <th>Duur</th>
-            <th>Omschrijving</th>
+            <th>Leerdoelen</th>
+            <th></th>
+            <th></th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="subject : ${shownCourse.subjects}">
             <td th:text="${subject.title}"></td>
             <td th:text="${subject.getDurationString()}"></td>
-            <td th:text="${subject.getDescription()}"></td>
+            <td>
+                <table>
+                    <tr th:each="goal : ${subject.learningGoals}">
+                        <td th:text="${goal.title}"></td>
+                    </tr>
+                </table>
+            </td>
+            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}">Wijzig</a></td>
+            <td><a th:href="@{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
+                subjectId=${subject.subjectId})}">Verwijder</a></td>
         </tr>
+        </tbody>
     </table>
+
+    <a class="btn" href="/subject/new">Vak toevoegen</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
