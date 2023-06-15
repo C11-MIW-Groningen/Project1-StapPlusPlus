@@ -34,6 +34,9 @@ public class Student implements Comparable <Student>{
     @ManyToMany
     private List<Course> courses;
 
+    @ManyToMany(mappedBy = "students")
+    private List<Cohort> cohort;
+
     @Override
     public int compareTo(Student otherStudent) {
         return this.lastName.compareTo(otherStudent.getLastName());

@@ -35,6 +35,18 @@ public class CohortController {
         return "cohortForm";
     }
 
+    @GetMapping("/cohort/details/{cohortId}")
+    private String showCohortDetails(@PathVariable("cohortId") Long cohortId, Model model) {
+        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+
+        if (optionalCohort.isPresent()) {
+            model.addAttribute("shownCohort", optionalCohort.get());
+
+            return "cohortDetails";
+        }
+        return "redirect:/cohort";
+    }
+
     @GetMapping("/edit/{cohortId}")
     private String showEditCohortForm(@PathVariable("cohortId") Long cohortId, Model model) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
@@ -56,13 +68,16 @@ public class CohortController {
         return "redirect:/cohort/";
     }
 
-    @GetMapping("/delete/{cohortId}")
-    private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
-        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+    @GetMapping("/details/{number}")
+    private String showCohortDetails(@PathVariable("number") String number, Model model) {
+        Optional<Cohort> optionalCohort = cohortRepository.findByNumber(number);
 
         if (optionalCohort.isPresent()) {
-            cohortRepository.delete(optionalCohort.get());
+            model.addAttribute("cohortShown", optionalCohort.get());
+
+            return "cohortDetails";
         }
+
         return "redirect:/cohort/";
     }
 }
