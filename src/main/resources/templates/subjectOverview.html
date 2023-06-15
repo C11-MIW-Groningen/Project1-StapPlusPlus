@@ -24,7 +24,7 @@
         <tbody>
             <tr th:each="subject : ${allSubjects}">
                 <td th:text="${subject.title}"></td>
-                <td th:text="${subject.duration}"></td>
+                <td th:text="${subject.getDurationString()}"></td>
                 <td>
                     <table>
                         <tr th:each="goal : ${subject.learningGoals}">
