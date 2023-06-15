@@ -13,21 +13,15 @@
         <tr class="table-secondary">
             <th>Cohort Nummer</th>
             <th>Start Datum</th>
-            <th>Studenten</th>
+            <th>Aantal Studenten</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
 
         <tr th:each="cohort : ${allCohorts}">
             <td th:text="${cohort.number}"></td>
-            <td th:text="${cohort.startDate}"></td>
-            <td>
-                <table>
-                    <tr th:each="student : ${cohort.students}">
-                        <td th:text="${student.displayName}"></td>
-                    </tr>
-                </table>
-            </td>
+            <td th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#lists.size(cohort.students)}"></td>
             <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
             <td><a th:href="@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})}">Verwijder</a></td>
         </tr>
