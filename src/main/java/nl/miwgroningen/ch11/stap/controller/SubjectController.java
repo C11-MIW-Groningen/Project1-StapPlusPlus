@@ -72,7 +72,5 @@ public class SubjectController {
 
         return "redirect:/subject/all";
     }
-
-    @GetMapping
 }
 
