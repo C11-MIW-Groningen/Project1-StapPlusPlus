@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Cohort Overzicht</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+     <h2>Cohort Overview</h2>
+    <table class="table table-hover">
+        <tr class="table-secondary">
+            <th>Cohort Nummer</th>
+            <th>Start Datum</th>
+            <th>Studenten</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <tr th:each="cohort : ${allCohorts}">
+            <td th:text="${cohort.number}"></td>
+            <td th:text="${cohort.startDate}"></td>
+            <td>
+                <table>
+                    <tr th:each="student : ${cohort.students}">
+                        <td th:text="${student.displayName}"></td>
+                    </tr>
+                </table>
+            </td>
+            <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
+            <td><a th:href="@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})}">Verwijder</a></td>
+        </tr>
+    </table>
+
+    <a class="btn" href="/cohort/new">Voeg nieuw cohort toe</a>
+
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

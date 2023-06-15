@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Cohort Invoer</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <h2>Cohort invoer</h2>
+
+    <form th:action="@{/cohort/new}" method="post" th:object="${cohort}">
+        <input type="hidden" th:field="*{cohortId}">
+        <table class="table table-borderless">
+            <tr>
+                <th>Cohort nummer</th>
+                <td><label>
+                    <input type="text" th:field="*{number}">
+                </label></td>
+            </tr>
+            <tr>
+                <th>Start Datum</th>
+                <td><label>
+                    <input type="text" th:field="*{startDate}">
+                </label></td>
+            </tr>
+            <tr>
+                <th>StudentIDs (moet nog gefixt worden)</th>
+                <td><label>
+                    <input type="text" th:field="*{students}">
+                </label></td>
+            </tr>
+        </table>
+
+        <input class="btn" type="submit" value="Opslaan">
+    </form>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>
