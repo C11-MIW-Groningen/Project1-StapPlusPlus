@@ -25,11 +25,11 @@ public class SeedController {
     private static final int SEED_NUMBER_OF_STUDENTS = 30;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
     private static final int SEED_NUMBER_OF_COHORTS = 6;
-    private static final int SEED_NUMBER_OF_STUDENTS_PER_COHORT = 5;
+    private static final int MIN_NUMBER_OF_STUDENTS_PER_COHORT = 5;
+    private static final int MAX_NUMBER_OF_STUDENTS_PER_COHORT = 25;
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
-    private static final int SEED_NUMBER_MINIMUM_STUDENTS = 3;
 
     private final CourseRepository courseRepository;
     private final LearningGoalRepository learningGoalRepository;
@@ -65,12 +65,11 @@ public class SeedController {
         return randomLearningGoals;
     }
 
-    private List<Student> getRandomStudents() {
+    private List<Student> getRandomStudents(int numberOfStudents) {
         List<Student> allStudents = studentRepository.findAll();
         List<Student> randomStudents = new ArrayList<>();
 
-            for (int student = 0; student < random.nextInt(SEED_NUMBER_OF_STUDENTS_PER_COHORT)
-                    + SEED_NUMBER_MINIMUM_STUDENTS; student++) {
+            for (int student = 0; student < numberOfStudents; student++) {
                 int randomStudent = random.nextInt(allStudents.size() - 1);
                 randomStudents.add(allStudents.get(randomStudent));
             }
@@ -94,7 +93,8 @@ public class SeedController {
     private void seedCourses() {
         Course course1 = Course.builder()
                 .name("Software Engineering")
-                .description(faker.lorem().paragraph(3))
+                .description("In de omscholing Software Engineering leer je softwaresystemen ontwerpen, realiseren " +
+                        "en testen. Je werkt met verschillende programmeertalen en ontwikkelmethoden.")
                 .imageUrl("/images/Software%20Engineering.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
@@ -141,16 +141,16 @@ public class SeedController {
     private void seedSubjects() {
         String[] subjects = {"Programming", "Databases", "Object Oriented Programming", "Intermediate Programming",
         "Advanced Programming", "Design Patterns", "Scrum"};
+        int[] subjectDurations = {8, 8, 8, 22, 50, 2, 2};
 
-        for (String subject : subjects) {
+        for (int subject = 0; subject < subjects.length; subject++) {
             Subject newSubject = Subject.builder()
-                    .title(subject)
-                    .duration(12 - random.nextInt(4))
+                    .title(subjects[subject])
+                    .duration(subjectDurations[subject])
                     .description(faker.lorem().paragraph(2))
                     .learningGoals(getRandomLearningGoals())
                     .teacher((getRandomTeacher()))
                     .build();
-
             subjectRepository.save(newSubject);
         }
     }
@@ -179,15 +179,30 @@ public class SeedController {
     }
 
     private void seedCohorts() {
-        for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
+        List<Integer> numberOfStudentsPerCohort = getNumberOfStudentsPerCohort();
 
+        for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
             Cohort newCohort = Cohort.builder()
                     .number(cohort + 1)
                     .startDate(LocalDate.of(2000 + cohort, 9, 1))
                     .course(getRandomCourse())
-                    .students(getRandomStudents())
+                    .students(getRandomStudents(numberOfStudentsPerCohort.get(cohort)))
                     .build();
             cohortRepository.save(newCohort);
         }
+    }
+
+    private List<Integer> getNumberOfStudentsPerCohort() {
+        List<Integer> numberOfStudentsPerCohort = new ArrayList<>();
+        numberOfStudentsPerCohort.add(MIN_NUMBER_OF_STUDENTS_PER_COHORT);
+        numberOfStudentsPerCohort.add(MAX_NUMBER_OF_STUDENTS_PER_COHORT);
+
+        for (int i = 2; i < SEED_NUMBER_OF_COHORTS; i++) {
+            numberOfStudentsPerCohort.add(random.nextInt(
+                    MAX_NUMBER_OF_STUDENTS_PER_COHORT - MIN_NUMBER_OF_STUDENTS_PER_COHORT)
+                    + MIN_NUMBER_OF_STUDENTS_PER_COHORT);
+        }
+
+        return numberOfStudentsPerCohort;
     }
 }

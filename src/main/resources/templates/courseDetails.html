@@ -15,12 +15,14 @@
 
     <table class="table table-hover table-borderless">
         <tr class="table-secondary">
-            <th class="w-25">Vakken</th>
+            <th>Vakken</th>
+            <th>Duur</th>
             <th>Omschrijving</th>
         </tr>
         <tr th:each="subject : ${shownCourse.subjects}">
-            <td class="w-25" th:text="${subject.title}"></td>
-            <td th:text="${subject.description}"></td>
+            <td th:text="${subject.title}"></td>
+            <td th:text="${subject.getDurationString()}"></td>
+            <td th:text="${subject.getDescription()}"></td>
         </tr>
     </table>
 </div>
