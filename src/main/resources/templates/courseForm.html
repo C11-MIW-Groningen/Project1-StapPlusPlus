@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Cursus invoer</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <h2>Cursus invoer</h2>
+
+    <form th:action="@{/course/new}" method="post" th:object="${course}">
+        <input type="hidden" th:field="*{courseId}">
+        <table class="table table-borderless">
+            <tr>
+                <td>Cursusnaam:</td>
+                <td><label>
+                    <input type="text" th:field="*{name}">
+                </label></td>
+            </tr>
+            <tr>
+                <td>Afbeelding url:</td>
+                <td><label><input type="text" th:field="*{imageUrl}"></label></td>
+            </tr>
+            <tr>
+                <td>Omschrijving:</td>
+                <td>
+                    <label>
+                        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Vakken:</td>
+                <td>
+                    <label>
+                        <select th:field="*{subjects}" multiple="multiple">
+                            <option th:each="subject : ${allSubjects}"
+                                    th:value="${subject.subjectId}"
+                                    th:text="${subject.title}">
+                            </option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+        </table>
+
+        <input class="btn" type="submit" value="Opslaan">
+    </form>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

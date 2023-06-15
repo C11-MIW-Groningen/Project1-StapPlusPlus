@@ -7,8 +7,8 @@ import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class CourseController {
     private final SubjectRepository subjectRepository;
 
     @GetMapping("/")
-    private String showSubjectOverview(Model model) {
+    private String showCourseOverview(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
         return "courseOverview";
     }
@@ -44,8 +44,39 @@ public class CourseController {
         return "redirect:/";
     }
 
+    @GetMapping("/course/new")
+    private String showCourseForm(Model model) {
+        model.addAttribute("course", new Course());
+        model.addAttribute("allSubjects", subjectRepository.findAll());
+
+        return "courseForm";
+    }
+
+    @GetMapping("/course/edit/{courseId}")
+    private String showEditCourseForm(@PathVariable("courseId") Long courseId, Model model) {
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalCourse.isPresent()) {
+            model.addAttribute("course", optionalCourse.get());
+            model.addAttribute("allSubjects", subjectRepository.findAll());
+
+            return "courseForm";
+        }
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/course/new")
+    private String saveCourse(@ModelAttribute("course") Course courseToSave, BindingResult result) {
+        if (!result.hasErrors()) {
+            courseRepository.save(courseToSave);
+        }
+
+        return "redirect:/";
+    }
+
     @GetMapping("/course/remove/{courseId}/{subjectId}")
-    private String removeCourse(@PathVariable("courseId") Long courseId, @PathVariable("subjectId") Long subjectId) {
+    private String removeSubject(@PathVariable("courseId") Long courseId, @PathVariable("subjectId") Long subjectId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 

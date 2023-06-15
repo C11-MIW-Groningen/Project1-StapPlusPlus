@@ -41,7 +41,7 @@
         </tbody>
     </table>
 
-    <a class="btn" href="/subject/new">Vak toevoegen</a>
+    <a class="btn" th:href="@{/course/edit/{courseId}(courseId=${shownCourse.courseId})}">Wijzig cursus</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
