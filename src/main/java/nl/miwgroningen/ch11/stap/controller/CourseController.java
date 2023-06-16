@@ -72,7 +72,8 @@ public class CourseController {
             courseRepository.save(courseToSave);
         }
 
-        return "redirect:/";
+        return String.format("redirect:/course/details/%s",
+                courseToSave.getName().replace(" ", "%20"));
     }
 
     @GetMapping("/course/remove/{courseId}/{subjectId}")
@@ -80,11 +81,15 @@ public class CourseController {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 
-        if (optionalCourse.isPresent() && optionalSubject.isPresent()) {
-            List<Subject> courseSubjects = optionalCourse.get().getSubjects();
-            courseSubjects.remove(optionalSubject.get());
-            optionalCourse.get().setSubjects(courseSubjects);
-            courseRepository.save(optionalCourse.get());
+        if (optionalCourse.isPresent()) {
+            if (optionalSubject.isPresent()) {
+                List<Subject> courseSubjects = optionalCourse.get().getSubjects();
+                courseSubjects.remove(optionalSubject.get());
+                optionalCourse.get().setSubjects(courseSubjects);
+                courseRepository.save(optionalCourse.get());
+            }
+            return String.format("redirect:/course/details/%s",
+                    optionalCourse.get().getName().replace(" ", "%20"));
         }
 
         return "redirect:/";
