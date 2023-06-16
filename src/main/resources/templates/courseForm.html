@@ -24,18 +24,10 @@
                 <td><label><input type="text" th:field="*{imageUrl}"></label></td>
             </tr>
             <tr>
-                <td>Omschrijving:</td>
-                <td>
-                    <label>
-                        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
-                    </label>
-                </td>
-            </tr>
-            <tr>
                 <td>Vakken:</td>
                 <td>
                     <label>
-                        <select th:field="*{subjects}" multiple="multiple">
+                        <select th:rows="5" th:field="*{subjects}" multiple="multiple">
                             <option th:each="subject : ${allSubjects}"
                                     th:value="${subject.subjectId}"
                                     th:text="${subject.title}">
@@ -45,6 +37,10 @@
                 </td>
             </tr>
         </table>
+
+        <p>Omschrijving:</p>
+
+        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
 
         <input class="btn" type="submit" value="Opslaan">
     </form>

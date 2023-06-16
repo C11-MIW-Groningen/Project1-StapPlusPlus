@@ -49,16 +49,14 @@
                         </select>
                     </label>
                 </td>
+                <td><a class="btn" href="/goal/new">Lesdoel toevoegen</a></td>
             </tr>
             <tr>
                 <td>Omschrijving:</td>
-                <td>
-                    <label>
-                        <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
-                    </label>
-                </td>
             </tr>
         </table>
+
+        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
 
         <input class="btn" type="submit" value="Opslaan">
     </form>

@@ -16,19 +16,18 @@
             <tr>
                 <td>Lesdoel naam:</td>
                 <td><label>
-                    <input class="form-control" type="text" th:field="*{title}">
+                    <input class="form-control border-dark" type="text" th:field="*{title}">
                 </label></td>
             </tr>
             <tr>
                 <td>Omschrijving:</td>
-                <td><label>
-                    <textarea class="form-control border-dark" rows="3" type="text"
-                              th:field="*{description}"></textarea>
-                </label></td>
             </tr>
         </table>
 
+        <textarea class="form-control border-dark" rows="4" th:field="*{description}"></textarea>
+
         <input class="btn" type="submit" value="Opslaan">
+
     </form>
 </div>
 
