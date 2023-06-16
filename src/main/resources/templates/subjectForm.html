@@ -32,7 +32,7 @@
                         <select th:field="*{teacher}">
                             <option th:each="teacher : ${allTeachers}"
                                     th:value="${teacher.teacherId}"
-                                    th:text="${teacher.lastName}"></option>
+                                    th:text="${teacher.displayName}"></option>
                         </select>
                     </label>
                 </td>

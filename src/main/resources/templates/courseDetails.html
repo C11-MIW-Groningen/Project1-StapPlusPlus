@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
     <title th:text="${shownCourse.name}"></title>
 </head>
@@ -9,14 +9,24 @@
 
 <div class="container">
 
-    <h2 th:text="${shownCourse.name}"></h2>
-    <p class="w-75" th:text="${shownCourse.description}"></p>
+    <table>
+        <tr>
+            <td><h2 th:text="${shownCourse.name}"></h2></td>
+            <td><a class="btn" th:href="@{/course/edit/{courseId}(courseId=${shownCourse.courseId})}"
+                   sec:authorize="isAuthenticated()">Wijzig</a></td>
+        </tr>
+        <tr>
+            <td th:text="${shownCourse.description}"></td>
+        </tr>
+    </table>
+
     <p></p>
 
     <table class="table">
         <thead class="table-secondary">
         <tr>
             <th>Vak</th>
+            <th sec:authorize="isAuthenticated()">Docent</th>
             <th>Duur</th>
             <th>Leerdoelen</th>
             <th></th>
@@ -26,6 +36,7 @@
         <tbody>
         <tr th:each="subject : ${shownCourse.subjects}">
             <td th:text="${subject.title}"></td>
+            <td th:text="${subject.teacher.displayName}" sec:authorize="isAuthenticated()"></td>
             <td th:text="${subject.getDurationString()}"></td>
             <td>
                 <table>
@@ -34,14 +45,13 @@
                     </tr>
                 </table>
             </td>
-            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}">Wijzig</a></td>
+            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}"
+                   sec:authorize="isAuthenticated()">Wijzig</a></td>
             <td><a th:href="@{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
-                subjectId=${subject.subjectId})}">Verwijder</a></td>
+            subjectId=${subject.subjectId})}" sec:authorize="isAuthenticated()">Verwijder</a></td>
         </tr>
         </tbody>
     </table>
-
-    <a class="btn" th:href="@{/course/edit/{courseId}(courseId=${shownCourse.courseId})}">Wijzig cursus</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
