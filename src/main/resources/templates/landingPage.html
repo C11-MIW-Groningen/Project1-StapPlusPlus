@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Cursus overview</title>
+</head>
+<body>
+
+<div>
+    <nav class="navbar navbar-light navbar-expand-lg navbar-frontpage">
+        <a class="navbar-brand" href="/">
+            <img id="makeITWorkLogo" src="/images/makeItWorkTransParent.png" width="40%" height="40%" alt="">
+        </a>
+        <div class="container-fluid collapse navbar-collapse" sec:authorize="isAnonymous()">
+            <div class="navbar-nav"></div>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/login}">Log in</a>
+            </div>
+        </div>
+        <div class="container-fluid collapse navbar-collapse" id="navbarNavAltMarkup" sec:authorize="isAuthenticated()">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/course/all">Studierichtingen</a>
+                <a class="nav-item nav-link" href="/teacher/all">Docenten</a>
+                <a class="nav-item nav-link" href="/student/all">Studenten</a>
+                <a class="nav-item nav-link" href="/cohort/all">Cohorten</a>
+                <a class="nav-item nav-link" href="/subject/all">Vakken</a>
+            </div>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/logout}">Log out</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="banner">
+
+    <div class="banner-content">
+        <h1>Een uniek omscholingstraject op hbo-niveau mét baangarantie in de IT</h1>
+    <p class="description">Tijdens het omscholingstraject Make IT Work school je je in 5 maanden om tot IT’er.
+        Hierna ga je minimaal 6 maanden betaald aan de slag in je nieuwe functie bij één van de deelnemende werkgevers. </p>
+    </div>
+</div>
+
+<div class="container">
+    <div id="courses-overview">
+        <div class="course" th:each="course : ${allCourses}">
+            <div  class="card">
+                <a class="link-dark text-decoration-none" th:href="@{/course/details/{courseName}(courseName=${course.name})}">
+                    <img class="card-img-top" th:src="${course.imageUrl}" alt="Card image cap" src="">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${course.name}"></h5>
+                        <p class="card-text" th:text="${course.description}"></p>
+                        <a th:href="@{/course/details/{courseName}(courseName=${course.name})}" class="btn btn-homepage">Meer informatie</a>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

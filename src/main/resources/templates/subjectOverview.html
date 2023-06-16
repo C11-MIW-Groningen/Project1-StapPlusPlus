@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-  <title>Vak overview</title>
+    <title>Vak overview</title>
 </head>
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-  <h2>Vak overview</h2>
+    <h2>Vak overview</h2>
 
-  <table class="table">
+    <table class="table">
 
-    <thead class="table-secondary">
-    <tr>
-      <th>Vaknaam</th>
-      <th>Duur</th>
-      <th>Leerdoelen</th>
-      <th></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="subject : ${allSubjects}">
-      <td th:text="${subject.title}"></td>
-      <td th:text="${subject.getDurationString()}"></td>
-      <td>
-        <table>
-          <tr th:each="goal : ${subject.learningGoals}">
-            <td th:text="${goal.title}"></td>
-          </tr>
-        </table>
-      </td>
-      <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}">Wijzig</a></td>
-      <td><a th:href="@{/subject/delete/{subjectId}(subjectId=${subject.subjectId})}">Verwijder</a></td>
-    </tr>
-    </tbody>
-  </table>
+        <thead class="table-secondary">
+        <tr>
+            <th>Vaknaam</th>
+            <th>Duur</th>
+            <th>Leerdoelen</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subject : ${allSubjects}">
+            <td th:text="${subject.title}"></td>
+            <td th:text="${subject.getDurationString()}"></td>
+            <td>
+                <table>
+                    <tr th:each="goal : ${subject.learningGoals}">
+                        <td th:text="${goal.title}"></td>
+                    </tr>
+                </table>
+            </td>
+            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}">Wijzig</a></td>
+            <td><a th:href="@{/subject/delete/{subjectId}(subjectId=${subject.subjectId})}">Verwijder</a></td>
+        </tr>
+        </tbody>
+    </table>
 
-  <a class="btn" href="/subject/new">Vak toevoegen</a>
+    <a class="btn" href="/subject/new">Vak toevoegen</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

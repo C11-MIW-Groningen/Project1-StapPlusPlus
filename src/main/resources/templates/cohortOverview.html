@@ -26,6 +26,12 @@
                         th:text="'Cohort ' + ${cohort.number}">
                     </a>
                 </td>
+                <td>
+                    <a class="link-dark text-decoration-none"
+                        th:href="@{/cohort/details/{number}(number=${cohort.number})}"
+                        th:text="${cohort.course}">
+                    </a>
+                </td>
                 <td >
                     <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
                         th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}">
