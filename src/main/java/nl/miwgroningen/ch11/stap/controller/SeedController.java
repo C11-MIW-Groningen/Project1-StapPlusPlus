@@ -22,7 +22,7 @@ import java.util.Random;
 public class SeedController {
     private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
-    private static final int SEED_NUMBER_OF_STUDENTS = 30;
+    private static final int SEED_NUMBER_OF_STUDENTS = 100;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
     private static final int SEED_NUMBER_OF_COHORTS = 6;
     private static final int MIN_NUMBER_OF_STUDENTS_PER_COHORT = 5;

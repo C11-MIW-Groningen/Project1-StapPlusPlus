@@ -1,7 +1,6 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
-import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
@@ -67,9 +66,7 @@ public class StudentController {
     private String deleteStudent(@PathVariable("studentId") Long studentId) {
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
 
-        if (optionalStudent.isPresent()) {
-            studentRepository.delete(optionalStudent.get());
-        }
+        optionalStudent.ifPresent(studentRepository::delete);
 
         return "redirect:/student/all";
     }
