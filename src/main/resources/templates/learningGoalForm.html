@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title>Lesdoel invoer</title>
+    <title>Leerdoel invoer</title>
 </head>
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <h2>Lesdoel invoer</h2>
+    <h2>Leerdoel invoer</h2>
 
     <form th:action="@{/goal/new}" method="post" th:object="${learningGoal}">
         <input type="hidden" th:field="*{learningGoalId}">
