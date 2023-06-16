@@ -8,11 +8,16 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-     <h2>Cohort Overview</h2>
+    <div class="row">
+        <h2 class="col">Cohort overzicht</h2>
+        <span class="col"><a class="btn float-end" href="/cohort/new">Voeg nieuw cohort toe</a></span>
+    </div>
+
     <table class="table table-hover">
         <thead>
             <tr class="table-secondary">
                 <th>Cohort</th>
+                <th>Studierichting</th>
                 <th>Start Datum</th>
                 <th>Aantal Studenten</th>
                 <th>Edit</th>
@@ -29,7 +34,7 @@
                 <td>
                     <a class="link-dark text-decoration-none"
                         th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                        th:text="${cohort.course}">
+                        th:text="${cohort.course.name}">
                     </a>
                 </td>
                 <td >
@@ -47,9 +52,6 @@
             </tr>
         </tbody>
     </table>
-
-    <a class="btn" href="/cohort/new">Voeg nieuw cohort toe</a>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

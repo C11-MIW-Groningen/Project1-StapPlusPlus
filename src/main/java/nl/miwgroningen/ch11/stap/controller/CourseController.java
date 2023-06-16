@@ -111,6 +111,11 @@ public class CourseController {
         return "redirect:/";
     }
 
+    @GetMapping("/course/return")
+    private String returnToCourseOverview() {
+        return "redirect:/course/all";
+    }
+
     @GetMapping("/course/return/{courseId}")
     private String returnToCourseDetails(@PathVariable("courseId") Long courseId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
