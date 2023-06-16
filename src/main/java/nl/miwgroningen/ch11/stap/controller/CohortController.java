@@ -44,7 +44,7 @@ public class CohortController {
 
             return "cohortDetails";
         }
-        return "redirect:/cohort";
+        return "redirect:/cohort/all";
     }
 
     @GetMapping("/edit/{cohortId}")
@@ -57,7 +57,7 @@ public class CohortController {
             return "cohortForm";
         }
 
-        return "redirect:/cohort/";
+        return "redirect:/cohort/all";
     }
 
     @PostMapping("/new")
@@ -67,7 +67,7 @@ public class CohortController {
         if (!result.hasErrors()) {
             cohortRepository.save(cohort);
         }
-        return "redirect:/cohort/";
+        return "redirect:/cohort/all";
     }
 
     @GetMapping("/details/{number}")
@@ -80,7 +80,7 @@ public class CohortController {
             return "cohortDetails";
         }
 
-        return "redirect:/cohort/";
+        return "redirect:/cohort/all";
     }
 
     @GetMapping("/delete/{cohortId}")
