@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,7 +55,7 @@ public class CohortController {
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
-            model.addAttribute("allStudents", studentRepository.findAll());
+            model.addAttribute("allStudents", getStudentsSorted());
             return "cohortForm";
         }
 
@@ -87,10 +89,14 @@ public class CohortController {
     private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
 
-        if (optionalCohort.isPresent()) {
-            cohortRepository.delete(optionalCohort.get());
-        }
+        optionalCohort.ifPresent(cohortRepository::delete);
 
         return "redirect:/cohort/all";
+    }
+
+    private List<Student> getStudentsSorted() {
+        List<Student> allStudents = studentRepository.findAll();
+        Collections.sort(allStudents);
+        return allStudents;
     }
 }

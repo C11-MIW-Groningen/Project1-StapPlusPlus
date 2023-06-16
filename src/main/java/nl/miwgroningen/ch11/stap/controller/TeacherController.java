@@ -58,9 +58,7 @@ public class TeacherController {
     private String deleteTeacher(@PathVariable("teacherId") Long teacherId) {
         Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
 
-        if (optionalTeacher.isPresent()) {
-            teacherRepository.delete(optionalTeacher.get());
-        }
+        optionalTeacher.ifPresent(teacherRepository::delete);
 
         return "redirect:/teacher/all";
     }
