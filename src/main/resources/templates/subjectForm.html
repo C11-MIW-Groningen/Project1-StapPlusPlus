@@ -49,7 +49,9 @@
                         </select>
                     </label>
                 </td>
-                <td><a class="btn" href="/goal/new">Lesdoel toevoegen</a></td>
+                <td>
+                    <div th:replace="fragments/buttons :: new(@{/goal/new})"></div>
+                </td>
             </tr>
             <tr>
                 <td>Omschrijving:</td>
@@ -58,7 +60,10 @@
 
         <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
 
-        <input class="btn" type="submit" value="Opslaan">
+        <button th:fragment="save" type="submit" class="btn btn-primary">
+            <span th:replace="fragments/icons :: saveIcon"></span>Opslaan
+        </button>
+
         <a class="btn" href="/subject/all">Annuleren</a>
     </form>
 </div>

@@ -38,7 +38,8 @@
     </tbody>
   </table>
 
-  <a class="btn" href="/subject/new">Vak toevoegen</a>
+  <div th:replace="fragments/buttons :: new(@{/subject/new})"></div>
+
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

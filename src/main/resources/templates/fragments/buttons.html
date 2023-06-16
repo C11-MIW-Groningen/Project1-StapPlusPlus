@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buttons</title>
+</head>
+<body>
+
+<!-- New button fragment-->
+<div th:fragment="new(link)">
+    <a type="button" class="btn btn-outline-success"
+       th:href="${link}"
+    >
+        Voeg nieuwe toe
+    </a>
+</div>
+
+<!-- Edit button fragment-->
+<span th:fragment="edit(link)">
+    <a type="button" class="btn btn-outline-success"
+       th:href="${link}"
+    >
+        <span th:replace="fragments/icons :: editIcon"></span>
+    </a>
+</span>
+
+<!-- Delete button fragment-->
+<span th:fragment="delete(link)">
+    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+            th:attr="data-bs-target='#delete-modal' + ${#strings.replace(link, '/', '')}"
+    >
+        <span th:replace="fragments/icons :: deleteIcon"></span>
+    </button>
+    <span th:replace="fragments/modals :: deleteModal(${link})"></span>
+</span>
+
+<!-- Save button fragment -->
+<div th:fragment="save" class="text-end mt-3" >
+    <button type="submit" class="btn btn-primary">
+        <span th:replace="fragments/icons :: saveIcon"></span>
+        Save
+    </button>
+</div>

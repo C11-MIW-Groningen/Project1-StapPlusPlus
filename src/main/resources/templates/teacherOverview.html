@@ -24,7 +24,7 @@
         </tr>
     </table>
 
-    <a class="btn" href="/teacher/new">Voeg nieuwe docent toe</a>
+    <div th:replace="fragments/buttons :: new(@{/teacher/new})"></div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
