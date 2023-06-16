@@ -26,8 +26,16 @@ public class CourseController {
     private final SubjectRepository subjectRepository;
 
     @GetMapping("/")
+    private String showLandingPage(Model model) {
+        model.addAttribute("allCourses", courseRepository.findAll());
+
+        return "landingPage";
+    }
+
+    @GetMapping("/course/all")
     private String showCourseOverview(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
+
         return "courseOverview";
     }
 
@@ -76,6 +84,14 @@ public class CourseController {
                 courseToSave.getName().replace(" ", "%20"));
     }
 
+    @GetMapping("/course/delete/{courseId}")
+    private String deleteCourse(@PathVariable("courseId") Long courseId) {
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        optionalCourse.ifPresent(courseRepository::delete);
+
+        return "redirect:/course/all";
+    }
+
     @GetMapping("/course/remove/{courseId}/{subjectId}")
     private String removeSubject(@PathVariable("courseId") Long courseId, @PathVariable("subjectId") Long subjectId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
@@ -93,6 +109,11 @@ public class CourseController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/course/return")
+    private String returnToCourseOverview() {
+        return "redirect:/course/all";
     }
 
     @GetMapping("/course/return/{courseId}")

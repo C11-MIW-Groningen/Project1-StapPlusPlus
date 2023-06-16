@@ -9,18 +9,12 @@
 
 <div class="container">
 
-    <table>
-        <tr>
-            <td><h2 th:text="${shownCourse.name}"></h2></td>
-            <td><a class="btn" th:href="@{/course/edit/{courseId}(courseId=${shownCourse.courseId})}"
-                   sec:authorize="isAuthenticated()">Wijzig</a></td>
-        </tr>
-        <tr>
-            <td th:text="${shownCourse.description}"></td>
-        </tr>
-    </table>
-
-    <p></p>
+    <div class="row">
+        <h2 class="col" th:text="${shownCourse.name}"></h2>
+        <span class="col"><a class="btn float-end"
+                             th:href="@{/course/edit/{courseId}(courseId=${shownCourse.courseId})}"
+                             sec:authorize="isAuthenticated()">Wijzig</a></span>
+    </div>
 
     <table class="table">
         <thead class="table-secondary">

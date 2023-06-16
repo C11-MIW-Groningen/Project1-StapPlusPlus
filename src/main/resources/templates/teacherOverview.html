@@ -8,7 +8,10 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <h2>Docent Overview</h2>
+    <div class="row">
+        <h2 class="col">Docent overzicht</h2>
+        <span class="col"><div th:replace="fragments/buttons :: new(@{/teacher/new})"></div></span>
+    </div>
 
     <table class="table">
         <tr class="table-secondary">
@@ -23,8 +26,6 @@
             <td><a th:href="@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})}">Verwijder</a></td>
         </tr>
     </table>
-
-    <div th:replace="fragments/buttons :: new(@{/teacher/new})"></div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

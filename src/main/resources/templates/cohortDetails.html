@@ -8,8 +8,10 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-  <h2>Cohort <span th:text="${cohortShown.number}"></span></h2>
-    <p></p>
+    <div class="row">
+        <h2 class="col">Cohort <span th:text="${cohortShown.number}"></span></h2>
+        <span class="col"><a class="btn float-end" href="/student/new">Voeg nieuwe student toe</a></span>
+    </div>
 
     <table class="table table-hover">
         <thead>
@@ -31,8 +33,6 @@
             </tr>
         </tbody>
     </table>
-
-    <a class="btn" href="/student/new">Voeg nieuwe student toe</a>
 
 </div>
 
