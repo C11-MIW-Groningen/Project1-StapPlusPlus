@@ -33,7 +33,7 @@
                 </td>
                 <td>
                     <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                        th:text="${#lists.size(cohort.students)}">
+                        th:text="${cohort.students.size()}">
                     </a>
                 </td>
                 <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
