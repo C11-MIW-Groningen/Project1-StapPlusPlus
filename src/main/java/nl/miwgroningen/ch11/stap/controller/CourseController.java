@@ -94,4 +94,16 @@ public class CourseController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/course/return/{courseId}")
+    private String returnToCourseDetails(@PathVariable("courseId") Long courseId) {
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalCourse.isPresent()) {
+            return String.format("redirect:/course/details/%s",
+                    optionalCourse.get().getName().replace(" ", "%20"));
+        }
+
+        return "redirect:/";
+    }
 }

@@ -43,6 +43,7 @@
         <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
 
         <input class="btn" type="submit" value="Opslaan">
+        <a class="btn" th:href="@{/course/return/{courseId}(courseId=${course.courseId})}">Annuleren</a>
     </form>
 </div>
 

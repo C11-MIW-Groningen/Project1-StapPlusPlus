@@ -22,7 +22,7 @@ public class CohortController {
     private final CohortRepository cohortRepository;
     private final StudentRepository studentRepository;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     private String showCohortOverview(Model model) {
         model.addAttribute("allCohorts", cohortRepository.findAll());
         return "cohortOverview";

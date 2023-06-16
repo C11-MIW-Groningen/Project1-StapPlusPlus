@@ -28,6 +28,13 @@ public class SubjectController {
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
 
+    @GetMapping("/all")
+    private String showSubjectOverview(Model model) {
+        model.addAttribute("allSubjects", subjectRepository.findAll());
+
+        return "subjectOverview";
+    }
+
     @GetMapping("/new")
     private String showSubjectForm(Model model) {
         model.addAttribute("subject", new Subject());
