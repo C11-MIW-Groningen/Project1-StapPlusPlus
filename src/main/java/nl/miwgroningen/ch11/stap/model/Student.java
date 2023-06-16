@@ -31,9 +31,6 @@ public class Student implements Comparable <Student>{
     private String privateEmail;
     private String schoolEmail;
 
-    @ManyToMany
-    private List<Course> courses;
-
     @ManyToMany(mappedBy = "students")
     private List<Cohort> cohort;
 

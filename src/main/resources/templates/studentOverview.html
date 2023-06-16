@@ -14,6 +14,7 @@
             <th>Naam</th>
             <th>Privé email</th>
             <th>School email</th>
+            <th>Cohort</th>
             <th>Wijzig</th>
             <th>Verwijder</th>
         </tr>
@@ -22,6 +23,16 @@
             <td th:text="${student.displayName}"></td>
             <td th:text="${student.privateEmail}"></td>
             <td th:text="${student.schoolEmail}"></td>
+            <td>
+                <table>
+                    <tr th:each="cohort : ${student.cohort}">
+                        <td>
+                            <a th:href="@{/cohort/details/{number}(number=${cohort.number})}"
+                            th:text="'Cohort ' + ${cohort.number}"></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
             <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>
             <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Verwijder</a></td>
         </tr>
