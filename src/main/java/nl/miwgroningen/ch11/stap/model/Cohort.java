@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Tristan Meinsma
@@ -22,9 +23,11 @@ public class Cohort {
     private Long cohortId;
 
     private String number;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH})
     private Course course;
 
     @ManyToMany

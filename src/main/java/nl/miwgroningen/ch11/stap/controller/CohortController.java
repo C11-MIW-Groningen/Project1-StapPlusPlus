@@ -2,6 +2,7 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
+import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,8 @@ public class CohortController {
 
     @PostMapping("/new")
     private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
+        System.out.println(cohort.getStartDate());
+        System.out.println(cohort.getNumber());
         if (!result.hasErrors()) {
             cohortRepository.save(cohort);
         }
@@ -78,5 +81,16 @@ public class CohortController {
         }
 
         return "redirect:/cohort/";
+    }
+
+    @GetMapping("/delete/{cohortId}")
+    private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
+        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+
+        if (optionalCohort.isPresent()) {
+            cohortRepository.delete(optionalCohort.get());
+        }
+
+        return "redirect:/cohort/all";
     }
 }
