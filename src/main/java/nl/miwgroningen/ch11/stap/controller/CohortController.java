@@ -38,7 +38,6 @@ public class CohortController {
     @GetMapping("/cohort/details/{cohortId}")
     private String showCohortDetails(@PathVariable("cohortId") Long cohortId, Model model) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
-
         if (optionalCohort.isPresent()) {
             model.addAttribute("shownCohort", optionalCohort.get());
 

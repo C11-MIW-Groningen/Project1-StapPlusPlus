@@ -9,26 +9,37 @@
 
 <div class="container">
      <h2>Cohort Overview</h2>
-    <table class="table">
-        <tr class="table-secondary">
-            <th>Cohort Nummer</th>
-            <th>Start Datum</th>
-            <th>Aantal Studenten</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-
-        <tr th:each="cohort : ${allCohorts}">
-            <td >
-                <a  th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                    th:text="${cohort.number}">
-                </a>
-            </td>
-            <td th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></td>
-            <td th:text="${#lists.size(cohort.students)}"></td>
-            <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
-            <td><a th:href="@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})}">Verwijder</a></td>
-        </tr>
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-secondary">
+                <th>Cohort</th>
+                <th>Start Datum</th>
+                <th>Aantal Studenten</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cohort : ${allCohorts}">
+                <td >
+                    <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
+                        th:text="'Cohort ' + ${cohort.number}">
+                    </a>
+                </td>
+                <td >
+                    <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
+                        th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}">
+                    </a>
+                </td>
+                <td>
+                    <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
+                        th:text="${#lists.size(cohort.students)}">
+                    </a>
+                </td>
+                <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
+                <td><a th:href="@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})}">Verwijder</a></td>
+            </tr>
+        </tbody>
     </table>
 
     <a class="btn" href="/cohort/new">Voeg nieuw cohort toe</a>

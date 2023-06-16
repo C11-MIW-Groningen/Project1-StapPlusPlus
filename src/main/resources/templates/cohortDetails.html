@@ -11,7 +11,8 @@
   <h2>Cohort <span th:text="${cohortShown.number}"></span></h2>
     <p></p>
 
-    <table class="table table-hover table-borderless">
+    <table class="table table-hover">
+        <thead>
         <tr class="table-secondary">
             <th>Naam</th>
             <th>School Email</th>
@@ -19,13 +20,16 @@
             <th>Wijzig</th>
             <th>Verwijder</th>
         </tr>
-        <tr th:each="student : ${cohortShown.students}">
-            <td th:text="${student.displayName}"></td>
-            <td th:text="${student.privateEmail}"></td>
-            <td th:text="${student.schoolEmail}"></td>
-            <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>
-            <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Verwijder</a></td>
-        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="student : ${cohortShown.students}">
+                <td th:text="${student.displayName}"></td>
+                <td th:text="${student.privateEmail}"></td>
+                <td th:text="${student.schoolEmail}"></td>
+                <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>
+                <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Verwijder</a></td>
+            </tr>
+        </tbody>
     </table>
 
     <a class="btn" href="/student/new">Voeg nieuwe student toe</a>
