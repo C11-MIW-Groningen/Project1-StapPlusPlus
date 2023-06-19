@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Tentamen</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <div class="row">
+        <h2 class="col">Tentamen</h2>
+        <span class="col">
+            <a class="btn float-end" th:href="@{/exam/edit/{examId}(examId=${shownExam.examId})}">Wijzig</a>
+        </span>
+        <span class="col">
+            <span th:replace="fragments/buttons :: new(@{/question/new/{examId}(examId=${shownExam.examId})})"></span>
+        </span>
+    </div>
+
+    <table class="table">
+        <thead class="table-secondary">
+        <tr>
+            <th>Nummer</th>
+            <th>Vraag</th>
+            <th>Punten</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="examQuestion : ${shownExam.examQuestions}">
+            <td th:text="${examQuestion.questionNumber}"></td>
+            <td th:text="${examQuestion.questionText}"></td>
+            <td th:text="${examQuestion.attainablePoints}"></td>
+            <td>
+                <a th:href="@{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})}">Wijzig
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

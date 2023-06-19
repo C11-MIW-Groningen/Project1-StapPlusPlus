@@ -40,7 +40,9 @@
 
         <p>Omschrijving:</p>
 
-        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
+        <label>
+            <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
+        </label>
 
         <button th:fragment="save" type="submit" class="btn btn-primary">
             <span th:replace="fragments/icons :: saveIcon"></span>Opslaan

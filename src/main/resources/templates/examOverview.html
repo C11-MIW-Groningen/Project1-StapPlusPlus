@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Tentamen overzicht</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <div class="row">
+        <h2 class="col">Tentamen overzicht</h2>
+        <span class="col"><span th:replace="fragments/buttons :: new(@{/exam/new})"></span></span>
+    </div>
+
+    <table class="table">
+        <thead class="table-secondary">
+        <tr>
+            <th>Cohort</th>
+            <th>Vak</th>
+            <th>Herkansing</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="exam : ${allExams}">
+            <td>
+                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}" th:text="${exam.cohort.number}"></a>
+            </td>
+            <td>
+                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}" th:text="${exam.subject.title}"></a>
+            </td>
+            <td>
+                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}"
+                   th:text="${exam.resit} ? 'Herkansing' : ''"></a>
+            </td>
+            <td><a th:href="@{/exam/edit/{examId}(examId=${exam.examId})}">Wijzig</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

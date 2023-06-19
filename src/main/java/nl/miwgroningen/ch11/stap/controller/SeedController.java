@@ -113,7 +113,7 @@ public class SeedController {
         for (int learningGoal = 0; learningGoal < SEED_NUMBER_OF_LEARNING_GOALS; learningGoal++) {
             LearningGoal newLearningGoal = LearningGoal.builder()
                     .title(faker.lorem().sentence(2))
-                    .description(faker.lorem().paragraph(3))
+                    .description(faker.lorem().paragraph(2))
                     .build();
             learningGoalRepository.save(newLearningGoal);
         }
