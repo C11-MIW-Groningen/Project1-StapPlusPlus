@@ -1,7 +1,6 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
-import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.model.Teacher;
 import nl.miwgroningen.ch11.stap.repositories.TeacherRepository;
 import org.springframework.stereotype.Controller;
