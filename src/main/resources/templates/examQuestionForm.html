@@ -31,9 +31,7 @@
             </tr>
         </table>
 
-        <label>
-            <textarea class="form-control" rows="4" th:field="*{questionText}"></textarea>
-        </label>
+        <textarea class="form-control" rows="4" th:field="*{questionText}"></textarea>
 
         <button th:fragment="save" type="submit" class="btn btn-primary">
             <span th:replace="fragments/icons :: saveIcon"></span>Opslaan
