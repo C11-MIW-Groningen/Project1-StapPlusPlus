@@ -39,7 +39,7 @@
             <span th:replace="fragments/icons :: saveIcon"></span>Opslaan
         </button>
 
-        <a class="btn" th:href="@{/exam/cancel/{examId}(examId=${examId})}">Annuleren</a>
+        <a class="btn" th:href="@{/exam/cancel/{examId}(examId=${examQuestion.exam.examId})}">Annuleren</a>
     </form>
 </div>
 

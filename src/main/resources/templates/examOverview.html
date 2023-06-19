@@ -16,6 +16,7 @@
     <table class="table">
         <thead class="table-secondary">
         <tr>
+            <th>Datum</th>
             <th>Cohort</th>
             <th>Vak</th>
             <th>Herkansing</th>
@@ -24,8 +25,10 @@
         </thead>
         <tbody>
         <tr th:each="exam : ${allExams}">
+            <td th:text="${#temporals.format(exam.examDate, 'dd-MM-yyyy')}"></td>
             <td>
-                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}" th:text="${exam.cohort.number}"></a>
+                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}"
+                   th:text="'Cohort ' + ${exam.cohort.number}"></a>
             </td>
             <td>
                 <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}" th:text="${exam.subject.title}"></a>
