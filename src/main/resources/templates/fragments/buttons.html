@@ -12,7 +12,16 @@
        th:href="${link}"
     >
         <span th:replace="fragments/icons :: newIcon"></span>
-        Voeg nieuwe toe
+        <span>Voeg nieuwe toe</span>
+    </a>
+</span>
+
+<span th:fragment="newCustom(link, buttonText)">
+    <a type="button" class="btn btn-success float-end btn-new"
+       th:href="${link}"
+    >
+        <span th:replace="fragments/icons :: newIcon"></span>
+        <span th:text="${buttonText}"></span>
     </a>
 </span>
 
