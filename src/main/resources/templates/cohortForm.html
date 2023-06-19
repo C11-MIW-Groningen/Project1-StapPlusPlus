@@ -16,7 +16,7 @@
             <tr>
                 <th>Cohort nummer</th>
                 <td><label>
-                    <input type="number" th:field="*{number}">
+                    <input type="text" th:field="*{number}">
                 </label></td>
             </tr>
             <tr>
@@ -38,9 +38,7 @@
             </tr>
         </table>
 
-        <button th:fragment="save" type="submit" class="btn btn-primary">
-            <span th:replace="fragments/icons :: saveIcon"></span>Opslaan
-        </button>
+        <span th:replace="fragments/buttons :: save"></span>
 
         <a class="btn btn-light" href="/cohort/all">Annuleren</a>
 

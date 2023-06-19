@@ -26,9 +26,8 @@
 
         <textarea class="form-control border-dark" rows="4" th:field="*{description}"></textarea>
 
-        <button th:fragment="save" type="submit" class="btn btn-primary">
-            <span th:replace="fragments/icons :: saveIcon"></span>Opslaan
-        </button>
+        <span th:replace="fragments/buttons :: save"></span>
+
         <a class="btn btn-light" href="/goal/all">Annuleren</a>
 
     </form>

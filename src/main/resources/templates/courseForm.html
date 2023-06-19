@@ -44,9 +44,7 @@
             <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
         </label>
 
-        <button th:fragment="save" type="submit" class="btn btn-primary">
-            <span th:replace="fragments/icons :: saveIcon"></span>Opslaan
-        </button>
+        <span th:replace="fragments/buttons :: save"></span>
 
         <a class="btn btn-light" th:href="@{/course/return/{courseId}(courseId=${course.courseId})}">Annuleren</a>
     </form>

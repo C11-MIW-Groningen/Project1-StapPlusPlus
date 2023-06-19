@@ -6,17 +6,28 @@
 </head>
 <body>
 
-<!-- New button fragment-->
+<!-- New button with standard text -->
 <span th:fragment="new(link)">
     <a type="button" class="btn btn-success float-end btn-new"
        th:href="${link}"
     >
         <span th:replace="fragments/icons :: newIcon"></span>
-        Voeg nieuwe toe
+        <span>Voeg nieuwe toe</span>
     </a>
 </span>
 
-<!-- Delete button fragment-->
+<!-- New button with custom text-->
+
+<span th:fragment="newCustom(link, buttonText)">
+    <a type="button" class="btn btn-success float-end btn-new"
+       th:href="${link}"
+    >
+        <span th:replace="fragments/icons :: newIcon"></span>
+        <span th:text="${buttonText}"></span>
+    </a>
+</span>
+
+<!-- Delete button -->
 <span th:fragment="delete(link)">
     <a type="button" class="btn btn-danger btn-table btn-sm"
        th:href="${link}">Verwijder
@@ -25,7 +36,7 @@
     </a>
 </span>
 
-<!-- Edit button fragment-->
+<!-- Edit button -->
 <span th:fragment="edit(link)">
     <a type="button" class="btn btn-secondary btn-table btn-sm"
        th:href="${link}">Wijzig
@@ -34,7 +45,7 @@
     </a>
 </span>
 
-<!-- Edit on title button fragment-->
+<!-- Edit button on title button -->
 <span class="btn-title" th:fragment="editOnTitle(link)">
     <a type="button" class="btn btn-secondary btn-sm"
        th:href="${link}">Wijzig
@@ -43,16 +54,15 @@
     </a>
 </span>
 
-
-<!-- Save button fragment -->
-<div th:fragment="save" class="text-end mt-3" >
-    <a type="submit" class="btn btn-primary">
+<!-- Save button -->
+<span th:fragment="save">
+    <button type="submit" class="btn btn-primary">
         <span th:replace="fragments/icons :: saveIcon"></span>
-        Save
-    </a>
-</div>
+        Opslaan
+    </button>
+</span>
 
-<!-- Link button fragment-->
+<!-- Link button -->
 <span th:fragment="link(link, text)">
     <a class="btn btn-light btn-table btn-sm" th:href="${link}">
         <span th:text="${text}" > </span>

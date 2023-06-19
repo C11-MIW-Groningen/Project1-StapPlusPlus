@@ -18,7 +18,7 @@
         <tr>
             <th>Datum</th>
             <th>Cohort</th>
-            <th>Vak</th>
+            <th>Tentamen</th>
             <th>Herkansing</th>
             <th></th>
         </tr>
@@ -27,17 +27,16 @@
         <tr th:each="exam : ${allExams}">
             <td th:text="${#temporals.format(exam.examDate, 'dd-MM-yyyy')}"></td>
             <td>
-                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}"
-                   th:text="'Cohort ' + ${exam.cohort.number}"></a>
+                    <span th:replace="fragments/buttons :: link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.number})},
+                    'Cohort ' + ${exam.cohort.number})"></span>
             </td>
             <td>
-                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}" th:text="${exam.subject.title}"></a>
+                    <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
+                    ${exam.subject.title})"></span>
             </td>
-            <td>
-                <a th:href="@{/exam/details/{examId}(examId=${exam.examId})}"
-                   th:text="${exam.resit} ? 'Herkansing' : ''"></a>
+            <td th:text="${exam.resit} ? 'ja' : ''">
             </td>
-            <td><a th:href="@{/exam/edit/{examId}(examId=${exam.examId})}">Wijzig</a></td>
+             <td><span th:replace="fragments/buttons :: edit(@{/exam/edit/{examId}(examId=${exam.examId})})"></span></td>
         </tr>
         </tbody>
     </table>
