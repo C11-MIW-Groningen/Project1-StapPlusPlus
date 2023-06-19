@@ -2,10 +2,7 @@ package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -32,7 +29,7 @@ public class Student implements Comparable <Student>{
     private String schoolEmail;
 
     @ManyToMany(mappedBy = "students")
-    private List<Cohort> cohort;
+    private List<Cohort> cohorts;
 
     @Override
     public int compareTo(Student otherStudent) {

@@ -30,6 +30,10 @@ h2 {
     background-color: #ff8f52;
 }
 
+.btn-table {
+    margin: 0;
+}
+
 .navbar {
     background-color: #eaeaea;
 }
@@ -61,7 +65,6 @@ h2 {
 
 #courses-overview {
     display: flex;
-    /*margin-top: 10%;*/
 }
 
 .course {

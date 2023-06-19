@@ -27,8 +27,8 @@
             <tr th:each="goal : ${allLearningGoals}">
                 <td th:text="${goal.title}"></td>
                 <td th:text="${goal.description}"></td>
-                <td><a th:href="@{/goal/edit/{goalId}(goalId=${goal.learningGoalId})}">Wijzig</a></td>
-                <td><a th:href="@{/goal/delete/{goalId}(goalId=${goal.learningGoalId})}">Verwijder</a></td>
+                <td><span th:replace="fragments/buttons :: edit(@{/goal/edit/{goalId}(goalId=${goal.learningGoalId})})"></span></td>
+                <td><span th:replace="fragments/buttons :: delete(@{/goal/delete/{goalId}(goalId=${goal.learningGoalId})})"></span></td>
             </tr>
         </tbody>
     </table>

@@ -36,8 +36,8 @@
                     </tr>
                 </table>
             </td>
-            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}">Wijzig</a></td>
-            <td><a th:href="@{/subject/delete/{subjectId}(subjectId=${subject.subjectId})}">Verwijder</a></td>
+            <td><span th:replace="fragments/buttons :: edit(@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/subject/delete/{subjectId}(subjectId=${subject.subjectId})})"></span></td>
         </tr>
         </tbody>
     </table>

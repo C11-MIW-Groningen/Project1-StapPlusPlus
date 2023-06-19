@@ -24,10 +24,11 @@
         </thead>
         <tbody>
         <tr th:each="course : ${allCourses}">
+
             <td><a th:href="@{/course/details/{courseName}(courseName=${course.name})}"
                    th:text="${course.name}"></a></td>
-            <td><a th:href="@{/course/edit/{courseId}(courseId=${course.courseId})}">Wijzig</a></td>
-            <td><a th:href="@{/course/delete/{courseId}(courseId=${course.courseId})}">Verwijder</a></td>
+            <td><span th:replace="fragments/buttons :: edit(@{/course/edit/{courseId}(courseId=${course.courseId})})"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/course/delete/{courseId}(courseId=${course.courseId})})"></span></td>
         </tr>
         </tbody>
     </table>

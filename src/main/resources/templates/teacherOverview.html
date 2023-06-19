@@ -16,14 +16,14 @@
     <table class="table">
         <tr class="table-secondary">
             <th>Naam</th>
-            <th>Wijzig</th>
-            <th>Verwijder</th>
+            <th></th>
+            <th></th>
         </tr>
 
         <tr th:each="teacher : ${allTeachers}">
             <td th:text="${teacher.displayName}"></td>
-            <td><a th:href="@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})}">Wijzig</a></td>
-            <td><a th:href="@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})}">Verwijder</a></td>
+            <td><span th:replace="fragments/buttons :: edit(@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})})"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})})"></span></td>
         </tr>
     </table>
 </div>

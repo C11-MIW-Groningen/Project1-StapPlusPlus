@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <h2 class="col">Cohort <span th:text="${cohortShown.number}"></span></h2>
-        <span class="col"><a class="btn float-end" href="/student/new">Voeg nieuwe student toe</a></span>
+         <span class="col"><span th:replace="fragments/buttons :: new(@{/student/new})"></span></span>
     </div>
 
     <table class="table table-hover">
@@ -19,8 +19,8 @@
             <th>Naam</th>
             <th>School Email</th>
             <th>Privé Email</th>
-            <th>Wijzig</th>
-            <th>Verwijder</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -28,8 +28,8 @@
                 <td th:text="${student.displayName}"></td>
                 <td th:text="${student.privateEmail}"></td>
                 <td th:text="${student.schoolEmail}"></td>
-                <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>
-                <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Verwijder</a></td>
+                <td><span th:replace="fragments/buttons :: edit(@{/student/edit/{studentId}(studentId=${student.studentId})})"></span></td>
+                <td><span th:replace="fragments/buttons :: delete(@{/student/delete/{studentId}(studentId=${student.studentId})})"></span></td>
             </tr>
         </tbody>
     </table>

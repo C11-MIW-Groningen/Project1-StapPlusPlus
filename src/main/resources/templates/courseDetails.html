@@ -39,10 +39,12 @@
                     </tr>
                 </table>
             </td>
-            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}"
-                   sec:authorize="isAuthenticated()">Wijzig</a></td>
-            <td><a th:href="@{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
-            subjectId=${subject.subjectId})}" sec:authorize="isAuthenticated()">Verwijder</a></td>
+
+
+            <td><span th:replace="fragments/buttons :: edit(@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"
+            sec:authorize="isAuthenticated()"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
+            subjectId=${subject.subjectId})})" sec:authorize="isAuthenticated()"></span></td>
         </tr>
         </tbody>
     </table>

@@ -20,35 +20,26 @@
                 <th>Studierichting</th>
                 <th>Start Datum</th>
                 <th>Aantal Studenten</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="cohort : ${allCohorts}">
                 <td >
-                    <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                        th:text="'Cohort ' + ${cohort.number}">
-                    </a>
+<!--                    moet text en link meegeven als parameter-->
+                    <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.number})}, 'Cohort ' + ${cohort.number})"></span>
+
+<!--
+<a th:href="@{/cohort/details/{number}(number=${cohort.number})}"-->
+<!--                        th:text="'Cohort ' + ${cohort.number}">-->
+<!--                    </a>-->
                 </td>
-                <td>
-                    <a class="link-dark text-decoration-none"
-                        th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                        th:text="${cohort.course.name}">
-                    </a>
-                </td>
-                <td >
-                    <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                        th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}">
-                    </a>
-                </td>
-                <td>
-                    <a class="link-dark text-decoration-none" th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                        th:text="${cohort.students.size()}">
-                    </a>
-                </td>
-                <td><a th:href="@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})}">Wijzig</a></td>
-                <td><a th:href="@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})}">Verwijder</a></td>
+                <td th:text="${cohort.course.name}"></td>
+                <td th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></td>
+                <td th:text="${cohort.students.size()}"></td>
+                <td><span th:replace="fragments/buttons :: edit(@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})})"></span></td>
+                <td><span th:replace="fragments/buttons :: delete(@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})})"></span></td>
             </tr>
         </tbody>
     </table>
