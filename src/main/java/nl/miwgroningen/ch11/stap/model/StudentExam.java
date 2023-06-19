@@ -1,11 +1,13 @@
 package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 
 /**
  * Author: Thijs Harleman

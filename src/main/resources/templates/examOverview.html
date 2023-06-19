@@ -16,6 +16,7 @@
     <table class="table">
         <thead class="table-secondary">
         <tr>
+            <th>Datum</th>
             <th>Cohort</th>
             <th>Tentamen</th>
             <th>Herkansing</th>
@@ -24,15 +25,16 @@
         </thead>
         <tbody>
         <tr th:each="exam : ${allExams}">
-            <td >
+            <td th:text="${#temporals.format(exam.examDate, 'dd-MM-yyyy')}"></td>
+            <td>
                     <span th:replace="fragments/buttons :: link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.number})},
                     'Cohort ' + ${exam.cohort.number})"></span>
             </td>
-            <td >
+            <td>
                     <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
                     ${exam.subject.title})"></span>
             </td>
-            <td th:text="${exam.resit} ? 'ja' : 'nee'">
+            <td th:text="${exam.resit} ? 'ja' : ''">
             </td>
              <td><span th:replace="fragments/buttons :: edit(@{/exam/edit/{examId}(examId=${exam.examId})})"></span></td>
         </tr>

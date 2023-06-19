@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,9 @@ public class ExamController {
 
     @GetMapping("/all")
     private String showExamOverview(Model model) {
-        model.addAttribute("allExams", examRepository.findAll());
+        List<Exam> allExams = examRepository.findAll();
+        Collections.sort(allExams);
+        model.addAttribute("allExams", allExams);
         return "examOverview";
     }
 

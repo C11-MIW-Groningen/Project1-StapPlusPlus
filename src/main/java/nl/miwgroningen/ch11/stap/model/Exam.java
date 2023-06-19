@@ -1,8 +1,10 @@
 package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -16,18 +18,26 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Exam {
+public class Exam implements Comparable<Exam> {
     @Id @GeneratedValue
     private Long examId;
 
     @ManyToOne
-    private Subject subject;
+    private Cohort cohort;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate examDate;
 
     @ManyToOne
-    private Cohort cohort;
+    private Subject subject;
 
     @OneToMany(mappedBy = "exam")
     private List<ExamQuestion> examQuestions;
 
     private boolean resit;
+
+    @Override
+    public int compareTo(Exam otherExam) {
+        return examDate.compareTo(otherExam.examDate);
+    }
 }

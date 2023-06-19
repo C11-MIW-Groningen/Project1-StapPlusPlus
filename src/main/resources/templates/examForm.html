@@ -14,6 +14,12 @@
         <input type="hidden" th:field="*{examId}">
         <table class="table table-borderless">
             <tr>
+                <td>Datum:</td>
+                <td><label>
+                    <input type="date" th:field="*{examDate}">
+                </label></td>
+            </tr>
+            <tr>
                 <td>Cohort:</td>
                 <td><label>
                     <select th:field="*{cohort}">
@@ -45,7 +51,7 @@
 
         <span th:replace="fragments/buttons :: save"></span>
 
-        <a class="btn" href="redirect:/exam/all">Annuleren</a>
+        <a class="btn" href="/exam/all">Annuleren</a>
     </form>
 </div>
 
