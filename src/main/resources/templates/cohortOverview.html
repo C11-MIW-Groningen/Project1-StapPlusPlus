@@ -13,7 +13,7 @@
         <span class="col"><span th:replace="fragments/buttons :: new(@{/cohort/new})"></span></span>
     </div>
 
-    <table class="table table-hover">
+    <table class="table">
         <thead>
             <tr class="table-secondary">
                 <th>Cohort</th>
@@ -27,13 +27,8 @@
         <tbody>
             <tr th:each="cohort : ${allCohorts}">
                 <td >
-<!--                    moet text en link meegeven als parameter-->
-                    <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.number})}, 'Cohort ' + ${cohort.number})"></span>
-
-<!--
-<a th:href="@{/cohort/details/{number}(number=${cohort.number})}"-->
-<!--                        th:text="'Cohort ' + ${cohort.number}">-->
-<!--                    </a>-->
+                    <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.number})},
+                    'Cohort ' + ${cohort.number})"></span>
                 </td>
                 <td th:text="${cohort.course.name}"></td>
                 <td th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></td>

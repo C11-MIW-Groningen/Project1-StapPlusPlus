@@ -9,11 +9,10 @@
 
 <div class="container">
 
-    <div class="row">
-        <h2 class="col" th:text="${shownCourse.name}"></h2>
-        <span class="col"><a class="btn float-end"
-                             th:href="@{/course/edit/{courseId}(courseId=${shownCourse.courseId})}"
-                             sec:authorize="isAuthenticated()">Wijzig</a></span>
+    <div style="display: flex; align-items: center;">
+        <h2 th:text="${shownCourse.name}"></h2>
+        <span th:replace="fragments/buttons :: editOnTitle(@{/course/edit/{courseId}(courseId=${shownCourse.courseId})})"
+        sec:authorize="isAuthenticated()"></span>
     </div>
 
     <table class="table">

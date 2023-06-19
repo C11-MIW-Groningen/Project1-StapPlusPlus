@@ -31,9 +31,9 @@
                 <table>
                     <tr th:each="cohort : ${student.getCohorts}">
                         <td>
-                            <a th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                            th:text="'Cohort ' + ${cohort.number}"></a>
-                        </td>
+                            <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.number})},
+                        'Cohort ' + ${cohort.number})"></span>
+                        <td >
                     </tr>
                 </table>
             </td>
