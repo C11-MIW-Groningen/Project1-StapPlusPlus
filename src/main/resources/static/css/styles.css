@@ -30,6 +30,18 @@ h2 {
     background-color: #ff8f52;
 }
 
+.btn-table {
+    margin: 0;
+}
+
+.btn-new {
+    margin-right: 5%;
+}
+
+.btn-title {
+    margin-left: 20px;
+}
+
 .navbar {
     background-color: #eaeaea;
 }
@@ -61,7 +73,6 @@ h2 {
 
 #courses-overview {
     display: flex;
-    /*margin-top: 10%;*/
 }
 
 .course {

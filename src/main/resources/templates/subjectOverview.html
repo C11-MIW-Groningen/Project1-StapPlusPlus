@@ -11,7 +11,7 @@
 
     <div class="row">
         <h2 class="col">Vak overzicht</h2>
-        <span class="col"><div th:replace="fragments/buttons :: new(@{/subject/new})"></div></span>
+        <span class="col"><span th:replace="fragments/buttons :: new(@{/subject/new})"></span></span>
     </div>
 
     <table class="table">
@@ -36,8 +36,8 @@
                     </tr>
                 </table>
             </td>
-            <td><a th:href="@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})}">Wijzig</a></td>
-            <td><a th:href="@{/subject/delete/{subjectId}(subjectId=${subject.subjectId})}">Verwijder</a></td>
+            <td><span th:replace="fragments/buttons :: edit(@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/subject/delete/{subjectId}(subjectId=${subject.subjectId})})"></span></td>
         </tr>
         </tbody>
     </table>

@@ -7,37 +7,57 @@
 <body>
 
 <!-- New button fragment-->
-<div th:fragment="new(link)">
-    <a type="button" class="btn btn-outline-success float-end"
+<span th:fragment="new(link)">
+    <a type="button" class="btn btn-success float-end btn-new"
        th:href="${link}"
     >
+        <span th:replace="fragments/icons :: newIcon"></span>
         Voeg nieuwe toe
-    </a>
-</div>
-
-<!-- Edit button fragment-->
-<span th:fragment="edit(link)">
-    <a type="button" class="btn btn-outline-success"
-       th:href="${link}"
-    >
-        <span th:replace="fragments/icons :: editIcon"></span>
     </a>
 </span>
 
 <!-- Delete button fragment-->
 <span th:fragment="delete(link)">
-    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-            th:attr="data-bs-target='#delete-modal' + ${#strings.replace(link, '/', '')}"
-    >
+    <a type="button" class="btn btn-danger btn-table btn-sm"
+       th:href="${link}">Verwijder
+
         <span th:replace="fragments/icons :: deleteIcon"></span>
-    </button>
-    <span th:replace="fragments/modals :: deleteModal(${link})"></span>
+    </a>
 </span>
+
+<!-- Edit button fragment-->
+<span th:fragment="edit(link)">
+    <a type="button" class="btn btn-secondary btn-table btn-sm"
+       th:href="${link}">Wijzig
+
+        <span th:replace="fragments/icons :: editIcon"></span>
+    </a>
+</span>
+
+<!-- Edit on title button fragment-->
+<span class="btn-title" th:fragment="editOnTitle(link)">
+    <a type="button" class="btn btn-secondary btn-sm"
+       th:href="${link}">Wijzig
+
+        <span th:replace="fragments/icons :: editIcon"></span>
+    </a>
+</span>
+
 
 <!-- Save button fragment -->
 <div th:fragment="save" class="text-end mt-3" >
-    <button type="submit" class="btn btn-primary">
+    <a type="submit" class="btn btn-primary">
         <span th:replace="fragments/icons :: saveIcon"></span>
         Save
-    </button>
+    </a>
 </div>
+
+<!-- Link button fragment-->
+<span th:fragment="link(link, text)">
+    <a class="btn btn-light btn-table btn-sm" th:href="${link}">
+        <span th:text="${text}" > </span>
+        <span th:replace="fragments/icons :: linkIcon"></span>
+    </a>
+</span>
+
+

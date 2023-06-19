@@ -10,20 +10,20 @@
 <div class="container">
     <div class="row">
         <h2 class="col">Docent overzicht</h2>
-        <span class="col"><div th:replace="fragments/buttons :: new(@{/teacher/new})"></div></span>
+        <span class="col"><span th:replace="fragments/buttons :: new(@{/teacher/new})"></span></span>
     </div>
 
     <table class="table">
         <tr class="table-secondary">
             <th>Naam</th>
-            <th>Wijzig</th>
-            <th>Verwijder</th>
+            <th></th>
+            <th></th>
         </tr>
 
         <tr th:each="teacher : ${allTeachers}">
             <td th:text="${teacher.displayName}"></td>
-            <td><a th:href="@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})}">Wijzig</a></td>
-            <td><a th:href="@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})}">Verwijder</a></td>
+            <td><span th:replace="fragments/buttons :: edit(@{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})})"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})})"></span></td>
         </tr>
     </table>
 </div>

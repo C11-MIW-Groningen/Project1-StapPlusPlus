@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <h2 class="col">Student overzicht</h2>
-        <span class="col"><div th:replace="fragments/buttons :: new(@{/student/new})"></div></span>
+        <span class="col"><span th:replace="fragments/buttons :: new(@{/student/new})"></span></span>
     </div>
 
     <table class="table">
@@ -19,8 +19,8 @@
             <th>Privé email</th>
             <th>School email</th>
             <th>Cohort</th>
-            <th>Wijzig</th>
-            <th>Verwijder</th>
+            <th></th>
+            <th></th>
         </tr>
 
         <tr th:each="student : ${allStudents}">
@@ -29,16 +29,16 @@
             <td th:text="${student.schoolEmail}"></td>
             <td>
                 <table>
-                    <tr th:each="cohort : ${student.cohort}">
+                    <tr th:each="cohort : ${student.getCohorts}">
                         <td>
-                            <a th:href="@{/cohort/details/{number}(number=${cohort.number})}"
-                            th:text="'Cohort ' + ${cohort.number}"></a>
-                        </td>
+                            <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.number})},
+                        'Cohort ' + ${cohort.number})"></span>
+                        <td >
                     </tr>
                 </table>
             </td>
-            <td><a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">Wijzig</a></td>
-            <td><a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">Verwijder</a></td>
+            <td><span th:replace="fragments/buttons :: edit(@{/student/edit/{studentId}(studentId=${student.studentId})})"></span></td>
+            <td><span th:replace="fragments/buttons :: delete(@{/student/delete/{studentId}(studentId=${student.studentId})})"></span></td>
         </tr>
     </table>
 </div>
