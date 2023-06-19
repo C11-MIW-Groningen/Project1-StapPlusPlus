@@ -32,14 +32,14 @@ public class StudentController {
         Collections.sort(students);
         model.addAttribute("allStudents", students);
         model.addAttribute("newStudent", new Student());
-        return "studentOverview";
+        return "student/studentOverview";
     }
 
     @GetMapping("/new")
     private String showStudentForm(Model model) {
         model.addAttribute("student", new Student());
 
-        return "studentForm";
+        return "student/studentForm";
     }
 
     @GetMapping("/edit/{studentId}")
@@ -48,7 +48,7 @@ public class StudentController {
 
         if (optionalStudent.isPresent()) {
             model.addAttribute("student", optionalStudent.get());
-            return "studentForm";
+            return "student/studentForm";
         }
 
         return "redirect:/student/all";

@@ -36,7 +36,7 @@ public class CourseController {
     private String showCourseOverview(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
 
-        return "courseOverview";
+        return "course/courseOverview";
     }
 
     @GetMapping("/course/details/{name}")
@@ -46,7 +46,7 @@ public class CourseController {
         if (optionalCourse.isPresent()) {
             model.addAttribute("shownCourse", optionalCourse.get());
 
-            return "courseDetails";
+            return "course/courseDetails";
         }
 
         return "redirect:/";
@@ -57,7 +57,7 @@ public class CourseController {
         model.addAttribute("course", new Course());
         model.addAttribute("allSubjects", subjectRepository.findAll());
 
-        return "courseForm";
+        return "course/courseForm";
     }
 
     @GetMapping("/course/edit/{courseId}")
@@ -68,7 +68,7 @@ public class CourseController {
             model.addAttribute("course", optionalCourse.get());
             model.addAttribute("allSubjects", subjectRepository.findAll());
 
-            return "courseForm";
+            return "course/courseForm";
         }
 
         return "redirect:/";

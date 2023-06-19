@@ -30,14 +30,14 @@ public class TeacherController {
         Collections.sort(teachers);
         model.addAttribute("allTeachers", teachers);
         model.addAttribute("newTeacher", new Teacher());
-        return "teacherOverview";
+        return "teacher/teacherOverview";
     }
 
     @GetMapping("/new")
     private String showTeacherForm(Model model) {
         model.addAttribute("teacher", new Teacher());
 
-        return "teacherForm";
+        return "teacher/teacherForm";
     }
 
     @GetMapping("/edit/{teacherId}")
@@ -47,7 +47,7 @@ public class TeacherController {
         if (optionalTeacher.isPresent()) {
             model.addAttribute("teacher", optionalTeacher.get());
             model.addAttribute("allTeachers", teacherRepository.findAll());
-            return "teacherForm";
+            return "teacher/teacherForm";
         }
 
         return "redirect:/teacher/all";

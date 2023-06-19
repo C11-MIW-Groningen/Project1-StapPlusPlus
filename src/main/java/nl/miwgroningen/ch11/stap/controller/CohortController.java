@@ -28,14 +28,14 @@ public class CohortController {
     @GetMapping("/all")
     private String showCohortOverview(Model model) {
         model.addAttribute("allCohorts", cohortRepository.findAll());
-        return "cohortOverview";
+        return "cohort/cohortOverview";
     }
 
     @GetMapping("/new")
     private String showCohortForm(Model model) {
         model.addAttribute("cohort", new Cohort());
 
-        return "cohortForm";
+        return "cohort/cohortForm";
     }
 
     @GetMapping("/cohort/details/{cohortId}")
@@ -44,7 +44,7 @@ public class CohortController {
         if (optionalCohort.isPresent()) {
             model.addAttribute("shownCohort", optionalCohort.get());
 
-            return "cohortDetails";
+            return "cohort/cohortDetails";
         }
         return "redirect:/cohort/all";
     }
@@ -56,7 +56,7 @@ public class CohortController {
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
             model.addAttribute("allStudents", getStudentsSorted());
-            return "cohortForm";
+            return "cohort/cohortForm";
         }
 
         return "redirect:/cohort/all";
@@ -79,7 +79,7 @@ public class CohortController {
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohortShown", optionalCohort.get());
 
-            return "cohortDetails";
+            return "cohort/cohortDetails";
         }
 
         return "redirect:/cohort/all";

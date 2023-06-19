@@ -25,14 +25,14 @@ public class LearningGoalController {
     private String showLearningGoalOverview(Model model) {
         model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
 
-        return "learningGoalOverview";
+        return "learningGoal/learningGoalOverview";
     }
 
     @GetMapping("/new")
     private String showLearningGoalForm(Model model) {
         model.addAttribute("learningGoal", new LearningGoal());
 
-        return "learningGoalForm";
+        return "learningGoal/learningGoalForm";
     }
 
     @GetMapping("/edit/{learningGoalId}")
@@ -42,7 +42,7 @@ public class LearningGoalController {
         if (optionalLearningGoal.isPresent()) {
             model.addAttribute("learningGoal", optionalLearningGoal.get());
 
-            return "learningGoalForm";
+            return "learningGoal/learningGoalForm";
         }
 
         return "redirect:/goal/all";

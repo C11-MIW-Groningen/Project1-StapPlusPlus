@@ -32,7 +32,7 @@ public class SubjectController {
     private String showSubjectOverview(Model model) {
         model.addAttribute("allSubjects", subjectRepository.findAll());
 
-        return "subjectOverview";
+        return "subject/subjectOverview";
     }
 
     @GetMapping("/new")
@@ -41,7 +41,7 @@ public class SubjectController {
         model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
         model.addAttribute("allTeachers", getAllTeachersSorted());
 
-        return "subjectForm";
+        return "subject/subjectForm";
     }
 
     @GetMapping("/edit/{subjectId}")
@@ -53,7 +53,7 @@ public class SubjectController {
             model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
             model.addAttribute("allTeachers", getAllTeachersSorted());
 
-            return "subjectForm";
+            return "subject/subjectForm";
         }
 
         return "redirect:/";

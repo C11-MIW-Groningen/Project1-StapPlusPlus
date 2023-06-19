@@ -36,7 +36,7 @@ public class ExamQuestionController {
             model.addAttribute("examQuestion", examQuestion);
         }
 
-        return "examQuestionForm";
+        return "exam/examQuestionForm";
     }
 
     @GetMapping("/edit/{examQuestionId}")
@@ -46,7 +46,7 @@ public class ExamQuestionController {
         if (optionalExamQuestion.isPresent()) {
             model.addAttribute("examQuestion", optionalExamQuestion.get());
 
-            return "examQuestionForm";
+            return "exam/examQuestionForm";
         }
 
         return "redirect:/exam/all";

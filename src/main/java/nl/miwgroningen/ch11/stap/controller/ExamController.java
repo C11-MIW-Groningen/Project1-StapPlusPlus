@@ -36,7 +36,7 @@ public class ExamController {
         List<Exam> allExams = examRepository.findAll();
         Collections.sort(allExams);
         model.addAttribute("allExams", allExams);
-        return "examOverview";
+        return "exam/examOverview";
     }
 
     @GetMapping("/new")
@@ -45,7 +45,7 @@ public class ExamController {
         model.addAttribute("allCohorts", cohortRepository.findAll());
         model.addAttribute("allSubjects", subjectRepository.findAll());
 
-        return "examForm";
+        return "exam/examForm";
     }
 
     @GetMapping("/edit/{examId}")
@@ -57,7 +57,7 @@ public class ExamController {
             model.addAttribute("allCohorts", cohortRepository.findAll());
             model.addAttribute("allSubjects", subjectRepository.findAll());
 
-            return "examForm";
+            return "exam/examForm";
         }
 
         return "redirect:/exam/all";
@@ -79,7 +79,7 @@ public class ExamController {
         if (optionalExam.isPresent()) {
             model.addAttribute("shownExam", optionalExam.get());
 
-            return "examDetails";
+            return "exam/examDetails";
         }
 
         return "redirect:/exam/all";
