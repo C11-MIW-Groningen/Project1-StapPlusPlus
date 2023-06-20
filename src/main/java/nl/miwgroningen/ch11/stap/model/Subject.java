@@ -27,11 +27,17 @@ public class Subject {
     private int duration;
     private String description;
 
-    @ManyToOne
-    private Teacher teacher;
+    @ManyToMany(mappedBy = "subjects")
+    private List<Course> courses;
+
+    @OneToMany(mappedBy = "subject")
+    private List<Exam> exams;
 
     @ManyToMany
     private List<LearningGoal> learningGoals;
+
+    @ManyToOne
+    private Teacher teacher;
 
     public String getDurationString() {
         if (duration < 10) {

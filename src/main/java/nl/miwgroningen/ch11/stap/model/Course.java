@@ -23,9 +23,13 @@ public class Course {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Subject> subjects;
 
     private String imageUrl;
     private String description;
+
+    public void removeSubject(Subject subject) {
+        subjects.remove(subject);
+    }
 }

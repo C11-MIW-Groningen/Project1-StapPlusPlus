@@ -22,19 +22,22 @@ public class Exam implements Comparable<Exam> {
     @Id @GeneratedValue
     private Long examId;
 
-    @ManyToOne
-    private Cohort cohort;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate examDate;
+    private boolean resit;
 
     @ManyToOne
-    private Subject subject;
+    private Cohort cohort;
 
     @OneToMany(mappedBy = "exam")
     private List<ExamQuestion> examQuestions;
 
-    private boolean resit;
+    @ManyToOne
+    private Subject subject;
+
+    public void removeSubject() {
+        subject = null;
+    }
 
     @Override
     public int compareTo(Exam otherExam) {
