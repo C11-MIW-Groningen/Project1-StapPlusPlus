@@ -36,7 +36,12 @@
             <td th:text="${examQuestion.questionText}"></td>
             <td th:text="${examQuestion.attainablePoints}"></td>
             <td><span th:replace="fragments/buttons ::
-                edit(@{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})"></span></td>
+                edit(@{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})"></span>
+            </td>
+            <td>
+                <span th:replace="fragments/buttons ::
+                delete(@{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})"></span>
+            </td>
         </tr>
         </tbody>
     </table>

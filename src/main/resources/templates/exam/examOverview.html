@@ -34,8 +34,9 @@
                 </span>
             </td>
             <td>
-                    <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
-                    ${exam.subject.title})"></span>
+                <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
+                    ${exam.subject.title})">
+                </span>
             </td>
             <td th:text="${exam.resit} ? 'ja' : ''">
             </td>
