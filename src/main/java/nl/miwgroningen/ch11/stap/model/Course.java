@@ -28,4 +28,5 @@ public class Course {
 
     private String imageUrl;
     private String description;
+
 }

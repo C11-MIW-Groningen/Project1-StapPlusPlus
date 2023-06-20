@@ -36,6 +36,10 @@ public class Exam implements Comparable<Exam> {
 
     private boolean resit;
 
+    public void removeCohort() {
+        this.cohort = null;
+    }
+
     @Override
     public int compareTo(Exam otherExam) {
         return examDate.compareTo(otherExam.examDate);

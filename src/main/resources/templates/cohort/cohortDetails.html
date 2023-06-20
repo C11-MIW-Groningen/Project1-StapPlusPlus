@@ -8,12 +8,15 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <div class="row">
-        <h2 class="col">Cohort <span th:text="${cohortShown.number}"></span></h2>
-         <span class="col"><span th:replace="fragments/buttons :: new(@{/student/new})"></span></span>
+    <div>
+        <h2>Cohort <span th:text="${cohortShown.number}"></span></h2>
+        <p>Startdatum: <span th:text="${#temporals.format(cohortShown.startDate, 'dd-MM-yyyy')}"></span></p>
+        <p>Studierichting: <span th:text="${cohortShown.course.name}"></span></p>
+        <p>Aantal studenten: <span th:text="${cohortShown.students.size()}"></span></p>
+        <br>
     </div>
 
-    <table class="table table-hover">
+    <table class="table">
         <thead>
         <tr class="table-secondary">
             <th>Naam</th>
@@ -28,8 +31,8 @@
                 <td th:text="${student.displayName}"></td>
                 <td th:text="${student.privateEmail}"></td>
                 <td th:text="${student.schoolEmail}"></td>
-                <td><span th:replace="fragments/buttons :: edit(@{/student/edit/{studentId}(studentId=${student.studentId})})"></span></td>
-                <td><span th:replace="fragments/buttons :: delete(@{/student/delete/{studentId}(studentId=${student.studentId})})"></span></td>
+                <td><span th:replace="fragments/buttons :: editCustom(@{/student/edit/{studentId}(studentId=${student.studentId})}, 'Wijzig student')"></span></td>
+                <td><span th:replace="fragments/buttons :: deleteCustom(@{/student/delete/{studentId}(studentId=${student.studentId})}, 'Verwijder uit cohort')"></span></td>
             </tr>
         </tbody>
     </table>

@@ -48,6 +48,7 @@ public class StudentController {
 
         if (optionalStudent.isPresent()) {
             model.addAttribute("student", optionalStudent.get());
+            model.addAttribute("allCohorts", cohortRepository.findAll());
             return "student/studentForm";
         }
 
@@ -56,8 +57,12 @@ public class StudentController {
 
     @PostMapping("/new")
     private String saveOrUpdateStudent(@ModelAttribute("newStudent") Student student, BindingResult result) {
+
         if (!result.hasErrors()) {
+            cohortRepository.saveAll(student.getCohorts());
             studentRepository.save(student);
+        } else {
+            System.out.println(result.getAllErrors());
         }
 
         return "redirect:/student/all";
@@ -84,10 +89,11 @@ public class StudentController {
 
         if (optionalStudent.isPresent()) {
             List<Cohort> cohorts = optionalStudent.get().getCohorts();
-            Cohort mostRecentCohort = cohorts.get(cohorts.size() - 1);
-            return String.format("redirect:/cohort/details/%s", mostRecentCohort.getNumber());
+            if ((cohorts.size()) > 0) {
+                Cohort mostRecentCohort = cohorts.get(cohorts.size() - 1);
+                return String.format("redirect:/cohort/details/%s", mostRecentCohort.getNumber());
+            }
         }
-
-        return "redirect:/cohort/all";
+        return "redirect:/student/all";
     }
 }

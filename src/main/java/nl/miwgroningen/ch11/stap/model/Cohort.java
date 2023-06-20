@@ -24,6 +24,9 @@ public class Cohort {
 
     private String number;
 
+    @OneToMany(mappedBy = "cohort")
+    private List<Exam> exams;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
@@ -33,9 +36,6 @@ public class Cohort {
     @ManyToMany
     private List<Student> students;
 
-    public void addStudent(Student student) {
-        students.add(student);
-    }
     public void removeStudent(Student student) {
         students.remove(student);
     }
