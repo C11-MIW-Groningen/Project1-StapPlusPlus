@@ -72,6 +72,18 @@ public class ExamController {
         return "redirect:/exam/all";
     }
 
+    @GetMapping("/delete/{examId}")
+    private String deleteExam(@PathVariable("examId") Long examId) {
+        Optional<Exam> optionalExam = examRepository.findById(examId);
+
+        if (optionalExam.isPresent()) {
+            examQuestionRepository.deleteAll(optionalExam.get().getExamQuestions());
+            examRepository.delete(optionalExam.get());
+        }
+
+        return "redirect:/exam/all";
+    }
+
     @GetMapping("/details/{examId}")
     private String showExamDetails(@PathVariable("examId") Long examId, Model model) {
         Optional<Exam> optionalExam = examRepository.findById(examId);

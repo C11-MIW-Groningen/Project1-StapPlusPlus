@@ -21,6 +21,7 @@
             <th>Tentamen</th>
             <th>Herkansing</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -38,7 +39,12 @@
             </td>
             <td th:text="${exam.resit} ? 'ja' : ''">
             </td>
-            <td><span th:replace="fragments/buttons :: edit(@{/exam/edit/{examId}(examId=${exam.examId})})"></span></td>
+            <td>
+                <span th:replace="fragments/buttons :: edit(@{/exam/edit/{examId}(examId=${exam.examId})})"></span>
+            </td>
+            <td>
+                <span th:replace="fragments/buttons :: delete(@{/exam/delete/{examId}(examId=${exam.examId})})"></span>
+            </td>
         </tr>
         </tbody>
     </table>

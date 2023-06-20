@@ -35,10 +35,6 @@ public class Exam implements Comparable<Exam> {
     @ManyToOne
     private Subject subject;
 
-    public void removeSubject() {
-        subject = null;
-    }
-
     @Override
     public int compareTo(Exam otherExam) {
         return examDate.compareTo(otherExam.examDate);
