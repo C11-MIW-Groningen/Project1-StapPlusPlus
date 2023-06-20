@@ -11,6 +11,7 @@
     <div class="row">
         <h2 class="col">Student overzicht</h2>
         <span class="col"><span th:replace="fragments/buttons :: new(@{/student/new})"></span></span>
+        <p >Totaal aantal studenten: <span th:text="${allStudents.size()}"></span></p>
     </div>
 
     <table class="table">

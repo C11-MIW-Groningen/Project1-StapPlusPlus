@@ -24,12 +24,19 @@ public class Cohort {
 
     private String number;
 
+    @OneToMany(mappedBy = "cohort")
+    private List<Exam> exams;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @ManyToOne(cascade = {CascadeType.DETACH})
     private Course course;
 
-    @ManyToMany(cascade = {CascadeType.DETACH})
+    @ManyToMany
     private List<Student> students;
+
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
 }

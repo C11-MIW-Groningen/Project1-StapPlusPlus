@@ -2,8 +2,12 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
+import nl.miwgroningen.ch11.stap.model.Course;
+import nl.miwgroningen.ch11.stap.model.Exam;
 import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
+import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
+import nl.miwgroningen.ch11.stap.repositories.ExamRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +28,8 @@ import java.util.Optional;
 public class CohortController {
     private final CohortRepository cohortRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
+    private final ExamRepository examRepository;
 
     @GetMapping("/all")
     private String showCohortOverview(Model model) {
@@ -55,17 +61,25 @@ public class CohortController {
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
-            model.addAttribute("allStudents", getStudentsSorted());
+
+            List<Student> allStudents = getStudentsSorted();
+            List<Student> studentFromThisCohort = optionalCohort.get().getStudents();
+            allStudents.removeAll(studentFromThisCohort);
+
+            model.addAttribute("allStudents", allStudents);
+            model.addAttribute("allCourses", courseRepository.findAll());
+
             return "cohort/cohortForm";
         }
 
         return "redirect:/cohort/all";
     }
 
+
     @PostMapping("/new")
     private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
-        System.out.println(cohort.getStartDate());
-        System.out.println(cohort.getNumber());
+
+
         if (!result.hasErrors()) {
             cohortRepository.save(cohort);
         }
@@ -89,7 +103,13 @@ public class CohortController {
     private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
 
-        optionalCohort.ifPresent(cohortRepository::delete);
+        if (optionalCohort.isPresent()) {
+            for (Exam exam : optionalCohort.get().getExams()) {
+                exam.removeCohort();
+                examRepository.save(exam);
+            }
+            cohortRepository.deleteById(cohortId);
+        }
 
         return "redirect:/cohort/all";
     }

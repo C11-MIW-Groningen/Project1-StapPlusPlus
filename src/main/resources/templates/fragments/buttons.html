@@ -27,6 +27,17 @@
     </a>
 </span>
 
+<!-- Delete button with custom text -->
+
+<span th:fragment="deleteCustom(link, buttonText)">
+    <a type="button" class="btn btn-danger btn-table btn-sm"
+       th:href="${link}">
+
+        <span th:replace="fragments/icons :: deleteIcon"></span>
+        <span th:text="${buttonText}"></span>
+    </a>
+</span>
+
 <!-- Delete button -->
 <span th:fragment="delete(link)">
     <a type="button" class="btn btn-danger btn-table btn-sm"
@@ -35,6 +46,18 @@
         <span th:replace="fragments/icons :: deleteIcon"></span>
     </a>
 </span>
+
+<!-- Edit button with custom text -->
+
+<span th:fragment="editCustom(link, buttonText)">
+    <a type="button" class="btn btn-secondary btn-table btn-sm"
+       th:href="${link}">
+
+        <span th:replace="fragments/icons :: editIcon"></span>
+        <span th:text="${buttonText}"></span>
+    </a>
+</span>
+
 
 <!-- Edit button -->
 <span th:fragment="edit(link)">
@@ -66,7 +89,6 @@
 <span th:fragment="link(link, text)">
     <a class="btn btn-light btn-table btn-sm" th:href="${link}">
         <span th:text="${text}" > </span>
-        <span th:replace="fragments/icons :: linkIcon"></span>
     </a>
 </span>
 
