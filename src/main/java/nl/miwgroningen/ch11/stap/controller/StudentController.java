@@ -66,7 +66,14 @@ public class StudentController {
     @GetMapping("/delete/{studentId}")
     private String deleteStudent(@PathVariable("studentId") Long studentId) {
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
-        optionalStudent.ifPresent(studentRepository::delete);
+
+        if (optionalStudent.isPresent()) {
+            for (Cohort cohort : optionalStudent.get().getCohorts()) {
+                cohort.removeStudent(optionalStudent.get());
+                cohortRepository.save(cohort);
+            }
+            studentRepository.deleteById(studentId);
+        }
 
         return "redirect:/student/all";
     }

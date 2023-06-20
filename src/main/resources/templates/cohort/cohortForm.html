@@ -36,6 +36,19 @@
                     </select>
                 </label></td>
             </tr>
+
+            <tr>
+                <th>Studenten in dit cohort</th>
+                <td>
+                    <table>
+                        <tr th:each="student : ${cohort.students}">
+                            <td th:text="${student.displayName}"></td>
+                        </tr>
+                    </table>
+
+                </td>
+
+            </tr>
         </table>
 
         <span th:replace="fragments/buttons :: save"></span>

@@ -30,6 +30,13 @@ public class Cohort {
     @ManyToOne(cascade = {CascadeType.DETACH})
     private Course course;
 
-    @ManyToMany(cascade = {CascadeType.DETACH})
+    @ManyToMany
     private List<Student> students;
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
 }

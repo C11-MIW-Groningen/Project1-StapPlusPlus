@@ -55,7 +55,14 @@ public class CohortController {
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
-            model.addAttribute("allStudents", getStudentsSorted());
+
+            List<Student> allStudents = getStudentsSorted();
+            List<Student> studentFromThisCohort = optionalCohort.get().getStudents();
+
+            allStudents.removeAll(studentFromThisCohort);
+
+            model.addAttribute("allStudents", allStudents);
+
             return "cohort/cohortForm";
         }
 
