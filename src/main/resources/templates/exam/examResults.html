@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title th:text="${shownExam.displayExam}"></title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <div class="row">
+        <h2 class="col" th:text="${shownExam.displayExam}"></h2>
+        <span class="col">
+            <span th:replace="fragments/buttons :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})">
+            </span>
+        </span>
+    </div>
+
+    <table class="table">
+        <thead class="table-secondary">
+        <tr>
+            <th>Student</th>
+            <th>Cijfer</th>
+            <th>Punten behaald</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="studentExam : ${shownExam.studentExams}">
+            <td th:text="${studentExam.student.displayName}"></td>
+            <td th:text="${studentExam.grade}"></td>
+            <td th:text="${studentExam.pointsAttained}"></td>
+            <td>
+                <span th:replace="fragments/buttons ::
+                edit(@{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
+            </td>
+            <td>
+                <span th:replace="fragments/buttons ::
+                delete(@{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

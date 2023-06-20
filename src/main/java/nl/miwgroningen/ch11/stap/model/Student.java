@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Author: Thijs Harleman
@@ -30,6 +31,9 @@ public class Student implements Comparable <Student>{
 
     @ManyToMany(mappedBy = "students")
     private List<Cohort> cohorts;
+
+    @OneToMany(mappedBy = "student")
+    private Set<StudentExam> studentExams;
 
     @Override
     public int compareTo(Student otherStudent) {

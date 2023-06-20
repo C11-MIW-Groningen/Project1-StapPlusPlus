@@ -19,6 +19,7 @@
             <th>Datum</th>
             <th>Cohort</th>
             <th>Tentamen</th>
+            <th>Resultaten</th>
             <th>Herkansing</th>
             <th></th>
             <th></th>
@@ -36,6 +37,11 @@
             <td>
                 <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
                     ${exam.subject.title})">
+                </span>
+            </td>
+            <td>
+                <span th:replace="fragments/buttons ::
+                    link(@{/exam/results/{examId}(examId=${exam.examId})}, 'Resultaat')">
                 </span>
             </td>
             <td th:text="${exam.resit} ? 'ja' : ''">

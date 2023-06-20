@@ -97,6 +97,19 @@ public class ExamController {
         return "redirect:/exam/all";
     }
 
+    @GetMapping("/results/{examId}")
+    private String showExamResults(@PathVariable("examId") Long examId, Model model) {
+        Optional<Exam> optionalExam = examRepository.findById(examId);
+
+        if (optionalExam.isPresent()) {
+            model.addAttribute("shownExam", optionalExam.get());
+
+            return "exam/examResults";
+        }
+
+        return "redirect:/exam/all";
+    }
+
     @GetMapping("/cancel/{examId}")
     private String cancelNewQuestion(@PathVariable("examId") Long examId) {
         Optional<Exam> optionalExam = examRepository.findById(examId);

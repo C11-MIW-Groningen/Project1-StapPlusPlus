@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Author: Thijs Harleman
@@ -24,4 +25,7 @@ public class StudentExamQuestion {
     private int questionNumber;
     private int pointsAttained;
     private String feedback;
+
+    @ManyToOne
+    private StudentExam studentExam;
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Toets resultaat invoer</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <h2>Toets resultaat invoer</h2>
+
+    <form th:action="@{/studentExam/new/{examId}(examId=${studentExam.exam.examId})}"
+            method="post" th:object="${studentExam}">
+        <input type="hidden" th:field="*{studentExamId}">
+        <input type="hidden" th:field="*{exam}">
+        <table class="table table-borderless">
+            <tr>
+                <td>Student:</td>
+                <td><label>
+                    <select th:field="*{student}">
+                        <option th:each="student : ${studentExam.exam.cohort.students}"
+                                th:value="${student.studentId}"
+                                th:text="${student.displayName}"></option>
+                    </select>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Cijfer:</td>
+                <td><label>
+                    <input type="text" th:field="*{grade}">
+                </label></td>
+            </tr>
+            <tr>
+                <td>Punten:</td>
+                <td><label>
+                    <input type="text" th:field="*{pointsAttained}">
+                </label></td>
+            </tr>
+        </table>
+
+        <span th:replace="fragments/buttons :: save"></span>
+
+        <a class="btn"
+           th:href="@{/studentExam/cancel/{studentExamId}(studentExamId=${studentExam.studentExamId})}">Annuleren
+        </a>
+    </form>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

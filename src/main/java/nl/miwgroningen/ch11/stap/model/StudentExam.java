@@ -1,13 +1,9 @@
 package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Author: Thijs Harleman
@@ -28,7 +24,10 @@ public class StudentExam {
     private Exam exam;
 
     @ManyToOne
-    private StudentExamQuestion studentExamQuestion;
+    private Student student;
+
+    @OneToMany(mappedBy = "studentExam")
+    private Set<StudentExamQuestion> studentExamQuestion;
 
     private int pointsAttained;
     private double grade;
