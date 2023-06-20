@@ -19,6 +19,7 @@
         <thead class="table-secondary">
         <tr>
             <th>Vaknaam</th>
+            <th>Docent</th>
             <th>Duur</th>
             <th>Leerdoelen</th>
             <th></th>
@@ -28,6 +29,7 @@
         <tbody>
         <tr th:each="subject : ${allSubjects}">
             <td th:text="${subject.title}"></td>
+            <td th:text="${subject.teacher.displayName}"></td>
             <td th:text="${subject.getDurationString()}"></td>
             <td>
                 <table>

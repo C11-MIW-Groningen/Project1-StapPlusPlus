@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 /**
  * Author: Thijs Harleman
@@ -22,4 +24,7 @@ public class LearningGoal {
 
     private String title;
     private String description;
+
+    @ManyToMany(mappedBy = "learningGoals")
+    private List<Subject> subjects;
 }

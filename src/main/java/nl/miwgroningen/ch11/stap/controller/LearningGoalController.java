@@ -2,7 +2,9 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.LearningGoal;
+import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.repositories.LearningGoalRepository;
+import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LearningGoalController {
     private final LearningGoalRepository learningGoalRepository;
+    private final SubjectRepository subjectRepository;
 
     @GetMapping("/all")
     private String showLearningGoalOverview(Model model) {
@@ -61,7 +64,13 @@ public class LearningGoalController {
     private String deleteAuthor(@PathVariable("learningGoalId") Long goalId) {
         Optional<LearningGoal> optionalLearningGoal = learningGoalRepository.findById(goalId);
 
-        optionalLearningGoal.ifPresent(learningGoalRepository::delete);
+        if (optionalLearningGoal.isPresent()) {
+            for (Subject subject : optionalLearningGoal.get().getSubjects()) {
+                subject.removeLearningGoal(optionalLearningGoal.get());
+                subjectRepository.save(subject);
+            }
+            learningGoalRepository.deleteById(goalId);
+        }
 
         return "redirect:/goal/all";
     }

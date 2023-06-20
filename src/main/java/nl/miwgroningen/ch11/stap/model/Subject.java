@@ -40,4 +40,8 @@ public class Subject {
             return String.format("%.0f weken", duration / COURSE_DAYS_PER_WEEK);
         }
     }
+
+    public void removeLearningGoal(LearningGoal learningGoal) {
+        learningGoals.remove(learningGoal);
+    }
 }
