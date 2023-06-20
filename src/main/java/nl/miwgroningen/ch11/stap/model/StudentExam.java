@@ -3,7 +3,7 @@ package nl.miwgroningen.ch11.stap.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Author: Thijs Harleman
@@ -27,7 +27,7 @@ public class StudentExam {
     private Student student;
 
     @OneToMany(mappedBy = "studentExam")
-    private Set<StudentExamQuestion> studentExamQuestion;
+    private List<StudentExamQuestion> studentExamQuestions;
 
     private int pointsAttained;
     private double grade;
