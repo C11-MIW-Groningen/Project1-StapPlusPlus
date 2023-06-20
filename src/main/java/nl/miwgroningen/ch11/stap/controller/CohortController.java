@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
+import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import java.util.Optional;
 public class CohortController {
     private final CohortRepository cohortRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     @GetMapping("/all")
     private String showCohortOverview(Model model) {
@@ -58,10 +60,10 @@ public class CohortController {
 
             List<Student> allStudents = getStudentsSorted();
             List<Student> studentFromThisCohort = optionalCohort.get().getStudents();
-
             allStudents.removeAll(studentFromThisCohort);
 
             model.addAttribute("allStudents", allStudents);
+            model.addAttribute("allCourses", courseRepository.findAll());
 
             return "cohort/cohortForm";
         }
@@ -71,8 +73,7 @@ public class CohortController {
 
     @PostMapping("/new")
     private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
-        System.out.println(cohort.getStartDate());
-        System.out.println(cohort.getNumber());
+
         if (!result.hasErrors()) {
             cohortRepository.save(cohort);
         }
