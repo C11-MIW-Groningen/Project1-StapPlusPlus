@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 public class StudentExamQuestion {
     @Id @GeneratedValue
-    private Long studentExamQuestion;
+    private Long studentExamQuestionId;
 
     private int questionNumber;
     private int pointsAttained;

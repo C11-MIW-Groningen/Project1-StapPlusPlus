@@ -23,16 +23,17 @@ public class SeedController {
     private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
     private static final int SEED_NUMBER_OF_COHORTS = 6;
     private static final int SEED_NUMBER_OF_EXAMS = 30;
+    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 20;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
     private static final int SEED_NUMBER_OF_STUDENTS = 100;
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
 
     private static final int MIN_NUMBER_OF_STUDENTS_PER_COHORT = 5;
     private static final int MAX_NUMBER_OF_STUDENTS_PER_COHORT = 25;
+    private static final int SEED_EXAM_QUESTION_ATTAINABLE_POINTS = 5;
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
-    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 20;
 
     private final CohortRepository cohortRepository;
     private final CourseRepository courseRepository;
@@ -152,7 +153,7 @@ public class SeedController {
         for (int examQuestion = 0; examQuestion < SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM; examQuestion++) {
             ExamQuestion newExamQuestion = ExamQuestion.builder()
                     .questionNumber(examQuestion + 1)
-                    .attainablePoints(examQuestion)
+                    .attainablePoints(SEED_EXAM_QUESTION_ATTAINABLE_POINTS)
                     .questionText(faker.lorem().sentence())
                     .exam(examToAddTo)
                     .build();

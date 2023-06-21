@@ -10,10 +10,11 @@
 <div class="container">
     <h2>Toets resultaat invoer</h2>
 
-    <form th:action="@{/studentExam/new/{examId}(examId=${studentExam.exam.examId})}"
+    <form th:action="@{/studentExam/new}"
             method="post" th:object="${studentExam}">
         <input type="hidden" th:field="*{studentExamId}">
         <input type="hidden" th:field="*{exam}">
+
         <table class="table table-borderless">
             <tr>
                 <td>Student:</td>
@@ -25,17 +26,40 @@
                     </select>
                 </label></td>
             </tr>
+        </table>
+
+        <span th:replace="fragments/buttons :: save"></span>
+
+        <a class="btn"
+           th:href="@{/studentExam/cancel/{studentExamId}(studentExamId=${studentExam.studentExamId})}">Annuleren
+        </a>
+
+        <table class="table table-borderless">
             <tr>
-                <td>Cijfer:</td>
-                <td><label>
-                    <input type="text" th:field="*{grade}">
-                </label></td>
+                <td></td>
+                <td>Punten behaald</td>
+                <td>Feedback</td>
             </tr>
-            <tr>
-                <td>Punten:</td>
+            <tr th:each="question, itemStat : ${studentExam.studentExamQuestions}">
+                <td th:text="'Vraag ' + ${question.questionNumber}"></td>
                 <td><label>
-                    <input type="text" th:field="*{pointsAttained}">
+                    <input type="number" th:field="*{studentExamQuestions[__${itemStat.index}__].pointsAttained}">
                 </label></td>
+                <td><label>
+                    <input type="text" th:field="*{studentExamQuestions[__${itemStat.index}__].feedback}">
+                </label></td>
+                <td type="hidden">
+                    <input type="hidden"
+                           th:field="*{studentExamQuestions[__${itemStat.index}__].studentExamQuestionId}">
+                </td>
+                <td type="hidden">
+                    <input type="hidden"
+                           th:field="*{studentExamQuestions[__${itemStat.index}__].studentExam}">
+                </td>
+                <td type="hidden">
+                    <input type="hidden"
+                           th:field="*{studentExamQuestions[__${itemStat.index}__].questionNumber}">
+                </td>
             </tr>
         </table>
 

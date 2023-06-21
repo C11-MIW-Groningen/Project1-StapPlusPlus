@@ -35,15 +35,7 @@ public class StudentExamController {
             StudentExam studentExam = new StudentExam();
             studentExam.setExam(optionalExam.get());
             studentExamRepository.save(studentExam);
-
-            for (ExamQuestion examQuestion : optionalExam.get().getExamQuestions()) {
-                StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
-                studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
-                studentExamQuestion.setStudentExam(studentExam);
-                studentExamQuestionRepository.save(studentExamQuestion);
-            }
-
-            studentExamRepository.save(studentExam);
+            addStudentExamQuestions(studentExam);
 
             model.addAttribute("studentExam", studentExam);
 
@@ -66,9 +58,12 @@ public class StudentExamController {
         return "redirect:/exam/all";
     }
 
-    @PostMapping("/new/**")
+    @PostMapping("/new")
     private String saveStudentExam(@ModelAttribute("studentExam") StudentExam studentExamToSave, BindingResult result) {
         if (!result.hasErrors()) {
+            studentExamQuestionRepository.saveAll(studentExamToSave.getStudentExamQuestions());
+            studentExamToSave.setPointsAttained();
+            studentExamToSave.setGrade();
             studentExamRepository.save(studentExamToSave);
         }
 
@@ -104,5 +99,17 @@ public class StudentExamController {
         }
 
         return "redirect:/exam/all";
+    }
+
+    private void addStudentExamQuestions(StudentExam studentExam) {
+        for (ExamQuestion examQuestion : studentExam.getExam().getExamQuestions()) {
+            StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
+            studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
+            studentExamQuestion.setStudentExam(studentExam);
+            studentExam.getStudentExamQuestions().add(studentExamQuestion);
+            studentExamQuestionRepository.save(studentExamQuestion);
+        }
+
+        studentExamRepository.save(studentExam);
     }
 }
