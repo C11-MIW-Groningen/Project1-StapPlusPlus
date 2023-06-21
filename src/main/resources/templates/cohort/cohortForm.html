@@ -61,18 +61,6 @@
                 </td>
             </tr>
 
-<!--            to add the student that are already there, remove later with DTO -->
-            <tr hidden>
-                <th>Student in dit cohort</th>
-                <td><label>
-                    <select class="form-select" th:field="*{students}" multiple>
-                        <option th:each="student : ${cohort.students}"
-                                th:value="${student.studentId}"
-                                th:text="${student.displayName}">
-                        </option>
-                    </select>
-                </label></td>
-            </tr>
         </table>
 
         <span th:replace="fragments/buttons :: save"></span>

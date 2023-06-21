@@ -9,33 +9,61 @@
 
 <div class="container">
     <div>
-        <h2>Cohort <span th:text="${cohortShown.number}"></span></h2>
-        <p>Startdatum: <span th:text="${#temporals.format(cohortShown.startDate, 'dd-MM-yyyy')}"></span></p>
-        <p>Studierichting: <span th:text="${cohortShown.course.name}"></span></p>
-        <p>Aantal studenten: <span th:text="${cohortShown.students.size()}"></span></p>
+        <h2>Cohort <span th:text="${cohort.number}"></span></h2>
+        <p>Startdatum: <span th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></span></p>
+        <p>Studierichting: <span th:text="${cohort.course.name}"></span></p>
+        <p>Aantal studenten: <span th:text="${cohort.students.size()}"></span></p>
         <br>
     </div>
 
-    <table class="table">
-        <thead>
-        <tr class="table-secondary">
-            <th>Naam</th>
-            <th>School Email</th>
-            <th>Privé Email</th>
-            <th></th>
-            <th></th>
+    <table>
+        <tr th:each="student : ${cohort.students}">
+            <td th:text="${student.displayName}"></td>
+            <td>
+                <a th:href="@{/cohort/unenroll/{cohortId}/{studentId}(cohortId = ${cohort.cohortId}, studentId = ${student.studentId})}">
+                    unenroll
+                </a>
+            </td>
         </tr>
-        </thead>
-        <tbody>
-            <tr th:each="student : ${cohortShown.students}">
-                <td th:text="${student.displayName}"></td>
-                <td th:text="${student.privateEmail}"></td>
-                <td th:text="${student.schoolEmail}"></td>
-                <td><span th:replace="fragments/buttons :: editCustom(@{/student/edit/{studentId}(studentId=${student.studentId})}, 'Wijzig student')"></span></td>
-                <td><span th:replace="fragments/buttons :: deleteCustom(@{/student/delete/{studentId}(studentId=${student.studentId})}, 'Verwijder uit cohort')"></span></td>
-            </tr>
-        </tbody>
     </table>
+
+    <form th:action="@{/cohort/enrollStudent}" method="post" th:object="${enrollment}">
+        <input type="hidden" th:field="*{cohort}">
+
+        <div class="form-group">
+            <label for="authors" class="form-label">Enroll student</label>
+            <select id="authors" class="form-control" th:field="*{student}">
+                <option th:each="unenrolledStudent : ${allUnenrolledStudents}"
+                        th:value="${unenrolledStudent.studentId}"
+                        th:text="${unenrolledStudent.displayName}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save activity</button>
+        </div>
+    </form>
+
+<!--    <table class="table">-->
+<!--        <thead>-->
+<!--        <tr class="table-secondary">-->
+<!--            <th>Naam</th>-->
+<!--            <th>School Email</th>-->
+<!--            <th>Privé Email</th>-->
+<!--            <th></th>-->
+<!--            <th></th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--            <tr th:each="student : ${cohortShown.students}">-->
+<!--                <td th:text="${student.displayName}"></td>-->
+<!--                <td th:text="${student.privateEmail}"></td>-->
+<!--                <td th:text="${student.schoolEmail}"></td>-->
+<!--                <td><span th:replace="fragments/buttons :: editCustom(@{/student/edit/{studentId}(studentId=${student.studentId})}, 'Wijzig student')"></span></td>-->
+<!--            </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
 </div>
 

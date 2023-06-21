@@ -1,8 +1,8 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
+import nl.miwgroningen.ch11.stap.dto.EnrollmentDTO;
 import nl.miwgroningen.ch11.stap.model.Cohort;
-import nl.miwgroningen.ch11.stap.model.Course;
 import nl.miwgroningen.ch11.stap.model.Exam;
 import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
@@ -44,17 +44,6 @@ public class CohortController {
         return "cohort/cohortForm";
     }
 
-    @GetMapping("/cohort/details/{cohortId}")
-    private String showCohortDetails(@PathVariable("cohortId") Long cohortId, Model model) {
-        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
-        if (optionalCohort.isPresent()) {
-            model.addAttribute("shownCohort", optionalCohort.get());
-
-            return "cohort/cohortDetails";
-        }
-        return "redirect:/cohort/all";
-    }
-
     @GetMapping("/edit/{cohortId}")
     private String showEditCohortForm(@PathVariable("cohortId") Long cohortId, Model model) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
@@ -75,6 +64,51 @@ public class CohortController {
         return "redirect:/cohort/all";
     }
 
+    @GetMapping("/details/{number}")
+    public String showCohortDetails(@PathVariable("number") String number, Model model) {
+        Optional<Cohort> optionalCohort = cohortRepository.findByNumber(number);
+
+        if (optionalCohort.isPresent()) {
+            model.addAttribute("cohort", optionalCohort.get());
+            List<Student> unenrolledStudents = studentRepository.findAll();
+            unenrolledStudents.removeAll(optionalCohort.get().getStudents());
+            model.addAttribute("allUnenrolledStudents", unenrolledStudents);
+            model.addAttribute("enrollment", EnrollmentDTO.builder().cohort(optionalCohort.get()).build());
+            return "cohort/cohortDetails";
+        }
+
+        return "redirect:/cohort/all";
+    }
+
+    @PostMapping("/enrollStudent")
+    public String enrollStudent(@ModelAttribute("enrollment")
+                                EnrollmentDTO enrollment, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/cohort/all";
+        }
+
+        enrollment.getCohort().addStudent(enrollment.getStudent());
+        cohortRepository.save(enrollment.getCohort());
+
+        return "redirect:/cohort/details/" + enrollment.getCohort().getNumber();
+    }
+
+    @GetMapping("/unenroll/{cohortId}/{studentId}")
+    public String unenrollStudent(@PathVariable("cohortId") Long cohortId,
+                                  @PathVariable("studentId") Long studentId) {
+        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+
+        if (optionalCohort.isEmpty() || optionalStudent.isEmpty()) {
+            return "redirect:/cohort/all";
+        }
+
+        optionalCohort.get().removeStudent(optionalStudent.get());
+        cohortRepository.save(optionalCohort.get());
+
+        return "redirect:/cohort/details/" + optionalCohort.get().getNumber();
+    }
+
 
     @PostMapping("/new")
     private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
@@ -86,18 +120,7 @@ public class CohortController {
         return "redirect:/cohort/all";
     }
 
-    @GetMapping("/details/{number}")
-    private String showCohortDetails(@PathVariable("number") String number, Model model) {
-        Optional<Cohort> optionalCohort = cohortRepository.findByNumber(number);
 
-        if (optionalCohort.isPresent()) {
-            model.addAttribute("cohortShown", optionalCohort.get());
-
-            return "cohort/cohortDetails";
-        }
-
-        return "redirect:/cohort/all";
-    }
 
     @GetMapping("/delete/{cohortId}")
     private String deleteCohort(@PathVariable("cohortId") Long cohortId) {

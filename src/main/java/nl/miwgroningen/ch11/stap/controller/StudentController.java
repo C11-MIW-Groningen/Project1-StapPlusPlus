@@ -48,7 +48,6 @@ public class StudentController {
 
         if (optionalStudent.isPresent()) {
             model.addAttribute("student", optionalStudent.get());
-            model.addAttribute("allCohorts", cohortRepository.findAll());
             return "student/studentForm";
         }
 
@@ -59,7 +58,6 @@ public class StudentController {
     private String saveOrUpdateStudent(@ModelAttribute("newStudent") Student student, BindingResult result) {
 
         if (!result.hasErrors()) {
-            cohortRepository.saveAll(student.getCohorts());
             studentRepository.save(student);
         } else {
             System.out.println(result.getAllErrors());

@@ -43,17 +43,6 @@
                     <input type="text" th:field="*{schoolEmail}">
                 </label></td>
             </tr>
-            <tr>
-                <th>Cohort</th>
-                <td><label>
-                    <select class="form-select" size="6" th:field="*{cohorts}" multiple>
-                        <option th:each="cohort : ${allCohorts}"
-                                th:value="${cohort.cohortId}"
-                                th:text="${cohort.number}">
-                        </option>
-                    </select>
-                </label></td>
-            </tr>
         </table>
 
         <span th:replace="fragments/buttons :: save"></span>
