@@ -3,6 +3,7 @@ package nl.miwgroningen.ch11.stap.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class StudentExam {
     private Student student;
 
     @OneToMany(mappedBy = "studentExam")
-    private List<StudentExamQuestion> studentExamQuestions;
+    private List<StudentExamQuestion> studentExamQuestions = new ArrayList<>();
 
     private int pointsAttained;
     private double grade;
