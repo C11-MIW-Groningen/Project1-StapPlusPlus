@@ -41,9 +41,7 @@ public class CohortController {
     @GetMapping("/new")
     private String showCohortForm(Model model) {
         model.addAttribute("cohort", new Cohort());
-
         model.addAttribute("allCourses", courseRepository.findAll());
-        model.addAttribute("allStudents", studentRepository.findAll());
 
         return "cohort/cohortForm";
     }
@@ -54,12 +52,6 @@ public class CohortController {
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
-
-            List<Student> allStudents = getStudentsSorted();
-            List<Student> studentFromThisCohort = optionalCohort.get().getStudents();
-            allStudents.removeAll(studentFromThisCohort);
-
-            model.addAttribute("allStudents", allStudents);
             model.addAttribute("allCourses", courseRepository.findAll());
 
             return "cohort/cohortForm";
@@ -74,10 +66,11 @@ public class CohortController {
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
-            List<Student> unenrolledStudents = studentRepository.findAll();
+            List<Student> unenrolledStudents = getStudentsSorted();
             unenrolledStudents.removeAll(optionalCohort.get().getStudents());
             model.addAttribute("allUnenrolledStudents", unenrolledStudents);
             model.addAttribute("enrollment", EnrollmentDTO.builder().cohort(optionalCohort.get()).build());
+            Collections.sort(optionalCohort.get().getStudents());
             return "cohort/cohortDetails";
         }
 
@@ -85,8 +78,7 @@ public class CohortController {
     }
 
     @PostMapping("/enrollStudent")
-    public String enrollStudent(@ModelAttribute("enrollment")
-                                EnrollmentDTO enrollment, BindingResult result) {
+    public String enrollStudent(@ModelAttribute("enrollment") EnrollmentDTO enrollment, BindingResult result) {
         if (result.hasErrors()) {
             return "redirect:/cohort/all";
         }
@@ -122,8 +114,6 @@ public class CohortController {
         }
         return "redirect:/cohort/all";
     }
-
-
 
     @GetMapping("/delete/{cohortId}")
     private String deleteCohort(@PathVariable("cohortId") Long cohortId) {

@@ -58,7 +58,6 @@
     </a>
 </span>
 
-
 <!-- Edit button -->
 <span th:fragment="edit(link)">
     <a type="button" class="btn btn-secondary btn-table btn-sm"
@@ -82,6 +81,14 @@
     <button type="submit" class="btn btn-primary">
         <span th:replace="fragments/icons :: saveIcon"></span>
         Opslaan
+    </button>
+</span>
+
+<!-- Save button with custom text-->
+<span th:fragment="saveCustom(buttonText)">
+    <button type="submit" class="btn btn-primary">
+        <span th:replace="fragments/icons :: saveIcon"></span>
+        <span th:text="${buttonText}"></span>
     </button>
 </span>
 

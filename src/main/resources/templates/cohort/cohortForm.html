@@ -37,12 +37,22 @@
                     </select>
                 </label></td>
             </tr>
-
         </table>
 
         <span th:replace="fragments/buttons :: save"></span>
 
         <a class="btn btn-light" href="/cohort/all">Annuleren</a>
+
+        <div style="display: flex; align-items: center;">
+        <h3>Studenten in dit cohort</h3>
+        <span th:replace="fragments/buttons :: editOnTitle(@{/cohort/details/{number}(number = ${cohort.number})})"></span>
+        </div>
+
+        <table class="table">
+            <tr th:each="student : ${cohort.students}">
+                <td th:text="${student.displayName}"></td>
+            </tr>
+        </table>
 
     </form>
 </div>
