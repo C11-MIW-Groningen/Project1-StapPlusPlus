@@ -37,9 +37,7 @@ public class StudentExamController {
             studentExam.setExam(optionalExam.get());
             studentExamRepository.save(studentExam);
             addStudentExamQuestions(studentExam);
-            studentExam = studentExamRepository.findById(studentExam.getStudentExamId()).get();
 
-            System.out.println(studentExam.getStudentExamQuestions().size());
             model.addAttribute("studentExam", studentExam);
 
             return "exam/studentExamForm";
@@ -61,9 +59,12 @@ public class StudentExamController {
         return "redirect:/exam/all";
     }
 
-    @PostMapping("/new/**")
+    @PostMapping("/new")
     private String saveStudentExam(@ModelAttribute("studentExam") StudentExam studentExamToSave, BindingResult result) {
         if (!result.hasErrors()) {
+            System.err.println("Saving Student Exam");
+            System.out.println(studentExamToSave.getStudentExamQuestions());
+            studentExamQuestionRepository.saveAll(studentExamToSave.getStudentExamQuestions());
             studentExamRepository.save(studentExamToSave);
         }
 
@@ -106,7 +107,10 @@ public class StudentExamController {
             StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
             studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
             studentExamQuestion.setStudentExam(studentExam);
+            studentExam.getStudentExamQuestions().add(studentExamQuestion);
             studentExamQuestionRepository.save(studentExamQuestion);
         }
+
+        studentExamRepository.save(studentExam);
     }
 }

@@ -28,7 +28,9 @@
         </thead>
         <tbody>
         <tr th:each="studentExam : ${shownExam.studentExams}">
-            <td th:text="${studentExam.student.displayName}"></td>
+
+            <td th:if="${studentExam.student} == null">No Student</td>
+            <td th:unless="${studentExam.student} == null" th:text="${studentExam.student.displayName}"></td>
             <td th:text="${studentExam.grade}"></td>
             <td th:text="${studentExam.pointsAttained}"></td>
             <td>

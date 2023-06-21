@@ -27,7 +27,7 @@ public class StudentExam {
     @ManyToOne
     private Student student;
 
-    @OneToMany(mappedBy = "studentExam")
+    @OneToMany(mappedBy = "studentExam", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<StudentExamQuestion> studentExamQuestions = new ArrayList<>();
 
     private int pointsAttained;

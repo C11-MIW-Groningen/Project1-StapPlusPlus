@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 public class StudentExamQuestion {
     @Id @GeneratedValue
-    private Long studentExamQuestion;
+    private Long studentExamQuestionId;
 
     private int questionNumber;
     private int pointsAttained;
@@ -28,4 +28,9 @@ public class StudentExamQuestion {
 
     @ManyToOne
     private StudentExam studentExam;
+
+    @Override
+    public String toString() {
+        return String.format("studentExamQuestionId: %s, questionNumber: %s, pointsAttained: %s, feedback: %s, studentExam: %s", this.studentExamQuestionId, this.questionNumber, this.pointsAttained, this.feedback, this.studentExam);
+    }
 }

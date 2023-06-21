@@ -10,7 +10,7 @@
 <div class="container">
     <h2>Toets resultaat invoer</h2>
 
-    <form th:action="@{/studentExam/new/{examId}(examId=${studentExam.exam.examId})}"
+    <form th:action="@{/studentExam/new}"
             method="post" th:object="${studentExam}">
         <input type="hidden" th:field="*{studentExamId}">
         <input type="hidden" th:field="*{exam}">
@@ -26,11 +26,12 @@
                 </label></td>
             </tr>
             <div>
-                <tr th:each="question : ${studentExam.getStudentExamQuestions()}">
-
-                    <td th:text="${question.questionNumber}"></td>
-                    <td><input type="text" th:field="${question.pointsAttained}"></td>
-                    <td><input type="text" th:field="${question.feedback}"></td>
+                <tr th:each="question, itemStat : ${studentExam.studentExamQuestions}">
+                    <td><input type="text" th:name="|studentExamQuestions[${itemStat.index}].studentExamQuestionId|" th:value="${question.studentExamQuestionId}"></td>
+                    <td><input type="text" th:name="|studentExamQuestions[${itemStat.index}].questionNumber|" th:value="${question.questionNumber}"></td>
+                    <td><input type="number" th:name="|studentExamQuestions[${itemStat.index}].pointsAttained|" th:value="${question.pointsAttained}"></td>
+                    <td><input type="text" th:name="|studentExamQuestions[${itemStat.index}].feedback|" th:value="${question.feedback}"></td>
+                    <td><input type="text" th:name="|studentExamQuestions[${itemStat.index}].studentExam|" th:value="${question.studentExam.studentExamId}"></td>
                 </tr>
             </div>
         </table>
