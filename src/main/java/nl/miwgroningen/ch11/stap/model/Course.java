@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Tristan Meinsma
@@ -22,6 +23,9 @@ public class Course {
 
     @Column(unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "course")
+    private Set<Cohort> cohorts;
 
     @ManyToMany
     private List<Subject> subjects;

@@ -36,6 +36,10 @@ public class Cohort {
     @ManyToMany
     private List<Student> students;
 
+    public void removeCourse() {
+        course = null;
+    }
+
     public void removeStudent(Student student) {
         students.remove(student);
     }

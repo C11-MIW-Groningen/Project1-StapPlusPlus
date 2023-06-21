@@ -47,6 +47,10 @@ public class Subject {
         }
     }
 
+    public void removeCourse(Course course) {
+        courses.remove(course);
+    }
+
     public void removeLearningGoal(LearningGoal learningGoal) {
         learningGoals.remove(learningGoal);
     }

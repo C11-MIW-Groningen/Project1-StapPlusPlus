@@ -2,7 +2,6 @@ package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
-import nl.miwgroningen.ch11.stap.model.Course;
 import nl.miwgroningen.ch11.stap.model.Exam;
 import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
