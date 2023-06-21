@@ -1,8 +1,10 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
+import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.model.Course;
 import nl.miwgroningen.ch11.stap.model.Subject;
+import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class CourseController {
+    private final CohortRepository cohortRepository;
     private final CourseRepository courseRepository;
     private final SubjectRepository subjectRepository;
 
@@ -87,7 +90,20 @@ public class CourseController {
     @GetMapping("/course/delete/{courseId}")
     private String deleteCourse(@PathVariable("courseId") Long courseId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
-        optionalCourse.ifPresent(courseRepository::delete);
+
+        if (optionalCourse.isPresent()) {
+            for (Subject subject : optionalCourse.get().getSubjects()) {
+                subject.removeCourse(optionalCourse.get());
+                subjectRepository.save(subject);
+            }
+
+            for (Cohort cohort : optionalCourse.get().getCohorts()) {
+                cohort.removeCourse();
+                cohortRepository.save(cohort);
+            }
+
+            courseRepository.delete(optionalCourse.get());
+        }
 
         return "redirect:/course/all";
     }
