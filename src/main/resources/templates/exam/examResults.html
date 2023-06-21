@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title th:text="${shownExam.displayExam}"></title>
+    <title th:text="${shownExam.displayExamTitle}"></title>
 </head>
 <body>
 
@@ -9,7 +9,10 @@
 
 <div class="container">
     <div class="row">
-        <h2 class="col" th:text="${shownExam.displayExam}"></h2>
+        <span class="col">
+            <h2 th:text="${shownExam.displayExamTitle}"></h2>
+            <h3 th:text="${shownExam.displayExamSubtitle}"></h3>
+        </span>
         <span class="col">
             <span th:replace="fragments/buttons :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})">
             </span>

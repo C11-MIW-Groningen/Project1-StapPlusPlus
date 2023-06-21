@@ -39,9 +39,15 @@ public class Exam implements Comparable<Exam> {
     @ManyToOne
     private Subject subject;
 
-    public String getDisplayExam() {
-        return String.format("Tentamen cohort %s %s%s",
-                cohort.getNumber(), subject.getTitle(), resit ? " herkansing" : "");
+    public String getDisplayExamTitle() {
+        return String.format("Tentamen %s", (subject == null) ? "" : subject.getTitle());
+
+    }
+
+    public String getDisplayExamSubtitle() {
+        return String.format("Cohort %s%s",
+                (cohort == null) ? "geen" : cohort.getNumber(),
+                resit ? " (herkansing)" : "");
     }
 
     public void removeCohort() {

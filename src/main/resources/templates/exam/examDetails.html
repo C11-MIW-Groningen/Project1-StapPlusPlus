@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
-    <title th:text="${shownExam.displayExam}"></title>
+    <title th:text="${shownExam.displayExamTitle}"></title>
 </head>
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <div class="row">
-        <div class="col" style="display: flex; align-items: center;">
-            <h2 th:text="${shownExam.displayExam}"></h2>
+    <div class="row" style="display: flex; align-items: center;">
+        <div class="col">
+            <h2 th:text="${shownExam.displayExamTitle}"></h2>
+            <h3 th:text="${shownExam.displayExamSubtitle}"></h3>
+        </div>
+        <div class="col">
             <span th:replace="fragments/buttons :: editOnTitle(@{/exam/edit/{examId}(examId=${shownExam.examId})})">
             </span>
-
         </div>
-        <span class="col">
+        <div class="col">
              <span th:replace="fragments/buttons :: new(@{/question/new/{examId}(examId=${shownExam.examId})})"></span>
-        </span>
+        </div>
     </div>
 
     <table class="table">
