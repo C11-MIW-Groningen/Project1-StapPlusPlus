@@ -22,6 +22,7 @@ import java.util.Optional;
  * @author Tristan Meinsma
  * Handles interaction on web about cohorts
  */
+
 @Controller
 @RequestMapping("/cohort")
 @RequiredArgsConstructor
@@ -40,6 +41,9 @@ public class CohortController {
     @GetMapping("/new")
     private String showCohortForm(Model model) {
         model.addAttribute("cohort", new Cohort());
+
+        model.addAttribute("allCourses", courseRepository.findAll());
+        model.addAttribute("allStudents", studentRepository.findAll());
 
         return "cohort/cohortForm";
     }
@@ -112,7 +116,6 @@ public class CohortController {
 
     @PostMapping("/new")
     private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
-
 
         if (!result.hasErrors()) {
             cohortRepository.save(cohort);

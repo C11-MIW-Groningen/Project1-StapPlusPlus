@@ -33,6 +33,7 @@
                 <td><span th:replace="fragments/buttons :: link(@{/course/details/{name}(name=${cohort.course.name})}, ${cohort.course.name})"></span></td>
                 <td th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></td>
                 <td th:text="${cohort.students.size()}"></td>
+                <td><span th:replace="fragments/buttons :: edit(@{/cohort/edit/{cohortId}(cohortId=${cohort.cohortId})})"></span></td>
                 <td><span th:replace="fragments/buttons :: delete(@{/cohort/delete/{cohortId}(cohortId=${cohort.cohortId})})"></span></td>
             </tr>
         </tbody>
