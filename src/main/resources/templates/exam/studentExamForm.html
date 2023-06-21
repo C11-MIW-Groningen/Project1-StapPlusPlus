@@ -25,18 +25,14 @@
                     </select>
                 </label></td>
             </tr>
-            <tr>
-                <td>Cijfer:</td>
-                <td><label>
-                    <input type="text" th:field="*{grade}">
-                </label></td>
-            </tr>
-            <tr>
-                <td>Punten:</td>
-                <td><label>
-                    <input type="text" th:field="*{pointsAttained}">
-                </label></td>
-            </tr>
+            <div>
+                <tr th:each="question : ${studentExam.getStudentExamQuestions()}">
+
+                    <td th:text="${question.questionNumber}"></td>
+                    <td><input type="text" th:field="${question.pointsAttained}"></td>
+                    <td><input type="text" th:field="${question.feedback}"></td>
+                </tr>
+            </div>
         </table>
 
         <span th:replace="fragments/buttons :: save"></span>

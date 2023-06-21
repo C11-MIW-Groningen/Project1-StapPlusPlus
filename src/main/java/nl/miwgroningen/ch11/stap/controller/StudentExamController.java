@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,16 +36,10 @@ public class StudentExamController {
             StudentExam studentExam = new StudentExam();
             studentExam.setExam(optionalExam.get());
             studentExamRepository.save(studentExam);
+            addStudentExamQuestions(studentExam);
+            studentExam = studentExamRepository.findById(studentExam.getStudentExamId()).get();
 
-            for (ExamQuestion examQuestion : optionalExam.get().getExamQuestions()) {
-                StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
-                studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
-                studentExamQuestion.setStudentExam(studentExam);
-                studentExamQuestionRepository.save(studentExamQuestion);
-            }
-
-            studentExamRepository.save(studentExam);
-
+            System.out.println(studentExam.getStudentExamQuestions().size());
             model.addAttribute("studentExam", studentExam);
 
             return "exam/studentExamForm";
@@ -104,5 +99,14 @@ public class StudentExamController {
         }
 
         return "redirect:/exam/all";
+    }
+
+    private void addStudentExamQuestions(StudentExam studentExam) {
+        for (ExamQuestion examQuestion : studentExam.getExam().getExamQuestions()) {
+            StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
+            studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
+            studentExamQuestion.setStudentExam(studentExam);
+            studentExamQuestionRepository.save(studentExamQuestion);
+        }
     }
 }
