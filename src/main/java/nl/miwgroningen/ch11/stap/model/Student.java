@@ -17,13 +17,16 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Student implements Comparable <Student>{
     @Id
     @GeneratedValue
     private Long studentId;
 
+    @Column(nullable = false)
     private String firstName;
     private String infixName;
+    @Column(nullable = false)
     private String lastName;
 
     private String privateEmail;

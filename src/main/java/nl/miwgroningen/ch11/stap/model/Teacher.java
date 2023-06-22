@@ -2,10 +2,7 @@ package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -19,13 +16,17 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Teacher implements Comparable <Teacher> {
     @Id
     @GeneratedValue
     private Long teacherId;
 
+    @Column(nullable = false)
     private String firstName;
     private String infixName;
+
+    @Column(nullable = false)
     private String lastName;
 
     @Override
