@@ -28,7 +28,7 @@ public class SecurityConfiguration {
                         .antMatchers("/css/**", "/webjars/**").permitAll()
                         .antMatchers("/images/*").permitAll()
                         .antMatchers("/").permitAll()
-                        .antMatchers("/course/**").permitAll()
+                        .antMatchers("/course/details/**").permitAll()
                         .antMatchers("/seed").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
