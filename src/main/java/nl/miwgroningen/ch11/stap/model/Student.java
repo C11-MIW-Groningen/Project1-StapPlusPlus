@@ -24,12 +24,6 @@ public class Student extends Person {
     @GeneratedValue
     private Long studentId;
 
-//    @Column(nullable = false)
-//    private String firstName;
-//    private String infixName;
-//    @Column(nullable = false)
-//    private String lastName;
-
     private String privateEmail;
     private String schoolEmail;
 
@@ -39,16 +33,4 @@ public class Student extends Person {
     @OneToMany(mappedBy = "student")
     private Set<StudentExam> studentExams;
 
-//    @Override
-//    public int compareTo(Student otherStudent) {
-//        return this.getLastName().compareTo(otherStudent.getLastName());
-//    }
-
-//    public String getDisplayName() {
-//        if (infixName.equals("")) {
-//            return String.format("%s %s", firstName, lastName);
-//        } else {
-//            return String.format("%s %s %s", firstName, infixName, lastName);
-//        }
-//    }
 }

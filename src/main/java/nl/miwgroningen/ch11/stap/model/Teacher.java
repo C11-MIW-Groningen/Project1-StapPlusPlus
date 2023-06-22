@@ -23,23 +23,4 @@ public class Teacher extends Person {
     @GeneratedValue
     private Long teacherId;
 
-//    @Column(nullable = false)
-//    private String firstName;
-//    private String infixName;
-//
-//    @Column(nullable = false)
-//    private String lastName;
-
-//    @Override
-//    public int compareTo(Teacher otherTeacher) {
-//        return this.lastName.compareTo(otherTeacher.getLastName());
-//    }
-
-//    public String getDisplayName() {
-//        if (infixName.equals("")) {
-//            return String.format("%s %s", firstName, lastName);
-//        } else {
-//            return String.format("%s %s %s", firstName, infixName, lastName);
-//        }
-//    }
 }

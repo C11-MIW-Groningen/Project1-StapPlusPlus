@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * @author Tristan Meinsma
- * Dit programma doet x
+ * This is a generic person
  */
 
 @Getter @Setter
