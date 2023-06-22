@@ -29,7 +29,7 @@ public class StudentExam {
     @ManyToOne
     private Student student;
 
-    @OneToMany(mappedBy = "studentExam", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "studentExam")
     private List<StudentExamQuestion> studentExamQuestions = new ArrayList<>();
 
     private int pointsAttained;
