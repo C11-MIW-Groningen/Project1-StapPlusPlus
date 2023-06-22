@@ -21,11 +21,11 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class SeedController {
     private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
-    private static final int SEED_NUMBER_OF_COHORTS = 6;
-    private static final int SEED_NUMBER_OF_EXAMS = 30;
-    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 20;
+    private static final int SEED_NUMBER_OF_COHORTS = 3;
+    private static final int SEED_NUMBER_OF_EXAMS = 10;
+    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 10;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
-    private static final int SEED_NUMBER_OF_STUDENTS = 100;
+    private static final int SEED_NUMBER_OF_STUDENTS = 40;
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
 
     private static final int MIN_NUMBER_OF_STUDENTS_PER_COHORT = 5;
@@ -40,6 +40,7 @@ public class SeedController {
     private final ExamRepository examRepository;
     private final ExamQuestionRepository examQuestionRepository;
     private final LearningGoalRepository learningGoalRepository;
+    private final StudentExamRepository studentExamRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
@@ -57,6 +58,7 @@ public class SeedController {
         seedWebsiteUsers();
         seedCohorts();
         seedExams();
+        seedStudentExams();
 
         return "redirect:/";
     }
@@ -83,10 +85,15 @@ public class SeedController {
         List<Student> allStudents = studentRepository.findAll();
         List<Student> randomStudents = new ArrayList<>();
 
-            for (int student = 0; student < numberOfStudents; student++) {
-                int randomStudent = random.nextInt(allStudents.size() - 1);
-                randomStudents.add(allStudents.get(randomStudent));
+        for (int student = 0; student < numberOfStudents; student++) {
+            int randomStudent = random.nextInt(allStudents.size() - 1);
+
+            while (randomStudents.contains(allStudents.get(randomStudent))) {
+                randomStudent = random.nextInt(allStudents.size() - 1);
             }
+
+            randomStudents.add(allStudents.get(randomStudent));
+        }
         return randomStudents;
     }
 
@@ -169,6 +176,18 @@ public class SeedController {
                     .description(faker.lorem().paragraph(2))
                     .build();
             learningGoalRepository.save(newLearningGoal);
+        }
+    }
+
+    private void seedStudentExams() {
+        for (Exam exam : examRepository.findAll()) {
+            for (Student student : exam.getCohort().getStudents()) {
+                StudentExam newStudentExam = StudentExam.builder()
+                        .exam(exam)
+                        .student(student)
+                        .build();
+                studentExamRepository.save(newStudentExam);
+            }
         }
     }
 
