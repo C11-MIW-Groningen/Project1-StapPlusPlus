@@ -107,7 +107,6 @@ public class StudentExamController {
             studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
             studentExamQuestion.setStudentExam(studentExam);
             studentExam.getStudentExamQuestions().add(studentExamQuestion);
-            studentExamQuestionRepository.save(studentExamQuestion);
         }
 
         studentExamRepository.save(studentExam);
