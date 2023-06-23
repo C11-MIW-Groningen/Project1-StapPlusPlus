@@ -3,12 +3,8 @@ package nl.miwgroningen.ch11.stap.controller;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Exam;
 import nl.miwgroningen.ch11.stap.model.ExamQuestion;
-import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.model.StudentExam;
-import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
-import nl.miwgroningen.ch11.stap.repositories.ExamQuestionRepository;
-import nl.miwgroningen.ch11.stap.repositories.ExamRepository;
-import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
+import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +27,8 @@ public class ExamController {
     private final CohortRepository cohortRepository;
     private final ExamRepository examRepository;
     private final ExamQuestionRepository examQuestionRepository;
+    private final StudentExamRepository studentExamRepository;
+    private final StudentExamQuestionRepository studentExamQuestionRepository;
     private final SubjectRepository subjectRepository;
 
     @GetMapping("/all")
@@ -79,6 +77,11 @@ public class ExamController {
         Optional<Exam> optionalExam = examRepository.findById(examId);
 
         if (optionalExam.isPresent()) {
+            for (StudentExam studentExam : optionalExam.get().getStudentExams()) {
+                studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
+                studentExamRepository.delete(studentExam);
+            }
+
             examQuestionRepository.deleteAll(optionalExam.get().getExamQuestions());
             examRepository.delete(optionalExam.get());
         }
