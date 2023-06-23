@@ -19,7 +19,7 @@
     <form th:action="@{/cohort/enrollStudent}" method="post" th:object="${enrollment}">
         <input type="hidden" th:field="*{cohort}">
 
-        <div class="form-group">
+        <div class="form-group col-md-4">
             <label for="authors" class="form-label">Selecteer student</label>
             <select id="authors" class="form-control" th:field="*{student}">
                 <option th:each="unenrolledStudent : ${allUnenrolledStudents}"
@@ -29,19 +29,28 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <span th:replace="/fragments/buttons :: saveCustom('Voeg student toe')"></span>
-        </div>
+
+        <span th:replace="/fragments/buttons :: saveCustom('Voeg student toe')"></span>
+
+
+         <a class="btn btn-light" href="/cohort/all">Annuleren</a>
     </form>
+
+
+
+    <h2>Studenten in dit cohort</h2>
 
     <table class="table">
         <thead>
-            <th>Studenten in dit cohort</th>
-            <th></th>
+            <tr class="table-secondary">
+               <th>Naam</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
             <tr th:each="student : ${cohort.students}">
                 <td th:text="${student.displayName}"></td>
+                <td th:text="${student.}"></td>
                 <td><span th:replace="/fragments/buttons :: deleteCustom(@{/cohort/unenroll/{cohortId}/{studentId}(cohortId = ${cohort.cohortId}, studentId = ${student.studentId})},
                 'Verwijder uit cohort')"></span></td>
             </tr>

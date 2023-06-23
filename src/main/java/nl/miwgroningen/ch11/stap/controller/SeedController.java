@@ -125,7 +125,7 @@ public class SeedController {
                 .name("Software Engineering")
                 .description("In de omscholing Software Engineering leer je softwaresystemen ontwerpen, realiseren " +
                         "en testen. Je werkt met verschillende programmeertalen en ontwikkelmethoden.")
-                .imageUrl("/images/Software%20Engineering.jpg")
+                .imageUrl("https://www.dqsglobal.com/var/site/storage/images/_aliases/cw_large_2x/3/3/4/7/747433-10-ger-DE/f4cb829ab49c-datensicherheit-explore-dqs-shutterstock_1233182206.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
         courseRepository.save(course1);
@@ -133,7 +133,7 @@ public class SeedController {
         Course course2 = Course.builder()
                 .name("Functioneel Beheer")
                 .description(faker.lorem().paragraph(3))
-                .imageUrl("/images/Fucntioneel%20Beheer.jpeg")
+                .imageUrl("https://www.inspry.com/wp-content/uploads/joomla-4-upgrade-vs-wordpress-migration-1-scaled-1-2048x1366.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
         courseRepository.save(course2);

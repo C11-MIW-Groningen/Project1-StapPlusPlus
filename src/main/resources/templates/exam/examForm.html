@@ -12,46 +12,43 @@
 
     <form th:action="@{/exam/new}" method="post" th:object="${exam}">
         <input type="hidden" th:field="*{examId}">
-        <table class="table table-borderless">
-            <tr>
-                <td>Datum:</td>
-                <td><label>
-                    <input type="date" th:field="*{examDate}">
-                </label></td>
-            </tr>
-            <tr>
-                <td>Cohort:</td>
-                <td><label>
-                    <select th:field="*{cohort}">
-                        <option th:each="cohort : ${allCohorts}"
-                                th:value="${cohort.cohortId}"
-                                th:text="${cohort.number}"></option>
-                    </select>
-                </label></td>
-            </tr>
-            <tr>
-                <td>Vak:</td>
-                <td><label>
-                    <select th:field="*{subject}">
-                        <option th:each="subject : ${allSubjects}"
-                                th:value="${subject.subjectId}"
-                                th:text="${subject.title}"></option>
-                    </select>
-                </label></td>
-            </tr>
-            <tr>
-                <td>Herkansing:</td>
-                <td>
-                    <label>
-                        <input class="form-check-input border-dark" type="checkbox" th:field="*{resit}">
-                    </label>
-                </td>
-            </tr>
-        </table>
+
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Datum</label>
+            <input type="date" class="form-control" th:field="*{examDate}">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Cohort</label>
+            <select class="form-control" th:field="*{cohort}">
+                <option th:each="cohort : ${allCohorts}"
+                        th:value="${cohort.cohortId}"
+                        th:text="'Cohort ' + ${cohort.number}"></option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Vak</label>
+            <select class="form-control" th:field="*{subject}">
+                <option th:each="subject : ${allSubjects}"
+                        th:value="${subject.subjectId}"
+                        th:text="${subject.title}"></option>
+            </select>
+        </div>
+
+        <br>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" th:field="*{resit}">
+          <label class="form-check-label">
+            Herkansing
+          </label>
+        </div>
 
         <span th:replace="fragments/buttons :: save"></span>
 
-        <a class="btn" href="/exam/all">Annuleren</a>
+        <a class="btn btn-light" href="/exam/all">Annuleren</a>
     </form>
 </div>
 

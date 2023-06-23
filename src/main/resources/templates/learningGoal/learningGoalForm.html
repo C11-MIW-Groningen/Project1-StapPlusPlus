@@ -12,19 +12,16 @@
 
     <form th:action="@{/goal/new}" method="post" th:object="${learningGoal}">
         <input type="hidden" th:field="*{learningGoalId}">
-        <table class="table table-borderless">
-            <tr>
-                <td>Leerdoel naam:</td>
-                <td><label>
-                    <input class="form-control border-dark" type="text" th:field="*{title}">
-                </label></td>
-            </tr>
-            <tr>
-                <td>Omschrijving:</td>
-            </tr>
-        </table>
 
-        <textarea class="form-control border-dark" rows="4" th:field="*{description}"></textarea>
+        <div class="form-group col-md-4">
+            <label class="form-label">Leerdoel naam</label>
+            <input type="text" class="form-control" th:field="*{title}">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Omschrijving</label>
+            <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+        </div>
 
         <span th:replace="fragments/buttons :: save"></span>
 
