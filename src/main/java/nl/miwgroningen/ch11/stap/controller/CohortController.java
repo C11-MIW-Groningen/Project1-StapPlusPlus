@@ -60,9 +60,11 @@ public class CohortController {
         return "redirect:/cohort/all";
     }
 
-    @GetMapping("/details/{number}")
-    public String showCohortDetails(@PathVariable("number") String number, Model model) {
-        Optional<Cohort> optionalCohort = cohortRepository.findByNumber(number);
+    @GetMapping("/details/{cohortId}")
+    public String showCohortDetails(@PathVariable("cohortId") Long cohortId, Model model) {
+        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+
+        System.out.println(cohortId);
 
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
