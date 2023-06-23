@@ -44,13 +44,16 @@
         <thead>
             <tr class="table-secondary">
                <th>Naam</th>
+                <th>Privé email</th>
+                <th>School email</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="student : ${cohort.students}">
                 <td th:text="${student.displayName}"></td>
-                <td th:text="${student.}"></td>
+                <td th:text="${student.privateEmail}"></td>
+                <td th:text="${student.schoolEmail}"></td>
                 <td><span th:replace="/fragments/buttons :: deleteCustom(@{/cohort/unenroll/{cohortId}/{studentId}(cohortId = ${cohort.cohortId}, studentId = ${student.studentId})},
                 'Verwijder uit cohort')"></span></td>
             </tr>
