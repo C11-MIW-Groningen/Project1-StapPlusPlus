@@ -3,7 +3,10 @@ package nl.miwgroningen.ch11.stap.controller;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.model.Student;
+import nl.miwgroningen.ch11.stap.model.StudentExam;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
+import nl.miwgroningen.ch11.stap.repositories.StudentExamQuestionRepository;
+import nl.miwgroningen.ch11.stap.repositories.StudentExamRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +28,8 @@ import java.util.Optional;
 public class StudentController {
     private final StudentRepository studentRepository;
     private final CohortRepository cohortRepository;
+    private final StudentExamRepository studentExamRepository;
+    private final StudentExamQuestionRepository studentExamQuestionRepository;
 
     @GetMapping("/all")
     private String showStudentOverview(Model model) {
@@ -75,6 +80,12 @@ public class StudentController {
                 cohort.removeStudent(optionalStudent.get());
                 cohortRepository.save(cohort);
             }
+
+            for (StudentExam studentExam : optionalStudent.get().getStudentExams()) {
+                studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
+                studentExamRepository.delete(studentExam);
+            }
+
             studentRepository.deleteById(studentId);
         }
 

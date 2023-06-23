@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentExam {
+public class StudentExam implements Comparable<StudentExam> {
     private static final int MINIMUM_GRADE = 1;
     private static final int MAXIMUM_GRADE = 10;
     @Id @GeneratedValue
@@ -65,5 +65,10 @@ public class StudentExam {
         }
 
         pointsAttained = sumPoints;
+    }
+
+    @Override
+    public int compareTo(StudentExam otherStudentExam) {
+        return student.compareTo(otherStudentExam.student);
     }
 }

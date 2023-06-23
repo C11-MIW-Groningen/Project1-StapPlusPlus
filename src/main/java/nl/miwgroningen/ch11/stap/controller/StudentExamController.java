@@ -76,6 +76,8 @@ public class StudentExamController {
 
         if (optionalStudentExam.isPresent()) {
             Exam exam = optionalStudentExam.get().getExam();
+
+            studentExamQuestionRepository.deleteAll(optionalStudentExam.get().getStudentExamQuestions());
             studentExamRepository.delete(optionalStudentExam.get());
 
             return String.format("redirect:/exam/results/%d", exam.getExamId());

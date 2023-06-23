@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Author: Thijs Harleman
@@ -34,7 +33,7 @@ public class Exam implements Comparable<Exam> {
     private List<ExamQuestion> examQuestions;
 
     @OneToMany(mappedBy = "exam")
-    private Set<StudentExam> studentExams;
+    private List<StudentExam> studentExams;
 
     @ManyToOne
     private Subject subject;
