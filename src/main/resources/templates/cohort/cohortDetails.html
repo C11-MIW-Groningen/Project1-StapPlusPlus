@@ -11,7 +11,11 @@
     <div>
         <h2>Cohort <span th:text="${cohort.number}"></span></h2>
         <p>Startdatum: <span th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></span></p>
-        <p>Studierichting: <span th:text="${cohort.course.name}"></span></p>
+
+        <p>Studierichting: <span th:if="${cohort.course != null}">
+                    <span th:text="${cohort.course.name}"></span></span>
+                <span th:unless="${cohort.course != null}"></span>
+        </p>
         <p>Aantal studenten: <span th:text="${cohort.students.size()}"></span></p>
         <br>
     </div>

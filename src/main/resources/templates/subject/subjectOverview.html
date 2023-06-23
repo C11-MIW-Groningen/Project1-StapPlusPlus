@@ -31,11 +31,9 @@
             <td th:text="${subject.title}"></td>
 
             <td><span th:if="${subject.teacher != null}">
-                        <span th:text="${subject.teacher.displayName}">
-                        </span>
-                    </span>
-                    <span th:unless="${subject.teacher != null}"></span>
-                </td>
+                    <span th:text="${subject.teacher.displayName}"></span></span>
+                <span th:unless="${subject.teacher != null}"></span>
+            </td>
             <td th:text="${subject.getDurationString()}"></td>
             <td>
                 <table>
