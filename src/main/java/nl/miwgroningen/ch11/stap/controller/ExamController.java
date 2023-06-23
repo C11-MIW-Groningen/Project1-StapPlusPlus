@@ -67,6 +67,8 @@ public class ExamController {
     private String saveExam(@ModelAttribute("exam") Exam examToSave, BindingResult result) {
         if (!result.hasErrors()) {
             examRepository.save(examToSave);
+
+            return String.format("redirect:/exam/details/%d", examToSave.getExamId());
         }
 
         return "redirect:/exam/all";

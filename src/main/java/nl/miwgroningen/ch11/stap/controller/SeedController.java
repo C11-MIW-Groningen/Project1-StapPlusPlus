@@ -24,7 +24,6 @@ public class SeedController {
     private static final int SEED_NUMBER_OF_COHORTS = 3;
     private static final int SEED_NUMBER_OF_EXAMS = 10;
     private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 6;
-    private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
     private static final int SEED_NUMBER_OF_STUDENTS = 40;
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
 
