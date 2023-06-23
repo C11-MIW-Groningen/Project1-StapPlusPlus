@@ -54,4 +54,8 @@ public class Subject {
     public void removeLearningGoal(LearningGoal learningGoal) {
         learningGoals.remove(learningGoal);
     }
+
+    public void removeTeacher() {
+        this.teacher = null;
+    }
 }

@@ -88,7 +88,7 @@ public class CohortController {
         enrollment.getCohort().addStudent(enrollment.getStudent());
         cohortRepository.save(enrollment.getCohort());
 
-        return "redirect:/cohort/details/" + enrollment.getCohort().getNumber();
+        return "redirect:/cohort/details/" + enrollment.getCohort().getCohortId();
     }
 
     @GetMapping("/unenroll/{cohortId}/{studentId}")
@@ -104,7 +104,7 @@ public class CohortController {
         optionalCohort.get().removeStudent(optionalStudent.get());
         cohortRepository.save(optionalCohort.get());
 
-        return "redirect:/cohort/details/" + optionalCohort.get().getNumber();
+        return "redirect:/cohort/details/" + optionalCohort.get().getCohortId();
     }
 
 

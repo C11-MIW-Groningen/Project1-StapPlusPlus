@@ -23,4 +23,6 @@ public class Teacher extends Person {
     @GeneratedValue
     private Long teacherId;
 
+    @OneToMany(mappedBy = "teacher")
+    private List<Subject> subjects;
 }
