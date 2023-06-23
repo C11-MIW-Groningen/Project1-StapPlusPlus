@@ -25,6 +25,8 @@ public class SubjectController {
     private final ExamQuestionRepository examQuestionRepository;
     private final ExamRepository examRepository;
     private final LearningGoalRepository learningGoalRepository;
+    private final StudentExamRepository studentExamRepository;
+    private final StudentExamQuestionRepository studentExamQuestionRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
 
@@ -73,18 +75,31 @@ public class SubjectController {
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 
         if (optionalSubject.isPresent()) {
-            for (Course course : optionalSubject.get().getCourses()) {
-                course.removeSubject(optionalSubject.get());
-                courseRepository.save(course);
-            }
-            for (Exam exam : optionalSubject.get().getExams()) {
-                examQuestionRepository.deleteAll(exam.getExamQuestions());
-                examRepository.delete(exam);
-            }
+            detachCourses(optionalSubject.get());
+            deleteExams(optionalSubject.get());
+
             subjectRepository.deleteById(subjectId);
         }
 
         return "redirect:/subject/all";
+    }
+
+    private void deleteExams(Subject subject) {
+        for (Exam exam : subject.getExams()) {
+            for (StudentExam studentExam : exam.getStudentExams()) {
+                studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
+                studentExamRepository.delete(studentExam);
+            }
+            examQuestionRepository.deleteAll(exam.getExamQuestions());
+            examRepository.delete(exam);
+        }
+    }
+
+    private void detachCourses(Subject subject) {
+        for (Course course : subject.getCourses()) {
+            course.removeSubject(subject);
+            courseRepository.save(course);
+        }
     }
 
     private List<Teacher> getAllTeachersSorted() {
