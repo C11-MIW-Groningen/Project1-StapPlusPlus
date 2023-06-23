@@ -1,7 +1,11 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
+import nl.miwgroningen.ch11.stap.model.Cohort;
+import nl.miwgroningen.ch11.stap.model.Exam;
+import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.model.Teacher;
+import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
 import nl.miwgroningen.ch11.stap.repositories.TeacherRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TeacherController {
     private final TeacherRepository teacherRepository;
+    private final SubjectRepository subjectRepository;
 
     @GetMapping( "/all")
     private String showTeacherOverview(Model model) {
@@ -57,10 +62,31 @@ public class TeacherController {
     private String deleteTeacher(@PathVariable("teacherId") Long teacherId) {
         Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
 
-        optionalTeacher.ifPresent(teacherRepository::delete);
+        if (optionalTeacher.isPresent()) {
+            for (Subject subject : optionalTeacher.get().getSubjects()) {
+                subject.removeTeacher();
+                subjectRepository.save(subject);
+            }
+            teacherRepository.deleteById(teacherId);
+        }
 
         return "redirect:/teacher/all";
     }
+
+//    @GetMapping("/delete/{cohortId}")
+//    private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
+//        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+//
+//        if (optionalCohort.isPresent()) {
+//            for (Exam exam : optionalCohort.get().getExams()) {
+//                exam.removeCohort();
+//                examRepository.save(exam);
+//            }
+//            cohortRepository.deleteById(cohortId);
+//        }
+//
+//        return "redirect:/cohort/all";
+//    }
 
     @PostMapping("/new")
     private String saveOrUpdateTeacher(@ModelAttribute("newTeacher") Teacher teacher, BindingResult result) {
