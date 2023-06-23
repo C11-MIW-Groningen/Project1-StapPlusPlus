@@ -12,50 +12,39 @@
 
     <form th:action="@{/subject/new}" method="post" th:object="${subject}">
         <input type="hidden" th:field="*{subjectId}">
-        <table class="table table-borderless">
-            <tr>
-                <td>Vaknaam:</td>
-                <td><label>
-                    <input type="text" th:field="*{title}">
-                </label></td>
-            </tr>
-            <tr>
-                <td>Duur (dagen):</td>
-                <td><label>
-                    <input type="number" min="1" th:field="*{duration}">
-                </label></td>
-            </tr>
-            <tr>
-                <td>Docent:</td>
-                <td>
-                    <label>
-                        <select th:field="*{teacher}">
-                            <option th:each="teacher : ${allTeachers}"
-                                    th:value="${teacher.teacherId}"
-                                    th:text="${teacher.displayName}"></option>
-                        </select>
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <td>Lesdoelen:</td>
-                <td>
-                    <label>
-                        <select th:field="*{learningGoals}" multiple="multiple">
-                            <option th:each="goal : ${allLearningGoals}"
-                                    th:value="${goal.learningGoalId}"
-                                    th:text="${goal.title}">
-                            </option>
-                        </select>
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <td>Omschrijving:</td>
-            </tr>
-        </table>
 
-        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
+        <div class="form-group col-md-4">
+            <label class="form-label">Vaknaam</label>
+            <input type="text" class="form-control" th:field="*{title}">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Duur (dagen)</label>
+            <input type="number" class="form-control" th:field="*{duration}">
+        </div>
+
+         <div class="form-group col-md-4">
+            <label class="form-label">Docent</label>
+            <select class="form-control" th:field="*{teacher}">
+                <option th:each="teacher : ${allTeachers}"
+                        th:value="${teacher.teacherId}"
+                        th:text="${teacher.displayName}"></option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Leerdoelen</label>
+            <select class="form-control" th:field="*{learningGoals}" multiple>
+                <option th:each="goal : ${allLearningGoals}"
+                        th:value="${goal.learningGoalId}"
+                        th:text="${goal.title}"></option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Omschrijving</label>
+            <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+        </div>
 
         <span th:replace="fragments/buttons :: save"></span>
 
