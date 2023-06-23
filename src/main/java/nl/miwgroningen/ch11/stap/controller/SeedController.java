@@ -23,7 +23,7 @@ public class SeedController {
     private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
     private static final int SEED_NUMBER_OF_COHORTS = 3;
     private static final int SEED_NUMBER_OF_EXAMS = 10;
-    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 10;
+    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 6;
     private static final int SEED_NUMBER_OF_LEARNING_GOALS = 10;
     private static final int SEED_NUMBER_OF_STUDENTS = 40;
     private static final int SEED_NUMBER_OF_TEACHERS = 10;
@@ -40,8 +40,9 @@ public class SeedController {
     private final ExamRepository examRepository;
     private final ExamQuestionRepository examQuestionRepository;
     private final LearningGoalRepository learningGoalRepository;
-    private final StudentExamRepository studentExamRepository;
     private final StudentRepository studentRepository;
+    private final StudentExamRepository studentExamRepository;
+    private final StudentExamQuestionRepository studentExamQuestionRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
     private final WebsiteUserRepository websiteUserRepository;
@@ -59,6 +60,7 @@ public class SeedController {
         seedCohorts();
         seedExams();
         seedStudentExams();
+        seedStudentExamQuestions();
 
         return "redirect:/";
     }
@@ -179,18 +181,6 @@ public class SeedController {
         }
     }
 
-    private void seedStudentExams() {
-        for (Exam exam : examRepository.findAll()) {
-            for (Student student : exam.getCohort().getStudents()) {
-                StudentExam newStudentExam = StudentExam.builder()
-                        .exam(exam)
-                        .student(student)
-                        .build();
-                studentExamRepository.save(newStudentExam);
-            }
-        }
-    }
-
     private void seedStudents() {
         boolean infix = true;
 
@@ -207,6 +197,40 @@ public class SeedController {
                     .build();
             studentRepository.save(newStudent);
             infix = !infix;
+        }
+    }
+
+    private void seedStudentExams() {
+        for (Exam exam : examRepository.findAll()) {
+            for (Student student : exam.getCohort().getStudents()) {
+                StudentExam newStudentExam = StudentExam.builder()
+                        .exam(exam)
+                        .student(student)
+                        .build();
+                studentExamRepository.save(newStudentExam);
+            }
+        }
+    }
+
+    private void seedStudentExamQuestions() {
+        for (StudentExam studentExam : studentExamRepository.findAll()) {
+            int totalPoints = 0;
+
+            for (int question = 0; question < SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM; question++) {
+                int points = Math.max(random.nextInt(SEED_EXAM_QUESTION_ATTAINABLE_POINTS + 1),
+                        random.nextInt(SEED_EXAM_QUESTION_ATTAINABLE_POINTS + 1));
+                totalPoints += points;
+
+                StudentExamQuestion studentExamQuestion = StudentExamQuestion.builder()
+                        .questionNumber(question + 1)
+                        .pointsAttained(points)
+                        .feedback(faker.lorem().sentence())
+                        .studentExam(studentExam)
+                        .build();
+                studentExamQuestionRepository.save(studentExamQuestion);
+            }
+
+            updateGrades(studentExam, totalPoints);
         }
     }
 
@@ -276,5 +300,12 @@ public class SeedController {
         }
 
         return numberOfStudentsPerCohort;
+    }
+
+    private void updateGrades(StudentExam studentExam, int points) {
+        studentExam.setPointsAttained(points);
+        studentExam.setGrade( 1 + 9 * (double) points /
+                (SEED_EXAM_QUESTION_ATTAINABLE_POINTS * SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM));
+        studentExamRepository.save(studentExam);
     }
 }
