@@ -3,6 +3,8 @@ package nl.miwgroningen.ch11.stap.controller;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Exam;
 import nl.miwgroningen.ch11.stap.model.ExamQuestion;
+import nl.miwgroningen.ch11.stap.model.Student;
+import nl.miwgroningen.ch11.stap.model.StudentExam;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.ExamQuestionRepository;
 import nl.miwgroningen.ch11.stap.repositories.ExamRepository;
@@ -102,7 +104,11 @@ public class ExamController {
         Optional<Exam> optionalExam = examRepository.findById(examId);
 
         if (optionalExam.isPresent()) {
+            List<StudentExam> studentExams = optionalExam.get().getStudentExams();
+            Collections.sort(studentExams);
+
             model.addAttribute("shownExam", optionalExam.get());
+            model.addAttribute("shownStudentExams", studentExams);
 
             return "exam/examResults";
         }

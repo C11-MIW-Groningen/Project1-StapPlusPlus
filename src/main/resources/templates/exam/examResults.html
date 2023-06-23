@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="studentExam : ${shownExam.studentExams}">
+        <tr th:each="studentExam : ${shownStudentExams}">
             <td th:if="${studentExam.student} == null">Geen student</td>
             <td th:unless="${studentExam.student} == null" th:text="${studentExam.student.displayName}"></td>
             <td th:text="${studentExam.displayGrade}"></td>
