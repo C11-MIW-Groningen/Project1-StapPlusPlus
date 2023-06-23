@@ -94,6 +94,10 @@ public class StudentExamController {
             Exam exam = optionalStudentExam.get().getExam();
 
             if (optionalStudentExam.get().getStudent() == null) {
+                for (StudentExamQuestion studentExamQuestion : optionalStudentExam.get().getStudentExamQuestions()) {
+                    studentExamQuestionRepository.deleteAll(
+                            studentExamQuestion.getStudentExam().getStudentExamQuestions());
+                }
                 studentExamRepository.delete(optionalStudentExam.get());
             }
 
@@ -109,8 +113,7 @@ public class StudentExamController {
             studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
             studentExamQuestion.setStudentExam(studentExam);
             studentExam.getStudentExamQuestions().add(studentExamQuestion);
+            studentExamQuestionRepository.save(studentExamQuestion);
         }
-
-        studentExamRepository.save(studentExam);
     }
 }
