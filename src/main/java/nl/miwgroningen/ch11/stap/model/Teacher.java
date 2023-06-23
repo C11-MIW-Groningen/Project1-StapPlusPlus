@@ -1,11 +1,9 @@
 package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -16,28 +14,13 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher implements Comparable <Teacher> {
+
+public class Teacher extends Person {
     @Id
     @GeneratedValue
     private Long teacherId;
 
-    private String firstName;
-    private String infixName;
-    private String lastName;
-
-    @Override
-    public int compareTo(Teacher otherTeacher) {
-        return this.lastName.compareTo(otherTeacher.getLastName());
-    }
-
-    public String getDisplayName() {
-        if (infixName.equals("")) {
-            return String.format("%s %s", firstName, lastName);
-        } else {
-            return String.format("%s %s %s", firstName, infixName, lastName);
-        }
-    }
 }

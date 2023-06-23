@@ -1,6 +1,7 @@
 package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,17 +15,14 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student implements Comparable <Student>{
+
+public class Student extends Person {
     @Id
     @GeneratedValue
     private Long studentId;
-
-    private String firstName;
-    private String infixName;
-    private String lastName;
 
     private String privateEmail;
     private String schoolEmail;
@@ -35,16 +33,4 @@ public class Student implements Comparable <Student>{
     @OneToMany(mappedBy = "student")
     private Set<StudentExam> studentExams;
 
-    @Override
-    public int compareTo(Student otherStudent) {
-        return this.lastName.compareTo(otherStudent.getLastName());
-    }
-
-    public String getDisplayName() {
-        if (infixName.equals("")) {
-            return String.format("%s %s", firstName, lastName);
-        } else {
-            return String.format("%s %s %s", firstName, infixName, lastName);
-        }
-    }
 }
