@@ -123,7 +123,9 @@ public class SeedController {
                 .name("Software Engineering")
                 .description("In de omscholing Software Engineering leer je softwaresystemen ontwerpen, realiseren " +
                         "en testen. Je werkt met verschillende programmeertalen en ontwikkelmethoden.")
-                .imageUrl("https://www.dqsglobal.com/var/site/storage/images/_aliases/cw_large_2x/3/3/4/7/747433-10-ger-DE/f4cb829ab49c-datensicherheit-explore-dqs-shutterstock_1233182206.jpg")
+                .imageUrl("https://www.dqsglobal.com/var/site/storage/images/_" +
+                        "aliases/cw_large_2x/3/3/4/7/747433-10-ger-DE/f4cb829ab49c-" +
+                        "datensicherheit-explore-dqs-shutterstock_1233182206.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
         courseRepository.save(course1);
@@ -131,7 +133,8 @@ public class SeedController {
         Course course2 = Course.builder()
                 .name("Functioneel Beheer")
                 .description(faker.lorem().paragraph(3))
-                .imageUrl("https://www.inspry.com/wp-content/uploads/joomla-4-upgrade-vs-wordpress-migration-1-scaled-1-2048x1366.jpg")
+                .imageUrl("https://www.inspry.com/wp-content/uploads/joomla-4-upgrade-vs-" +
+                        "wordpress-migration-1-scaled-1-2048x1366.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
         courseRepository.save(course2);
@@ -169,7 +172,7 @@ public class SeedController {
         }
     }
 
-    private void seedLearningGoals() {
+    private void seedRandomLearningGoals() {
         for (int learningGoal = 0; learningGoal < SEED_NUMBER_OF_LEARNING_GOALS; learningGoal++) {
             LearningGoal newLearningGoal = LearningGoal.builder()
                     .title(faker.lorem().sentence(2))
@@ -178,6 +181,42 @@ public class SeedController {
             learningGoalRepository.save(newLearningGoal);
         }
     }
+
+    private void seedLearningGoals() {
+        LearningGoal model = LearningGoal.builder()
+                .title("Model")
+                .description("Je hebt van een model class de annotations, " +
+                        "validation,kardinaliteit en hulp-functies geschreven")
+                .build();
+        learningGoalRepository.save(model);
+
+        LearningGoal view = LearningGoal.builder()
+                .title("View")
+                .description("Je kunt nieuwe elementen vinden en toepassen om je product beter te maken.")
+                .build();
+        learningGoalRepository.save(view);
+
+        LearningGoal controller = LearningGoal.builder()
+                .title("Controller")
+                .description("Je hebt in een controller Get en Post mappings geschreven," +
+                        "kunt elementen toevoegen en ophalen uit Model en Path")
+                .build();
+        learningGoalRepository.save(controller);
+
+        LearningGoal testen = LearningGoal.builder()
+                .title("Testen")
+                .description("Je hebt een test waarin je expliciet hebt nagedacht over randgevallen (edge cases).")
+                .build();
+        learningGoalRepository.save(testen);
+
+        LearningGoal git = LearningGoal.builder()
+                .title("Git / GitHub")
+                .description("Het lukt je om zelfstandig te werken in Git, je maakt gebruik van de log " +
+                        "en kunt zelf merge conflicts oplossen.")
+                .build();
+        learningGoalRepository.save(git);
+    }
+
 
     private void seedStudentExams() {
         for (Exam exam : examRepository.findAll()) {
