@@ -58,4 +58,11 @@ public class Subject {
     public void removeTeacher() {
         this.teacher = null;
     }
+
+    public void setDuration(int duration) {
+        if (duration < 1) {
+            throw new IllegalArgumentException("Duration cannot be shorter than 1 day");
+        }
+        this.duration = duration;
+    }
 }
