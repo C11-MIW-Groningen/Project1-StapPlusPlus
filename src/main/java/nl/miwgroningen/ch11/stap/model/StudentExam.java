@@ -51,7 +51,6 @@ public class StudentExam implements Comparable<StudentExam> {
             System.err.println("Total points for exam cannot be 0 or less");
             return -1;
         }
-
     }
 
     public String getDisplayGrade() {
@@ -60,10 +59,11 @@ public class StudentExam implements Comparable<StudentExam> {
 
     public void setGrade() {
         if (!studentExamQuestions.isEmpty()) {
-
-            grade = (double) pointsAttained / calculateTotalAttainablePoints()
+            double calculatedGrade = (double) pointsAttained / calculateTotalAttainablePoints()
                     * (MAXIMUM_GRADE - MINIMUM_GRADE)
                     + MINIMUM_GRADE;
+
+            grade = Math.max(Math.min(calculatedGrade, MAXIMUM_GRADE), MINIMUM_GRADE);
         }
     }
 
