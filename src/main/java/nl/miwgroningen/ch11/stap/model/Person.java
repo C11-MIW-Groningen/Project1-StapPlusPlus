@@ -31,6 +31,7 @@ public abstract class Person implements Comparable<Person> {
         return this.lastName.compareTo(otherPerson.getLastName());
     }
 
+
     public String getDisplayName() {
         if (infixName.equals("")) {
             return String.format("%s %s", firstName, lastName);
@@ -38,6 +39,8 @@ public abstract class Person implements Comparable<Person> {
             return String.format("%s %s %s", firstName, infixName, lastName);
         }
     }
+
+    // IntelliJ herkent usage niet, maar wordt wel gebruikt
     public void setFirstName(String firstName) {
         if (firstName.isBlank()) {
             throw new IllegalArgumentException("First name cannot be blank.");
@@ -45,6 +48,7 @@ public abstract class Person implements Comparable<Person> {
         this.firstName = firstName;
     }
 
+    // IntelliJ herkent usage niet, maar wordt wel gebruikt
     public void setLastName(String lastName) {
         if (lastName.isBlank()) {
             throw new IllegalArgumentException("Last name cannot be blank.");
