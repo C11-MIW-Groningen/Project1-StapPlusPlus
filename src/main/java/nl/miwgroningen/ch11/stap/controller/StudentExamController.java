@@ -23,12 +23,17 @@ import java.util.Optional;
 @RequestMapping("/studentExam")
 @RequiredArgsConstructor
 public class StudentExamController {
+    private static final String REDIRECT_EXAM_DETAILS = "redirect:/exam/details/%d";
+    private static final String REDIRECT_EXAM_OVERVIEW = "redirect:/exam/all";
+    private static final String REDIRECT_EXAM_RESULTS = "redirect:/exam/results/%d";
+    private static final String STUDENT_EXAM_FORM = "exam/studentExamForm";
+
     private final ExamRepository examRepository;
     private final StudentExamRepository studentExamRepository;
     private final StudentExamQuestionRepository studentExamQuestionRepository;
 
     @GetMapping("/new/{examId}")
-    private String showStudentExamForm(@PathVariable("examId") Long examId, Model model) {
+    public String showStudentExamForm(@PathVariable("examId") Long examId, Model model) {
         Optional<Exam> optionalExam = examRepository.findById(examId);
 
         if (optionalExam.isPresent()) {
@@ -39,27 +44,27 @@ public class StudentExamController {
 
             model.addAttribute("studentExam", studentExam);
 
-            return "exam/studentExamForm";
+            return STUDENT_EXAM_FORM;
         }
 
-        return String.format("redirect:/exam/details/%d", examId);
+        return String.format(REDIRECT_EXAM_DETAILS, examId);
     }
 
     @GetMapping("/edit/{studentExamId}")
-    private String showEditStudentExamForm(@PathVariable("studentExamId") Long studentExamId, Model model) {
+    public String showEditStudentExamForm(@PathVariable("studentExamId") Long studentExamId, Model model) {
         Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
 
         if (optionalStudentExam.isPresent()) {
             model.addAttribute("studentExam", optionalStudentExam.get());
 
-            return "exam/studentExamForm";
+            return STUDENT_EXAM_FORM;
         }
 
-        return "redirect:/exam/all";
+        return REDIRECT_EXAM_OVERVIEW;
     }
 
     @PostMapping("/new")
-    private String saveStudentExam(@ModelAttribute("studentExam") StudentExam studentExamToSave, BindingResult result) {
+    public String saveStudentExam(@ModelAttribute("studentExam") StudentExam studentExamToSave, BindingResult result) {
         if (!result.hasErrors()) {
             studentExamQuestionRepository.saveAll(studentExamToSave.getStudentExamQuestions());
             studentExamToSave.setPointsAttained();
@@ -67,11 +72,11 @@ public class StudentExamController {
             studentExamRepository.save(studentExamToSave);
         }
 
-        return String.format("redirect:/exam/results/%d", studentExamToSave.getExam().getExamId());
+        return String.format(REDIRECT_EXAM_RESULTS, studentExamToSave.getExam().getExamId());
     }
 
     @GetMapping("/delete/{studentExamId}")
-    private String deleteExam(@PathVariable("studentExamId") Long studentExamId) {
+    public String deleteExam(@PathVariable("studentExamId") Long studentExamId) {
         Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
 
         if (optionalStudentExam.isPresent()) {
@@ -80,14 +85,14 @@ public class StudentExamController {
             studentExamQuestionRepository.deleteAll(optionalStudentExam.get().getStudentExamQuestions());
             studentExamRepository.delete(optionalStudentExam.get());
 
-            return String.format("redirect:/exam/results/%d", exam.getExamId());
+            return String.format(REDIRECT_EXAM_RESULTS, exam.getExamId());
         }
 
-        return "redirect:/exam/all";
+        return REDIRECT_EXAM_OVERVIEW;
     }
 
     @GetMapping("/cancel/{studentExamId}")
-    private String cancelStudentExam(@PathVariable("studentExamId") Long studentExamId) {
+    public String cancelStudentExam(@PathVariable("studentExamId") Long studentExamId) {
         Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
 
         if (optionalStudentExam.isPresent()) {
@@ -101,10 +106,10 @@ public class StudentExamController {
                 studentExamRepository.delete(optionalStudentExam.get());
             }
 
-            return String.format("redirect:/exam/results/%d", exam.getExamId());
+            return String.format(REDIRECT_EXAM_RESULTS, exam.getExamId());
         }
 
-        return "redirect:/exam/all";
+        return REDIRECT_EXAM_OVERVIEW;
     }
 
     private void addStudentExamQuestions(StudentExam studentExam) {

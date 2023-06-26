@@ -20,6 +20,7 @@ import java.util.List;
 public class StudentExam implements Comparable<StudentExam> {
     private static final int MINIMUM_GRADE = 1;
     private static final int MAXIMUM_GRADE = 10;
+
     @Id @GeneratedValue
     private Long studentExamId;
 

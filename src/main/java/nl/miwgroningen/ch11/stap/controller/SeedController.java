@@ -49,7 +49,7 @@ public class SeedController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/seed")
-    private String seedDatabase() {
+    public String seedDatabase() {
         seedLearningGoals();
         seedTeachers();
         seedSubjects();
@@ -150,7 +150,7 @@ public class SeedController {
 
             Exam newExam = Exam.builder()
                     .cohort(randomCohort)
-                    .examDate(randomCohort.getStartDate().plusWeeks(exam + 1))
+                    .examDate(randomCohort.getStartDate().plusWeeks(exam + 1L))
                     .subject(getRandomSubject())
                     .resit(resit)
                     .build();

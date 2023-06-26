@@ -30,11 +30,11 @@
             <td th:text="${#temporals.format(exam.examDate, 'dd-MM-yyyy')}"></td>
             <td>
                 <span th:if="${exam.cohort != null}">
-                        <span th:replace="fragments/buttons ::
+                    <span th:replace="fragments/buttons ::
                         link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.number})},
                         'Cohort ' + ${exam.cohort.number})">
-                        </span>
                     </span>
+                </span>
                 <span th:unless="${exam.cohort != null}"></span>
             </td>
             <td>

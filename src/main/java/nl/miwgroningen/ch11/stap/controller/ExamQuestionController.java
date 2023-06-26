@@ -22,11 +22,13 @@ import java.util.Optional;
 @RequestMapping("/question")
 @RequiredArgsConstructor
 public class ExamQuestionController {
+    private static final String REDIRECT_EXAM_OVERVIEW = "redirect:/exam/all";
+
     private final ExamQuestionRepository examQuestionRepository;
     private final ExamRepository examRepository;
 
     @GetMapping("/new/{examId}")
-    private String showExamQuestionForm(@PathVariable("examId") Long examId, Model model) {
+    public String showExamQuestionForm(@PathVariable("examId") Long examId, Model model) {
         Optional<Exam> optionalExam = examRepository.findById(examId);
 
         if (optionalExam.isPresent()) {
@@ -40,7 +42,7 @@ public class ExamQuestionController {
     }
 
     @GetMapping("/edit/{examQuestionId}")
-    private String showEditExamQuestionForm(@PathVariable("examQuestionId") Long examQuestionId, Model model) {
+    public String showEditExamQuestionForm(@PathVariable("examQuestionId") Long examQuestionId, Model model) {
         Optional<ExamQuestion> optionalExamQuestion = examQuestionRepository.findById(examQuestionId);
 
         if (optionalExamQuestion.isPresent()) {
@@ -49,11 +51,11 @@ public class ExamQuestionController {
             return "exam/examQuestionForm";
         }
 
-        return "redirect:/exam/all";
+        return REDIRECT_EXAM_OVERVIEW;
     }
 
     @PostMapping("/new")
-    private String saveExamQuestion(@ModelAttribute("examQuestion") ExamQuestion examQuestionToSave,
+    public String saveExamQuestion(@ModelAttribute("examQuestion") ExamQuestion examQuestionToSave,
                                     BindingResult result) {
         if (!result.hasErrors()) {
             examQuestionRepository.save(examQuestionToSave);
@@ -62,11 +64,11 @@ public class ExamQuestionController {
             return String.format("redirect:/exam/details/%d", examQuestionToSave.getExam().getExamId());
         }
 
-        return "redirect:/exam/all";
+        return REDIRECT_EXAM_OVERVIEW;
     }
 
     @GetMapping("/delete/{questionId}")
-    private String deleteExamQuestion(@PathVariable("questionId") Long questionId) {
+    public String deleteExamQuestion(@PathVariable("questionId") Long questionId) {
         Optional<ExamQuestion> optionalExamQuestion = examQuestionRepository.findById(questionId);
 
         if (optionalExamQuestion.isPresent()) {
@@ -76,6 +78,6 @@ public class ExamQuestionController {
             return String.format("redirect:/exam/details/%d", exam.getExamId());
         }
 
-        return "redirect:/exam/all";
+        return REDIRECT_EXAM_OVERVIEW;
     }
 }
