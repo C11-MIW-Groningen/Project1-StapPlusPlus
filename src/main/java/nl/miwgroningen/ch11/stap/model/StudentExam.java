@@ -13,6 +13,7 @@ import java.util.List;
  */
 
 @Entity
+//@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueExamAndStudent", columnNames = {"exam_exam_id", "student_student_id"})})
 @Getter @Setter
 @Builder
 @NoArgsConstructor
@@ -43,12 +44,7 @@ public class StudentExam implements Comparable<StudentExam> {
             totalAttainablePoints += examQuestion.getAttainablePoints();
         }
 
-        if (totalAttainablePoints > 0) {
-            return totalAttainablePoints;
-        } else {
-            System.err.println("Total attainable points per exam cannot be 0 or below.");
-            return -1;
-        }
+        return totalAttainablePoints;
     }
 
     public String getDisplayGrade() {
@@ -56,16 +52,16 @@ public class StudentExam implements Comparable<StudentExam> {
     }
 
     public void setGrade() {
-        if (!studentExamQuestions.isEmpty()) {
-            pointsAttained = setPointsAttained();
+        pointsAttained = getPointsAttained();
 
+        if (!studentExamQuestions.isEmpty()) {
             grade = (double) pointsAttained / calculateTotalAttainablePoints()
                     * (MAXIMUM_GRADE - MINIMUM_GRADE)
                     + MINIMUM_GRADE;
         }
     }
 
-    private int setPointsAttained() {
+    private int getPointsAttained() {
         int sumPoints = 0;
 
         for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
