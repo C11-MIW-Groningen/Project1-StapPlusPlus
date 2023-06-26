@@ -28,6 +28,8 @@ public class StudentExamController {
     private static final String REDIRECT_EXAM_RESULTS = "redirect:/exam/results/%d";
     private static final String STUDENT_EXAM_FORM = "exam/studentExamForm";
 
+    private static final int DEFAULT_QUESTION_POINTS_ATTAINED = 5;
+
     private final ExamRepository examRepository;
     private final StudentExamRepository studentExamRepository;
     private final StudentExamQuestionRepository studentExamQuestionRepository;
@@ -116,6 +118,7 @@ public class StudentExamController {
         for (ExamQuestion examQuestion : studentExam.getExam().getExamQuestions()) {
             StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
             studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
+            studentExamQuestion.setPointsAttained(DEFAULT_QUESTION_POINTS_ATTAINED);
             studentExamQuestion.setStudentExam(studentExam);
             studentExam.getStudentExamQuestions().add(studentExamQuestion);
             studentExamQuestionRepository.save(studentExamQuestion);
