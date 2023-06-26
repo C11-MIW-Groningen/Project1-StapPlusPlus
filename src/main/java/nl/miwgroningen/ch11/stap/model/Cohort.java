@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,10 +42,16 @@ public class Cohort {
     }
 
     public void removeStudent(Student student) {
+        if (!students.contains(student)){
+            throw new IllegalArgumentException("Student not present in this cohort");
+        }
         students.remove(student);
     }
 
     public void addStudent(Student student) {
+        if (students.contains(student)) {
+            throw new IllegalArgumentException("Student already present in this cohort");
+        }
         students.add(student);
     }
 }
