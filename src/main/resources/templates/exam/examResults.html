@@ -14,7 +14,16 @@
             <h3 th:text="${shownExam.displayExamSubtitle}"></h3>
         </span>
         <span class="col">
-            <span th:replace="fragments/buttons :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})">
+            <span th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
+                <span th:replace="fragments/buttons :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})">
+                </span>
+            </span>
+            <span th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
+                <button type="button" disabled="disabled" style="pointer-events: none;"
+                        class="btn btn-success float-end btn-new" aria-disabled="true">
+                    <span th:replace="fragments/icons :: newIcon"></span>
+                    <span>Alle studenten toegevoegd</span>
+                </button>
             </span>
         </span>
     </div>

@@ -42,6 +42,7 @@ class StudentExamTest {
         for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
             studentExamQuestion.setPointsAttained(5);
         }
+        studentExam.setPointsAttained();
         studentExam.setGrade();
 
         assertEquals(10, studentExam.getGrade());
@@ -53,6 +54,8 @@ class StudentExamTest {
         for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
             studentExamQuestion.setPointsAttained(0);
         }
+
+        studentExam.setPointsAttained();
         studentExam.setGrade();
 
         assertEquals(1, studentExam.getGrade());
@@ -69,6 +72,7 @@ class StudentExamTest {
             studentExamQuestions.get(question).setPointsAttained(3);
         }
 
+        studentExam.setPointsAttained();
         studentExam.setGrade();
 
         assertEquals(5.5, studentExam.getGrade());

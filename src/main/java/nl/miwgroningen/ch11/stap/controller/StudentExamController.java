@@ -69,6 +69,7 @@ public class StudentExamController {
     public String saveStudentExam(@ModelAttribute("studentExam") StudentExam studentExamToSave, BindingResult result) {
         if (!result.hasErrors()) {
             studentExamQuestionRepository.saveAll(studentExamToSave.getStudentExamQuestions());
+            studentExamToSave.setPointsAttained();
             studentExamToSave.setGrade();
             studentExamRepository.save(studentExamToSave);
         }
