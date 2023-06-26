@@ -13,12 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SubjectTest {
 
+    private Subject createSubjectWithDuration(int duration) {
+        Subject subject = new Subject();
+        subject.setDuration(duration);
+        return subject;
+    }
+
     @Test
     @DisplayName("Should return 1 day")
     void shouldReturn1Day() {
-        Subject subject = new Subject();
-        int numberOfDays = 1;
-        subject.setDuration(numberOfDays);
+        Subject subject = createSubjectWithDuration(1);
         String expectedString = "1 dag";
 
         assertEquals(expectedString, subject.getDurationString());
@@ -28,39 +32,35 @@ class SubjectTest {
     @DisplayName("Should show the correct amount of days")
     @ValueSource(ints = {2, 5, 9})
     void shouldShowTheCorrectAmountOfDays(int expectedNumberOfDays) {
-        Subject subject = new Subject();
-        subject.setDuration(expectedNumberOfDays);
+        Subject subject = createSubjectWithDuration(expectedNumberOfDays);
+        String expectedString = expectedNumberOfDays + " dagen";
 
-        assertEquals(String.format(expectedNumberOfDays + " dagen"), subject.getDurationString());
+        assertEquals(expectedString, subject.getDurationString());
     }
 
     @Test
     @DisplayName("Should show 2 weeks")
     void shouldShow2Weeks() {
-        Subject subject = new Subject();
-        subject.setDuration(10);
+        Subject subject1 = createSubjectWithDuration(10);
         String expectedString = "2 weken";
 
-        Subject subject1 = new Subject();
-        subject1.setDuration(12);
+        Subject subject2 = createSubjectWithDuration(12);
         String expectedString1 = "2 weken";
 
-        assertAll(() -> assertEquals(expectedString, subject.getDurationString()),
-                () -> assertEquals(expectedString1, subject1.getDurationString()));
+        assertAll(() -> assertEquals(expectedString, subject1.getDurationString()),
+                () -> assertEquals(expectedString1, subject2.getDurationString()));
     }
 
     @Test
     @DisplayName("Should show 3 weeks")
     void shouldShow3Weeks() {
-        Subject subject = new Subject();
-        subject.setDuration(13);
+        Subject subject1 = createSubjectWithDuration(13);
         String expectedString = "3 weken";
 
-        Subject subject1 = new Subject();
-        subject1.setDuration(17);
+        Subject subject2 = createSubjectWithDuration(17);
         String expectedString1 = "3 weken";
 
-        assertAll(() -> assertEquals(expectedString, subject.getDurationString()),
-                () -> assertEquals(expectedString1, subject1.getDurationString()));
+        assertAll(() -> assertEquals(expectedString, subject1.getDurationString()),
+                () -> assertEquals(expectedString1, subject2.getDurationString()));
     }
 }
