@@ -17,6 +17,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+// Intellij claims to not recognise columnNames, but the unique constraint is applied anyway.
+@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueCohortAndCourse", columnNames = {"number", "course_course_id"})})
 
 public class Cohort {
     @Id
