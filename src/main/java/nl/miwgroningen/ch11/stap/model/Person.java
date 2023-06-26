@@ -18,7 +18,7 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Person implements Comparable<Person> {
+public abstract class Person implements Comparable<Person> {
 
     @Column(nullable = false)
     private String firstName;
@@ -37,5 +37,21 @@ public class Person implements Comparable<Person> {
         } else {
             return String.format("%s %s %s", firstName, infixName, lastName);
         }
+    }
+
+    // IntelliJ doesn't recognize usage due to lombok
+    public void setFirstName(String firstName) {
+        if (firstName.isBlank()) {
+            throw new IllegalArgumentException("First name cannot be blank.");
+        }
+        this.firstName = firstName;
+    }
+
+    // IntelliJ doesn't recognize usage due to lombok
+    public void setLastName(String lastName) {
+        if (lastName.isBlank()) {
+            throw new IllegalArgumentException("Last name cannot be blank.");
+        }
+        this.lastName = lastName;
     }
 }

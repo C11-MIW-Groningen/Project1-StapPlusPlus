@@ -16,7 +16,7 @@
 
           <div class="form-group col-md-4">
                 <label class="form-label">Voornaam</label>
-                <input type="text" class="form-control" th:field="*{firstName}">
+                <input type="text" class="form-control" th:field="*{firstName}" required>
           </div>
           <div class="form-group col-md-4">
                 <label class="form-label">Tussenvoegsel</label>
@@ -24,7 +24,7 @@
           </div>
           <div class="form-group col-md-4">
                 <label class="form-label">Achternaam</label>
-                <input type="text" class="form-control" th:field="*{lastName}">
+                <input type="text" class="form-control" th:field="*{lastName}" required>
           </div>
 
       <span th:replace="fragments/buttons :: save"></span>
