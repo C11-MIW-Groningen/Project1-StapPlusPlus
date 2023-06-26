@@ -40,7 +40,9 @@ public class Subject {
     private Teacher teacher;
 
     public String getDurationString() {
-        if (duration < 10) {
+        if (duration == 1) {
+            return "1 dag";
+        } else if (duration < 10) {
             return String.format("%d dagen", duration);
         } else {
             return String.format("%.0f weken", duration / COURSE_DAYS_PER_WEEK);

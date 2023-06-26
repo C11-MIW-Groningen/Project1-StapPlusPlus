@@ -13,9 +13,20 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SubjectTest {
 
+    @Test
+    @DisplayName("Should return 1 day")
+    void shouldReturn1Day() {
+        Subject subject = new Subject();
+        int numberOfDays = 1;
+        subject.setDuration(numberOfDays);
+        String expectedString = "1 dag";
+
+        assertEquals(expectedString, subject.getDurationString());
+    }
+
     @ParameterizedTest
     @DisplayName("Should show the correct amount of days")
-    @ValueSource(ints = {1, 5, 9})
+    @ValueSource(ints = {2, 5, 9})
     void shouldShowTheCorrectAmountOfDays(int expectedNumberOfDays) {
         Subject subject = new Subject();
         subject.setDuration(expectedNumberOfDays);
@@ -24,7 +35,7 @@ class SubjectTest {
     }
 
     @Test
-    @DisplayName("should show 2 weeks")
+    @DisplayName("Should show 2 weeks")
     void shouldShow2Weeks() {
         Subject subject = new Subject();
         subject.setDuration(10);
@@ -39,7 +50,7 @@ class SubjectTest {
     }
 
     @Test
-    @DisplayName("should show 3 weeks")
+    @DisplayName("Should show 3 weeks")
     void shouldShow3Weeks() {
         Subject subject = new Subject();
         subject.setDuration(13);
