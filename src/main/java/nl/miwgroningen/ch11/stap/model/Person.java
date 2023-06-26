@@ -18,7 +18,7 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Person implements Comparable<Person> {
+public abstract class Person implements Comparable<Person> {
 
     @Column(nullable = false)
     private String firstName;

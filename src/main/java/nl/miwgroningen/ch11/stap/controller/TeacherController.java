@@ -73,21 +73,6 @@ public class TeacherController {
         return "redirect:/teacher/all";
     }
 
-//    @GetMapping("/delete/{cohortId}")
-//    private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
-//        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
-//
-//        if (optionalCohort.isPresent()) {
-//            for (Exam exam : optionalCohort.get().getExams()) {
-//                exam.removeCohort();
-//                examRepository.save(exam);
-//            }
-//            cohortRepository.deleteById(cohortId);
-//        }
-//
-//        return "redirect:/cohort/all";
-//    }
-
     @PostMapping("/new")
     private String saveOrUpdateTeacher(@ModelAttribute("newTeacher") Teacher teacher, BindingResult result) {
         if (!result.hasErrors()) {
