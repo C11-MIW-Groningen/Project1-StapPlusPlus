@@ -44,7 +44,13 @@ public class StudentExam implements Comparable<StudentExam> {
             totalAttainablePoints += examQuestion.getAttainablePoints();
         }
 
-        return totalAttainablePoints;
+        if (totalAttainablePoints > 0) {
+            return totalAttainablePoints;
+        } else {
+            System.err.println("Total points for exam cannot be 0 or less");
+            return -1;
+        }
+
     }
 
     public String getDisplayGrade() {
@@ -55,6 +61,7 @@ public class StudentExam implements Comparable<StudentExam> {
         pointsAttained = getPointsAttained();
 
         if (!studentExamQuestions.isEmpty()) {
+
             grade = (double) pointsAttained / calculateTotalAttainablePoints()
                     * (MAXIMUM_GRADE - MINIMUM_GRADE)
                     + MINIMUM_GRADE;
@@ -62,6 +69,7 @@ public class StudentExam implements Comparable<StudentExam> {
     }
 
     private int getPointsAttained() {
+
         int sumPoints = 0;
 
         for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
