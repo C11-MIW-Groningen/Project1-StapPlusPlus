@@ -38,4 +38,17 @@ public abstract class Person implements Comparable<Person> {
             return String.format("%s %s %s", firstName, infixName, lastName);
         }
     }
+    public void setFirstName(String firstName) {
+        if (firstName.isBlank()) {
+            throw new IllegalArgumentException("First name cannot be blank.");
+        }
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        if (lastName.isBlank()) {
+            throw new IllegalArgumentException("Last name cannot be blank.");
+        }
+        this.lastName = lastName;
+    }
 }
