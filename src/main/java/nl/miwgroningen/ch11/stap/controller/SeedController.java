@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.persistence.Cacheable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
