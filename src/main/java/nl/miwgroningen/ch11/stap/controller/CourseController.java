@@ -24,71 +24,79 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class CourseController {
+    private static final String REDIRECT_COURSE_DETAILS = "redirect:/course/details/%s";
+    private static final String REDIRECT_COURSE_OVERVIEW = "redirect:/course/all";
+    private static final String REDIRECT_ROOT = "redirect:/";
+
+    private static final String VIEW_COURSE_OVERVIEW = "course/courseOverview";
+    private static final String VIEW_COURSE_DETAILS = "course/courseDetails";
+    private static final String VIEW_COURSE_FORM = "course/courseForm";
+    private static final String VIEW_LANDING_PAGE = "general/landingPage";
+
     private final CohortRepository cohortRepository;
     private final CourseRepository courseRepository;
     private final SubjectRepository subjectRepository;
 
     @GetMapping("/")
-    private String showLandingPage(Model model) {
+    public String showLandingPage(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
 
-        return "general/landingPage";
+        return VIEW_LANDING_PAGE;
     }
 
     @GetMapping("/course/all")
-    private String showCourseOverview(Model model) {
+    public String showCourseOverview(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
 
-        return "course/courseOverview";
+        return VIEW_COURSE_OVERVIEW;
     }
 
     @GetMapping("/course/details/{name}")
-    private String showCourseDetails(@PathVariable("name") String name, Model model) {
+    public String showCourseDetails(@PathVariable("name") String name, Model model) {
         Optional<Course> optionalCourse = courseRepository.findByName(name);
 
         if (optionalCourse.isPresent()) {
             model.addAttribute("shownCourse", optionalCourse.get());
 
-            return "course/courseDetails";
+            return VIEW_COURSE_DETAILS;
         }
 
-        return "redirect:/";
+        return REDIRECT_ROOT;
     }
 
     @GetMapping("/course/new")
-    private String showCourseForm(Model model) {
+    public String showCourseForm(Model model) {
         model.addAttribute("course", new Course());
         model.addAttribute("allSubjects", subjectRepository.findAll());
 
-        return "course/courseForm";
+        return VIEW_COURSE_FORM;
     }
 
     @GetMapping("/course/edit/{courseId}")
-    private String showEditCourseForm(@PathVariable("courseId") Long courseId, Model model) {
+    public String showEditCourseForm(@PathVariable("courseId") Long courseId, Model model) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
 
         if (optionalCourse.isPresent()) {
             model.addAttribute("course", optionalCourse.get());
             model.addAttribute("allSubjects", subjectRepository.findAll());
 
-            return "course/courseForm";
+            return VIEW_COURSE_FORM;
         }
 
-        return "redirect:/";
+        return REDIRECT_ROOT;
     }
 
     @PostMapping("/course/new")
-    private String saveCourse(@ModelAttribute("course") Course courseToSave, BindingResult result) {
+    public String saveCourse(@ModelAttribute("course") Course courseToSave, BindingResult result) {
         if (!result.hasErrors()) {
             courseRepository.save(courseToSave);
         }
 
-        return String.format("redirect:/course/details/%s",
-                courseToSave.getName().replace(" ", "%20"));
+        return String.format(REDIRECT_COURSE_DETAILS, courseToSave.getName().replace(" ", "%20"));
     }
 
     @GetMapping("/course/delete/{courseId}")
-    private String deleteCourse(@PathVariable("courseId") Long courseId) {
+    public String deleteCourse(@PathVariable("courseId") Long courseId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
 
         if (optionalCourse.isPresent()) {
@@ -105,11 +113,11 @@ public class CourseController {
             courseRepository.delete(optionalCourse.get());
         }
 
-        return "redirect:/course/all";
+        return REDIRECT_COURSE_OVERVIEW;
     }
 
     @GetMapping("/course/remove/{courseId}/{subjectId}")
-    private String removeSubject(@PathVariable("courseId") Long courseId, @PathVariable("subjectId") Long subjectId) {
+    public String removeSubject(@PathVariable("courseId") Long courseId, @PathVariable("subjectId") Long subjectId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 
@@ -120,27 +128,27 @@ public class CourseController {
                 optionalCourse.get().setSubjects(courseSubjects);
                 courseRepository.save(optionalCourse.get());
             }
-            return String.format("redirect:/course/details/%s",
+            return String.format(REDIRECT_COURSE_DETAILS,
                     optionalCourse.get().getName().replace(" ", "%20"));
         }
 
-        return "redirect:/";
+        return REDIRECT_ROOT;
     }
 
     @GetMapping("/course/return")
-    private String returnToCourseOverview() {
-        return "redirect:/course/all";
+    public String returnToCourseOverview() {
+        return REDIRECT_COURSE_OVERVIEW;
     }
 
     @GetMapping("/course/return/{courseId}")
-    private String returnToCourseDetails(@PathVariable("courseId") Long courseId) {
+    public String returnToCourseDetails(@PathVariable("courseId") Long courseId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
 
         if (optionalCourse.isPresent()) {
-            return String.format("redirect:/course/details/%s",
+            return String.format(REDIRECT_COURSE_DETAILS,
                     optionalCourse.get().getName().replace(" ", "%20"));
         }
 
-        return "redirect:/";
+        return REDIRECT_ROOT;
     }
 }

@@ -15,8 +15,8 @@
         </span>
         <span class="col">
             <span th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
-                <span th:replace="fragments/buttons :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})">
-                </span>
+                <span th:replace="fragments/buttons
+                :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})"></span>
             </span>
             <span th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
                 <button type="button" disabled="disabled" style="pointer-events: none;"
@@ -30,29 +30,30 @@
 
     <table class="table">
         <thead class="table-secondary">
-        <tr>
-            <th>Student</th>
-            <th>Cijfer</th>
-            <th>Punten behaald</th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Student</th>
+                <th>Cijfer</th>
+                <th>Punten behaald</th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        <tr th:each="studentExam : ${shownStudentExams}">
-            <td th:if="${studentExam.student} == null">Geen student</td>
-            <td th:unless="${studentExam.student} == null" th:text="${studentExam.student.displayName}"></td>
-            <td th:text="${studentExam.displayGrade}"></td>
-            <td th:text="${studentExam.pointsAttained}"></td>
-            <td>
-                <span th:replace="fragments/buttons ::
-                edit(@{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
-            </td>
-            <td>
-                <span th:replace="fragments/buttons ::
-                delete(@{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
-            </td>
-        </tr>
+            <tr th:each="studentExam : ${shownStudentExams}">
+                <td th:if="${studentExam.student} == null">Geen student</td>
+                <td th:unless="${studentExam.student} == null" th:text="${studentExam.student.displayName}"></td>
+                <td th:text="${studentExam.displayGrade}"></td>
+                <td th:text="${studentExam.pointsAttained}"></td>
+                <td>
+                    <span th:replace="fragments/buttons
+                    :: edit(@{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
+                </td>
+                <td>
+                    <span th:replace="fragments/buttons
+                    :: delete(@{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.studentExamId})})">
+                    </span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

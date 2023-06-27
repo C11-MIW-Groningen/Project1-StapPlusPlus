@@ -24,7 +24,7 @@ public class StudentExamController {
     private static final String REDIRECT_EXAM_DETAILS = "redirect:/exam/details/%d";
     private static final String REDIRECT_EXAM_OVERVIEW = "redirect:/exam/all";
     private static final String REDIRECT_EXAM_RESULTS = "redirect:/exam/results/%d";
-    private static final String STUDENT_EXAM_FORM = "exam/studentExamForm";
+    private static final String VIEW_STUDENT_EXAM_FORM = "exam/studentExamForm";
 
     private static final int DEFAULT_QUESTION_POINTS_ATTAINED = 5;
 
@@ -45,7 +45,7 @@ public class StudentExamController {
             model.addAttribute("studentExam", studentExam);
             model.addAttribute("studentsWithoutExam", getStudentsWithoutExam(optionalExam.get()));
 
-            return STUDENT_EXAM_FORM;
+            return VIEW_STUDENT_EXAM_FORM;
         }
 
         return String.format(REDIRECT_EXAM_DETAILS, examId);
@@ -58,7 +58,7 @@ public class StudentExamController {
         if (optionalStudentExam.isPresent()) {
             model.addAttribute("studentExam", optionalStudentExam.get());
 
-            return STUDENT_EXAM_FORM;
+            return VIEW_STUDENT_EXAM_FORM;
         }
 
         return REDIRECT_EXAM_OVERVIEW;

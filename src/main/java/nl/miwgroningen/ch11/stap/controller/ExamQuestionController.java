@@ -22,7 +22,9 @@ import java.util.Optional;
 @RequestMapping("/question")
 @RequiredArgsConstructor
 public class ExamQuestionController {
+    private static final String REDIRECT_EXAM_DETAILS = "redirect:/exam/details/%d";
     private static final String REDIRECT_EXAM_OVERVIEW = "redirect:/exam/all";
+    private static final String VIEW_EXAM_QUESTION_FORM = "exam/examQuestionForm";
 
     private final ExamQuestionRepository examQuestionRepository;
     private final ExamRepository examRepository;
@@ -38,7 +40,7 @@ public class ExamQuestionController {
             model.addAttribute("examQuestion", examQuestion);
         }
 
-        return "exam/examQuestionForm";
+        return VIEW_EXAM_QUESTION_FORM;
     }
 
     @GetMapping("/edit/{examQuestionId}")
@@ -48,7 +50,7 @@ public class ExamQuestionController {
         if (optionalExamQuestion.isPresent()) {
             model.addAttribute("examQuestion", optionalExamQuestion.get());
 
-            return "exam/examQuestionForm";
+            return VIEW_EXAM_QUESTION_FORM;
         }
 
         return REDIRECT_EXAM_OVERVIEW;
@@ -61,7 +63,7 @@ public class ExamQuestionController {
             examQuestionRepository.save(examQuestionToSave);
             examRepository.save(examQuestionToSave.getExam());
 
-            return String.format("redirect:/exam/details/%d", examQuestionToSave.getExam().getExamId());
+            return String.format(REDIRECT_EXAM_DETAILS, examQuestionToSave.getExam().getExamId());
         }
 
         return REDIRECT_EXAM_OVERVIEW;
@@ -75,7 +77,7 @@ public class ExamQuestionController {
             Exam exam = optionalExamQuestion.get().getExam();
             examQuestionRepository.delete(optionalExamQuestion.get());
 
-            return String.format("redirect:/exam/details/%d", exam.getExamId());
+            return String.format(REDIRECT_EXAM_DETAILS, exam.getExamId());
         }
 
         return REDIRECT_EXAM_OVERVIEW;
