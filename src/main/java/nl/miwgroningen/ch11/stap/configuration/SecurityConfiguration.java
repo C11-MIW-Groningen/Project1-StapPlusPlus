@@ -35,8 +35,7 @@ public class SecurityConfiguration {
                         .antMatchers("/seed").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin().and()
-                .logout().logoutSuccessUrl("/");
+                .formLogin().loginPage("/login").permitAll().and().logout().logoutSuccessUrl("/");
 
         return httpSecurity.build();
     }

@@ -32,7 +32,7 @@ public class CourseController {
     private String showLandingPage(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
 
-        return "landingPage";
+        return "general/landingPage";
     }
 
     @GetMapping("/course/all")

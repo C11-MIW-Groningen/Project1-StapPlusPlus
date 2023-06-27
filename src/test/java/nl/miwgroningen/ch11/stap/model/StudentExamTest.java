@@ -15,6 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * Purpose:
  */
 class StudentExamTest {
+    private static final int NUMBER_OF_QUESTIONS = 4;
+
+    private static final int AVERAGE_ATTAINABLE_POINTS = 2;
+    private static final int MAX_ATTAINABLE_POINTS = 4;
+    private static final int MIN_ATTAINABLE_POINTS = 0;
+
+    private static final double AVERAGE_GRADE = 5.5;
+    private static final int MAXIMUM_GRADE = 10;
+    private static final int MINIMUM_GRADE = 1;
+
     List<StudentExamQuestion> studentExamQuestions;
     StudentExam studentExam;
 
@@ -23,9 +33,9 @@ class StudentExamTest {
         List<ExamQuestion> examQuestions = new ArrayList<>();
         studentExamQuestions = new ArrayList<>();
 
-        for (int question = 0; question < 4; question++) {
+        for (int question = 0; question < NUMBER_OF_QUESTIONS; question++) {
             ExamQuestion examQuestion = new ExamQuestion();
-            examQuestion.setAttainablePoints(5);
+            examQuestion.setAttainablePoints(MAX_ATTAINABLE_POINTS);
             examQuestions.add(examQuestion);
 
             studentExamQuestions.add(new StudentExamQuestion());
@@ -37,44 +47,70 @@ class StudentExamTest {
     }
 
     @Test
-    @DisplayName("Should set grade to 10 when 5 points per answered question")
-    void shouldSetGradeTo10When5PointsPerAnsweredQuestion() {
+    @DisplayName("Should set grade to maximum when max points per answered question")
+    void shouldSetGradeToMaximumWhenMaxPointsPerAnsweredQuestion() {
         for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
-            studentExamQuestion.setPointsAttained(5);
+            studentExamQuestion.setPointsAttained(MAX_ATTAINABLE_POINTS);
         }
         studentExam.setPointsAttained();
         studentExam.setGrade();
 
-        assertEquals(10, studentExam.getGrade());
+        assertEquals(MAXIMUM_GRADE, studentExam.getGrade());
     }
 
     @Test
-    @DisplayName("Should set grade to 1 when 0 points per answered question")
-    void shouldSetGradeTo1When0PointsPerAnsweredQuestion() {
+    @DisplayName("Should set grade to minimum when min points per answered question")
+    void shouldSetGradeToMinimumWhenMinPointsPerAnsweredQuestion() {
         for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
-            studentExamQuestion.setPointsAttained(0);
+            studentExamQuestion.setPointsAttained(MIN_ATTAINABLE_POINTS);
         }
 
         studentExam.setPointsAttained();
         studentExam.setGrade();
 
-        assertEquals(1, studentExam.getGrade());
+        assertEquals(MINIMUM_GRADE, studentExam.getGrade());
     }
 
     @Test
-    @DisplayName("Should set grade to 5.5 when 2 or 3 points per answered question")
-    void shouldSetGradeTo5Point5When2Or3PointsPerAnsweredQuestion() {
-        for (int question = 0; question < 2; question++) {
-            studentExamQuestions.get(question).setPointsAttained(2);
-        }
-
-        for (int question = 2; question < 4; question++) {
-            studentExamQuestions.get(question).setPointsAttained(3);
+    @DisplayName("Should set grade to average when half points per answered question")
+    void shouldSetGradeToAverageWhenHalfPointsPerAnsweredQuestion() {
+        for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
+            studentExamQuestion.setPointsAttained(AVERAGE_ATTAINABLE_POINTS);
         }
 
         studentExam.setPointsAttained();
         studentExam.setGrade();
 
-        assertEquals(5.5, studentExam.getGrade());
+        assertEquals(AVERAGE_GRADE, studentExam.getGrade());
+    }
+
+    @Test
+    @DisplayName("Should set grade to 1 when less than minimum points is entered")
+    void shouldSetGradeTo1WhenLessThan0PointsIsEntered() {
+        studentExamQuestions.get(0).setPointsAttained(MIN_ATTAINABLE_POINTS - 1);
+
+        for (int question = 1; question < NUMBER_OF_QUESTIONS; question++) {
+            studentExamQuestions.get(question).setPointsAttained(MIN_ATTAINABLE_POINTS);
+        }
+
+        studentExam.setPointsAttained();
+        studentExam.setGrade();
+
+        assertEquals(MINIMUM_GRADE, studentExam.getGrade());
+    }
+
+    @Test
+    @DisplayName("Should set grade to 10 when more than maximum points is entered")
+    void shouldSetGradeTo10WhenMoreThanMaximumPointsIsEntered() {
+        studentExamQuestions.get(0).setPointsAttained(MAX_ATTAINABLE_POINTS + 1);
+
+        for (int question = 1; question < NUMBER_OF_QUESTIONS; question++) {
+            studentExamQuestions.get(question).setPointsAttained(MAX_ATTAINABLE_POINTS);
+        }
+
+        studentExam.setPointsAttained();
+        studentExam.setGrade();
+
+        assertEquals(MAXIMUM_GRADE, studentExam.getGrade());
     }
 }

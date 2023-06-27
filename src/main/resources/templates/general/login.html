@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title>Login</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <div class="login-container d-flex justify-content-center">
+        <form th:action="@{/login}" method="post">
+            <p>Gebruikersnaam :</p>
+            <div>
+                <label><input class="form-control border-dark" type="text" name="username"/> </label>
+            </div>
+            <p>Wachtwoord :</p>
+            <div>
+                <label><input class="form-control border-dark" type="password" name="password"/> </label>
+            </div>
+            <div><input class="btn btn-primary" type="submit" value="Log in"/></div>
+
+            <p th:if="${param.error}">
+                Invalide gebruikersnaam en wachtwoord.
+            </p>
+            <p th:if="${param.logout}">
+                U bent uitgelogd.
+            </p>
+        </form>
+    </div>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

@@ -1,16 +1,14 @@
 package nl.miwgroningen.ch11.stap.controller;
 
 import lombok.RequiredArgsConstructor;
-import nl.miwgroningen.ch11.stap.model.Exam;
-import nl.miwgroningen.ch11.stap.model.ExamQuestion;
-import nl.miwgroningen.ch11.stap.model.StudentExam;
-import nl.miwgroningen.ch11.stap.model.StudentExamQuestion;
+import nl.miwgroningen.ch11.stap.model.*;
 import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,6 +43,7 @@ public class StudentExamController {
             addStudentExamQuestions(studentExam);
 
             model.addAttribute("studentExam", studentExam);
+            model.addAttribute("studentsWithoutExam", getStudentsWithoutExam(optionalExam.get()));
 
             return STUDENT_EXAM_FORM;
         }
@@ -123,5 +122,16 @@ public class StudentExamController {
             studentExam.getStudentExamQuestions().add(studentExamQuestion);
             studentExamQuestionRepository.save(studentExamQuestion);
         }
+    }
+
+    private List<Student> getStudentsWithoutExam(Exam exam) {
+        List<Student> students = exam.getCohort().getStudents();
+        List<StudentExam> studentExams = exam.getStudentExams();
+
+        for (StudentExam studentExam : studentExams) {
+            students.remove(studentExam.getStudent());
+        }
+
+        return students;
     }
 }

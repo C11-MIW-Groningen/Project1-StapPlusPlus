@@ -20,7 +20,7 @@
                 <td>Student:</td>
                 <td><label>
                     <select th:field="*{student}">
-                        <option th:each="student : ${studentExam.exam.cohort.students}"
+                        <option th:each="student : ${studentsWithoutExam}"
                                 th:value="${student.studentId}"
                                 th:text="${student.displayName}"></option>
                     </select>
