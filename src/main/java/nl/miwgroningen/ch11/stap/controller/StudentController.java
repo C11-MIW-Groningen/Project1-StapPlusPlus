@@ -21,11 +21,16 @@ import java.util.Optional;
  * @author Tristan Meinsma
  * This handles interaction on the webpage about students
  */
+
 @Controller
 @RequestMapping("/student")
 @RequiredArgsConstructor
 
 public class StudentController {
+    private static final String STUDENT_OVERVIEW = "student/studentOverview";
+    private static final String STUDENT_FORM = "student/studentForm";
+    private static final String REDIRECT_STUDENT_ALL = "redirect:/student/all";
+
     private final StudentRepository studentRepository;
     private final CohortRepository cohortRepository;
     private final StudentExamRepository studentExamRepository;
@@ -35,16 +40,18 @@ public class StudentController {
     private String showStudentOverview(Model model) {
         List<Student> students = studentRepository.findAll();
         Collections.sort(students);
+
         model.addAttribute("allStudents", students);
         model.addAttribute("newStudent", new Student());
-        return "student/studentOverview";
+
+        return STUDENT_OVERVIEW;
     }
 
     @GetMapping("/new")
     private String showStudentForm(Model model) {
         model.addAttribute("student", new Student());
 
-        return "student/studentForm";
+        return STUDENT_FORM;
     }
 
     @GetMapping("/edit/{studentId}")
@@ -53,10 +60,10 @@ public class StudentController {
 
         if (optionalStudent.isPresent()) {
             model.addAttribute("student", optionalStudent.get());
-            return "student/studentForm";
+            return STUDENT_FORM;
         }
 
-        return "redirect:/student/all";
+        return REDIRECT_STUDENT_ALL;
     }
 
     @PostMapping("/new")
@@ -68,7 +75,7 @@ public class StudentController {
             System.out.println(result.getAllErrors());
         }
 
-        return "redirect:/student/all";
+        return REDIRECT_STUDENT_ALL;
     }
 
     @GetMapping("/delete/{studentId}")
@@ -89,7 +96,7 @@ public class StudentController {
             studentRepository.deleteById(studentId);
         }
 
-        return "redirect:/student/all";
+        return REDIRECT_STUDENT_ALL;
     }
 
     @GetMapping("/cancel/{studentId}")
@@ -98,11 +105,12 @@ public class StudentController {
 
         if (optionalStudent.isPresent()) {
             List<Cohort> cohorts = optionalStudent.get().getCohorts();
+
             if ((cohorts.size()) > 0) {
                 Cohort mostRecentCohort = cohorts.get(cohorts.size() - 1);
-                return String.format("redirect:/cohort/details/%s", mostRecentCohort.getNumber());
+                return String.format("redirect:/cohort/details/%s", mostRecentCohort.getName());
             }
         }
-        return "redirect:/student/all";
+        return REDIRECT_STUDENT_ALL;
     }
 }

@@ -35,6 +35,7 @@ public class SeedController {
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
+    private static final LocalDate START_DATE_FIRST_COHORT = LocalDate.of(2000, 9, 1);
 
     private final CohortRepository cohortRepository;
     private final CourseRepository courseRepository;
@@ -176,38 +177,24 @@ public class SeedController {
     }
 
     private void seedLearningGoals() {
-        LearningGoal model = LearningGoal.builder()
-                .title("Model")
-                .description("Je hebt van een model class de annotations, " +
-                        "validation,kardinaliteit en hulp-functies geschreven")
-                .build();
-        learningGoalRepository.save(model);
+        String[] titles = {"Model", "View", "Controller", "Testen", "Git / GitHub"};
+        String[] descriptions = {"Je hebt van een model class de annotations, " +
+                "validation,kardinaliteit en hulp-functies geschreven",
+                "Je kunt nieuwe elementen vinden en toepassen om je product beter te maken.",
+                "Je hebt in een controller Get en Post mappings geschreven," +
+                        "kunt elementen toevoegen en ophalen uit Model en Path",
+                "Je hebt een test waarin je expliciet hebt nagedacht over randgevallen (edge cases).",
+                "Het lukt je om zelfstandig te werken in Git, je maakt gebruik van de log " +
+                        "en kunt zelf merge conflicts oplossen."
+        };
 
-        LearningGoal view = LearningGoal.builder()
-                .title("View")
-                .description("Je kunt nieuwe elementen vinden en toepassen om je product beter te maken.")
-                .build();
-        learningGoalRepository.save(view);
-
-        LearningGoal controller = LearningGoal.builder()
-                .title("Controller")
-                .description("Je hebt in een controller Get en Post mappings geschreven," +
-                        "kunt elementen toevoegen en ophalen uit Model en Path")
-                .build();
-        learningGoalRepository.save(controller);
-
-        LearningGoal testen = LearningGoal.builder()
-                .title("Testen")
-                .description("Je hebt een test waarin je expliciet hebt nagedacht over randgevallen (edge cases).")
-                .build();
-        learningGoalRepository.save(testen);
-
-        LearningGoal git = LearningGoal.builder()
-                .title("Git / GitHub")
-                .description("Het lukt je om zelfstandig te werken in Git, je maakt gebruik van de log " +
-                        "en kunt zelf merge conflicts oplossen.")
-                .build();
-        learningGoalRepository.save(git);
+        for (int learningGoal = 0; learningGoal < titles.length; learningGoal++) {
+            LearningGoal goal = LearningGoal.builder()
+                    .title(titles[learningGoal])
+                    .description(descriptions[learningGoal])
+                    .build();
+            learningGoalRepository.save(goal);
+        }
     }
 
     private void seedStudents() {
@@ -308,8 +295,8 @@ public class SeedController {
 
         for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
             Cohort newCohort = Cohort.builder()
-                    .number(String.valueOf(cohort + 1))
-                    .startDate(LocalDate.of(2000 + cohort, 9, 1))
+                    .name(String.valueOf(cohort + 1))
+                    .startDate(START_DATE_FIRST_COHORT.plusYears(cohort))
                     .course(getRandomCourse())
                     .students(getRandomStudents(numberOfStudentsPerCohort.get(cohort)))
                     .build();

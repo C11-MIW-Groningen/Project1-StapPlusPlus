@@ -9,12 +9,13 @@
 
 <div class="container">
     <div>
-        <h2>Cohort <span th:text="${cohort.number}"></span></h2>
+        <h2>Cohort <span th:text="${cohort.getName}"></span></h2>
         <p>Startdatum: <span th:text="${#temporals.format(cohort.startDate, 'dd-MM-yyyy')}"></span></p>
-
-        <p>Studierichting: <span th:if="${cohort.course != null}">
-                    <span th:text="${cohort.course.name}"></span></span>
-                <span th:unless="${cohort.course != null}"></span>
+        <p>Studierichting:
+            <span th:if="${cohort.course != null}">
+                <span th:text="${cohort.course.name}"></span>
+            </span>
+            <span th:unless="${cohort.course != null}"></span>
         </p>
         <p>Aantal studenten: <span th:text="${cohort.students.size()}"></span></p>
         <br>
@@ -33,17 +34,11 @@
             </select>
         </div>
 
-
         <span th:replace="/fragments/buttons :: saveCustom('Voeg student toe')"></span>
-
-
          <a class="btn btn-light" href="/cohort/all">Annuleren</a>
     </form>
 
-
-
     <h2>Studenten in dit cohort</h2>
-
     <table class="table">
         <thead>
             <tr class="table-secondary">
@@ -58,17 +53,15 @@
                 <td th:text="${student.displayName}"></td>
                 <td th:text="${student.privateEmail}"></td>
                 <td th:text="${student.schoolEmail}"></td>
-                <td><span th:replace="/fragments/buttons :: deleteCustom(@{/cohort/unenroll/{cohortId}/{studentId}(cohortId = ${cohort.cohortId}, studentId = ${student.studentId})},
+                <td><span th:replace="/fragments/buttons :: deleteCustom(@{/cohort/unenroll/{cohortId}/{studentId}
+                (cohortId = ${cohort.cohortId}, studentId = ${student.studentId})},
                 'Verwijder uit cohort')"></span></td>
             </tr>
         </tbody>
-
     </table>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
-
 <div th:replace="fragments/general :: bottomScripts"></div>
 
 </body>

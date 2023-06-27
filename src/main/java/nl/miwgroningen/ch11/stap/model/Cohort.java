@@ -18,14 +18,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 // Intellij claims to not recognise columnNames, but the unique constraint is applied anyway.
-@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueCohortAndCourse", columnNames = {"number", "course_course_id"})})
+@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueCohortAndCourse", columnNames = {"name", "course_course_id"})})
 
 public class Cohort {
     @Id
     @GeneratedValue
     private Long cohortId;
 
-    private String number;
+    private String name;
 
     @OneToMany(mappedBy = "cohort")
     private List<Exam> exams;
@@ -33,7 +33,7 @@ public class Cohort {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @ManyToOne(cascade = {CascadeType.DETACH})
+    @ManyToOne
     private Course course;
 
     @ManyToMany

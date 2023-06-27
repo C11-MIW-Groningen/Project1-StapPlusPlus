@@ -9,5 +9,4 @@ import java.util.Optional;
  * @author Tristan Meinsma
  */
 public interface CohortRepository extends JpaRepository<Cohort, Long> {
-    Optional<Cohort> findByNumber(String number);
 }
