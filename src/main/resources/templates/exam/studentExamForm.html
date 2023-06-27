@@ -37,11 +37,13 @@
         <table class="table table-borderless">
             <tr>
                 <td></td>
+                <td>Haalbare punten</td>
                 <td>Punten behaald</td>
                 <td>Feedback</td>
             </tr>
             <tr th:each="question, itemStat : ${studentExam.studentExamQuestions}">
                 <td th:text="'Vraag ' + ${question.questionNumber}"></td>
+                <td th:text="*{studentExamQuestions[__${itemStat.index}__].attainablePoints}"></td>
                 <td><label>
                     <input type="number" th:field="*{studentExamQuestions[__${itemStat.index}__].pointsAttained}">
                 </label></td>
