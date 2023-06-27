@@ -64,8 +64,6 @@ public class CohortController {
     public String showCohortDetails(@PathVariable("cohortId") Long cohortId, Model model) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
 
-        System.out.println(cohortId);
-
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
             List<Student> unenrolledStudents = getStudentsSorted();

@@ -71,6 +71,10 @@ h2 {
     background-color: #eaeaea;
 }
 
+.login-container {
+    padding: 6%;
+}
+
 #makeITWorkLogo {
     padding-left: 20px;
 }
