@@ -28,8 +28,9 @@ import java.util.Optional;
 
 public class StudentController {
     private static final String STUDENT_OVERVIEW = "student/studentOverview";
-    private static final String STUDENT_FORM = "student/studentForm";
     private static final String REDIRECT_STUDENT_ALL = "redirect:/student/all";
+    private static final String STUDENT_FORM = "student/studentForm";
+
 
     private final StudentRepository studentRepository;
     private final CohortRepository cohortRepository;
@@ -96,21 +97,6 @@ public class StudentController {
             studentRepository.deleteById(studentId);
         }
 
-        return REDIRECT_STUDENT_ALL;
-    }
-
-    @GetMapping("/cancel/{studentId}")
-    private String cancelStudentEdit(@PathVariable("studentId") Long studentId) {
-        Optional<Student> optionalStudent = studentRepository.findById(studentId);
-
-        if (optionalStudent.isPresent()) {
-            List<Cohort> cohorts = optionalStudent.get().getCohorts();
-
-            if ((cohorts.size()) > 0) {
-                Cohort mostRecentCohort = cohorts.get(cohorts.size() - 1);
-                return String.format("redirect:/cohort/details/%s", mostRecentCohort.getName());
-            }
-        }
         return REDIRECT_STUDENT_ALL;
     }
 }

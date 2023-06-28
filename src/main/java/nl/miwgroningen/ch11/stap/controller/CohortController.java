@@ -66,6 +66,30 @@ public class CohortController {
         return REDIRECT_COHORT_ALL;
     }
 
+    @PostMapping("/new")
+    private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
+        if (!result.hasErrors()) {
+            cohortRepository.save(cohort);
+        }
+
+        return REDIRECT_COHORT_ALL;
+    }
+
+     @GetMapping("/delete/{cohortId}")
+    private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
+        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
+
+        if (optionalCohort.isPresent()) {
+            for (Exam exam : optionalCohort.get().getExams()) {
+                exam.removeCohort();
+                examRepository.save(exam);
+            }
+            cohortRepository.deleteById(cohortId);
+        }
+
+        return REDIRECT_COHORT_ALL;
+    }
+
     @GetMapping("/details/{cohortId}")
     public String showCohortDetails(@PathVariable("cohortId") Long cohortId, Model model) {
         Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
@@ -112,30 +136,6 @@ public class CohortController {
         cohortRepository.save(optionalCohort.get());
 
         return REDIRECT_COHORT_DETAILS + optionalCohort.get().getCohortId();
-    }
-
-    @PostMapping("/new")
-    private String saveOrUpdateCohort(@ModelAttribute("newCohort") Cohort cohort, BindingResult result) {
-        if (!result.hasErrors()) {
-            cohortRepository.save(cohort);
-        }
-
-        return REDIRECT_COHORT_ALL;
-    }
-
-    @GetMapping("/delete/{cohortId}")
-    private String deleteCohort(@PathVariable("cohortId") Long cohortId) {
-        Optional<Cohort> optionalCohort = cohortRepository.findById(cohortId);
-
-        if (optionalCohort.isPresent()) {
-            for (Exam exam : optionalCohort.get().getExams()) {
-                exam.removeCohort();
-                examRepository.save(exam);
-            }
-            cohortRepository.deleteById(cohortId);
-        }
-
-        return REDIRECT_COHORT_ALL;
     }
 
     private List<Student> getStudentsSorted() {
