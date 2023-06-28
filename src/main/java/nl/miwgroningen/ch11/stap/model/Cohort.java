@@ -25,6 +25,7 @@ public class Cohort {
     @GeneratedValue
     private Long cohortId;
 
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "cohort")

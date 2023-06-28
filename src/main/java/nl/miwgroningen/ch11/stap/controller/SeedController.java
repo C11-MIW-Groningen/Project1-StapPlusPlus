@@ -20,7 +20,6 @@ import java.util.Random;
  */
 @Controller
 @RequiredArgsConstructor
-@Cacheable
 public class SeedController {
     private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
     private static final int SEED_NUMBER_OF_COHORTS = 3;
