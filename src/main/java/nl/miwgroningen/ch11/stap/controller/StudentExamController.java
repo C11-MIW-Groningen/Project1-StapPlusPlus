@@ -23,7 +23,8 @@ import java.util.Optional;
 public class StudentExamController {
     private static final String REDIRECT_EXAM_OVERVIEW = "redirect:/exam/all";
     private static final String REDIRECT_EXAM_RESULTS = "redirect:/exam/results/%d";
-    private static final String VIEW_STUDENT_EXAM_FORM = "exam/studentExamForm";
+    private static final String VIEW_STUDENT_EXAM_FORM = "studentExam/studentExamForm";
+    private static final String VIEW_STUDENT_EXAM_DETAILS = "studentExam/studentExamDetails";
 
     private final ExamRepository examRepository;
     private final StudentExamRepository studentExamRepository;
@@ -89,6 +90,19 @@ public class StudentExamController {
             studentExamRepository.delete(optionalStudentExam.get());
 
             return String.format(REDIRECT_EXAM_RESULTS, exam.getExamId());
+        }
+
+        return REDIRECT_EXAM_OVERVIEW;
+    }
+
+    @GetMapping("details/{studentExamId}")
+    public String showStudentExamDetails(@PathVariable("studentExamId") Long studentExamId, Model model) {
+        Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
+
+        if (optionalStudentExam.isPresent()) {
+            model.addAttribute("shownStudentExam", optionalStudentExam.get());
+
+            return VIEW_STUDENT_EXAM_DETAILS;
         }
 
         return REDIRECT_EXAM_OVERVIEW;

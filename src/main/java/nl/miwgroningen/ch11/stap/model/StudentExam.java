@@ -14,7 +14,8 @@ import java.util.List;
 
 @Entity
 // Intellij claims to not recognise columnNames, but the unique constraint is applied anyway.
-@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueExamAndStudent", columnNames = {"exam_exam_id", "student_student_id"})})
+@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueExamAndStudent",
+        columnNames = {"exam_exam_id", "student_student_id"})})
 @Getter @Setter
 @Builder
 @NoArgsConstructor
@@ -38,28 +39,13 @@ public class StudentExam implements Comparable<StudentExam> {
     private int pointsAttained;
     private double grade;
 
-    private int calculateTotalAttainablePoints() {
-        int totalAttainablePoints = 0;
-
-        for (ExamQuestion examQuestion : exam.getExamQuestions()) {
-            totalAttainablePoints += examQuestion.getAttainablePoints();
-        }
-
-        if (totalAttainablePoints > 0) {
-            return totalAttainablePoints;
-        } else {
-            System.err.println("Total points for exam cannot be 0 or less");
-            return -1;
-        }
-    }
-
     public String getDisplayGrade() {
         return String.format("%.2f", grade);
     }
 
     public void setGrade() {
         if (!studentExamQuestions.isEmpty()) {
-            double calculatedGrade = (double) pointsAttained / calculateTotalAttainablePoints()
+            double calculatedGrade = (double) pointsAttained / exam.getTotalAttainablePoints()
                     * (MAXIMUM_GRADE - MINIMUM_GRADE)
                     + MINIMUM_GRADE;
 

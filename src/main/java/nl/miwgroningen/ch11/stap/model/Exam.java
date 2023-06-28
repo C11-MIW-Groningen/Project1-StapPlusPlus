@@ -49,6 +49,21 @@ public class Exam implements Comparable<Exam> {
                 resit ? " (herkansing)" : "");
     }
 
+    public int getTotalAttainablePoints() {
+        int totalAttainablePoints = 0;
+
+        for (ExamQuestion examQuestion : examQuestions) {
+            totalAttainablePoints += examQuestion.getAttainablePoints();
+        }
+
+        if (totalAttainablePoints > 0) {
+            return totalAttainablePoints;
+        } else {
+            System.err.println("Total points for exam cannot be 0 or less");
+            return -1;
+        }
+    }
+
     public void removeCohort() {
         this.cohort = null;
     }
