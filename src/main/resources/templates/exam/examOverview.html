@@ -15,47 +15,49 @@
 
     <table class="table">
         <thead class="table-secondary">
-        <tr>
-            <th>Datum</th>
-            <th>Cohort</th>
-            <th>Tentamen</th>
-            <th>Resultaten</th>
-            <th>Herkansing</th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Datum</th>
+                <th>Cohort</th>
+                <th>Tentamen</th>
+                <th>Resultaten</th>
+                <th>Herkansing</th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        <tr th:each="exam : ${allExams}">
-            <td th:text="${#temporals.format(exam.examDate, 'dd-MM-yyyy')}"></td>
-            <td>
-                <span th:if="${exam.cohort != null}">
-                    <span th:replace="fragments/buttons ::
-                        link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.getName})},
-                        'Cohort ' + ${exam.cohort.getName})">
+            <tr th:each="exam : ${allExams}">
+                <td th:text="${#temporals.format(exam.examDate, 'dd-MM-yyyy')}"></td>
+                <td>
+                    <span th:if="${exam.cohort != null}">
+                        <span th:replace="fragments/buttons ::
+                            link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.getName})},
+                            'Cohort ' + ${exam.cohort.getName})">
+                        </span>
                     </span>
-                </span>
-                <span th:unless="${exam.cohort != null}"></span>
-            </td>
-            <td>
-                <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
-                    ${exam.subject.title})">
-                </span>
-            </td>
-            <td>
-                <span th:replace="fragments/buttons ::
-                    link(@{/exam/results/{examId}(examId=${exam.examId})}, 'Resultaat')">
-                </span>
-            </td>
-            <td th:text="${exam.resit} ? 'ja' : ''">
-            </td>
-            <td>
-                <span th:replace="fragments/buttons :: edit(@{/exam/edit/{examId}(examId=${exam.examId})})"></span>
-            </td>
-            <td>
-                <span th:replace="fragments/buttons :: delete(@{/exam/delete/{examId}(examId=${exam.examId})})"></span>
-            </td>
-        </tr>
+                    <span th:unless="${exam.cohort != null}"></span>
+                </td>
+                <td>
+                    <span th:replace="fragments/buttons :: link(@{/exam/details/{examId}(examId=${exam.examId})},
+                        ${exam.subject.title})">
+                    </span>
+                </td>
+                <td>
+                    <span th:replace="fragments/buttons ::
+                        link(@{/exam/results/{examId}(examId=${exam.examId})}, 'Resultaat')">
+                    </span>
+                </td>
+                <td th:text="${exam.resit} ? 'ja' : ''">
+                </td>
+                <td>
+                    <span th:replace="fragments/buttons
+                    :: edit(@{/exam/edit/{examId}(examId=${exam.examId})})"></span>
+                </td>
+                <td>
+                    <span th:replace="fragments/buttons
+                    :: delete(@{/exam/delete/{examId}(examId=${exam.examId})})"></span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

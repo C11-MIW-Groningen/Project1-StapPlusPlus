@@ -9,11 +9,14 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <form th:action="@{/logout}" method="post">
-        <div>
-            <input type="submit" value="Log uit" />
-        </div>
-    </form>
+    <div class="logout-container d-flex justify-content-center">
+        <form th:action="@{/logout}" method="post">
+            <p>Weet u zeker dat u wilt uitloggen?</p>
+            <div class="text-center">
+                <input class="btn btn-primary" type="submit" value="Log uit" />
+            </div>
+        </form>
+    </div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

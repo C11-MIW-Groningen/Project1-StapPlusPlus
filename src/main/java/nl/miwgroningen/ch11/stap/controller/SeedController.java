@@ -20,16 +20,19 @@ import java.util.Random;
 @Controller
 @RequiredArgsConstructor
 public class SeedController {
-    private static final int MAXIMUM_LEARNING_GOALS_PER_SUBJECT = 5;
-    private static final int SEED_NUMBER_OF_COHORTS = 3;
-    private static final int SEED_NUMBER_OF_EXAMS = 10;
-    private static final int SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM = 6;
-    private static final int SEED_NUMBER_OF_STUDENTS = 40;
-    private static final int SEED_NUMBER_OF_TEACHERS = 10;
+    private static final int COHORT_AMOUNT = 3;
+    private static final int EXAM_AMOUNT = 10;
+    private static final int EXAM_QUESTION_AMOUNT = 6;
+    private static final int STUDENT_AMOUNT = 40;
+    private static final int TEACHER_AMOUNT = 10;
 
-    private static final int MIN_NUMBER_OF_STUDENTS_PER_COHORT = 5;
-    private static final int MAX_NUMBER_OF_STUDENTS_PER_COHORT = 25;
-    private static final int SEED_EXAM_QUESTION_ATTAINABLE_POINTS = 5;
+    private static final int EXAM_MIN_GRADE = 1;
+    private static final int EXAM_MAX_GRADE = 10;
+    private static final int EXAM_QUESTION_POINTS = 5;
+    private static final int FAKER_SENTENCE_COUNT = 2;
+    private static final int GOALS_MAX_PER_SUBJECT = 5;
+    private static final int STUDENTS_MAX_PER_COHORT = 25;
+    private static final int STUDENTS_MIN_PER_COHORT = 5;
 
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
@@ -76,10 +79,11 @@ public class SeedController {
         List<LearningGoal> allLearningGoals = learningGoalRepository.findAll();
         List<LearningGoal> randomLearningGoals = new ArrayList<>();
 
-        for (int learningGoal = 0; learningGoal < random.nextInt(MAXIMUM_LEARNING_GOALS_PER_SUBJECT); learningGoal++) {
+        for (int learningGoal = 0; learningGoal < random.nextInt(GOALS_MAX_PER_SUBJECT); learningGoal++) {
             int randomLearningGoal = random.nextInt(allLearningGoals.size() - 1);
             randomLearningGoals.add(allLearningGoals.get(randomLearningGoal));
         }
+
         return randomLearningGoals;
     }
 
@@ -96,6 +100,7 @@ public class SeedController {
 
             randomStudents.add(allStudents.get(randomStudent));
         }
+
         return randomStudents;
     }
 
@@ -130,6 +135,7 @@ public class SeedController {
                         "datensicherheit-explore-dqs-shutterstock_1233182206.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
+
         courseRepository.save(course1);
 
         Course course2 = Course.builder()
@@ -139,14 +145,14 @@ public class SeedController {
                         "wordpress-migration-1-scaled-1-2048x1366.jpg")
                 .subjects(subjectRepository.findAll())
                 .build();
+
         courseRepository.save(course2);
     }
 
     private void seedExams() {
         boolean resit = false;
 
-        for (int exam = 0; exam < SEED_NUMBER_OF_EXAMS; exam++) {
-
+        for (int exam = 0; exam < EXAM_AMOUNT; exam++) {
             Cohort randomCohort = getRandomCohort();
 
             Exam newExam = Exam.builder()
@@ -155,20 +161,23 @@ public class SeedController {
                     .subject(getRandomSubject())
                     .resit(resit)
                     .build();
+
             examRepository.save(newExam);
             seedExamQuestions(newExam);
+
             resit = !resit;
         }
     }
 
     private void seedExamQuestions(Exam examToAddTo) {
-        for (int examQuestion = 0; examQuestion < SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM; examQuestion++) {
+        for (int examQuestion = 0; examQuestion < EXAM_QUESTION_AMOUNT; examQuestion++) {
             ExamQuestion newExamQuestion = ExamQuestion.builder()
                     .questionNumber(examQuestion + 1)
-                    .attainablePoints(SEED_EXAM_QUESTION_ATTAINABLE_POINTS)
+                    .attainablePoints(EXAM_QUESTION_POINTS)
                     .questionText(faker.lorem().sentence())
                     .exam(examToAddTo)
                     .build();
+
             examQuestionRepository.save(newExamQuestion);
             examRepository.save(examToAddTo);
         }
@@ -198,7 +207,7 @@ public class SeedController {
     private void seedStudents() {
         boolean infix = true;
 
-        for (int student = 0; student < SEED_NUMBER_OF_STUDENTS; student++) {
+        for (int student = 0; student < STUDENT_AMOUNT; student++) {
             String firstName = faker.name().firstName();
             String lastName = faker.name().lastName();
 
@@ -209,7 +218,9 @@ public class SeedController {
                     .privateEmail(String.format("%s.%s@gmail.com", firstName, lastName))
                     .schoolEmail(String.format("%s.%s@st.hanze.nl", firstName.charAt(0), lastName))
                     .build();
+
             studentRepository.save(newStudent);
+
             infix = !infix;
         }
     }
@@ -221,6 +232,7 @@ public class SeedController {
                         .exam(exam)
                         .student(student)
                         .build();
+
                 studentExamRepository.save(newStudentExam);
             }
         }
@@ -230,9 +242,9 @@ public class SeedController {
         for (StudentExam studentExam : studentExamRepository.findAll()) {
             int totalPoints = 0;
 
-            for (int question = 0; question < SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM; question++) {
-                int points = Math.max(random.nextInt(SEED_EXAM_QUESTION_ATTAINABLE_POINTS + 1),
-                        random.nextInt(SEED_EXAM_QUESTION_ATTAINABLE_POINTS + 1));
+            for (int question = 0; question < EXAM_QUESTION_AMOUNT; question++) {
+                int points = Math.max(random.nextInt(EXAM_QUESTION_POINTS + 1),
+                        random.nextInt(EXAM_QUESTION_POINTS + 1));
                 totalPoints += points;
 
                 StudentExamQuestion studentExamQuestion = StudentExamQuestion.builder()
@@ -241,6 +253,7 @@ public class SeedController {
                         .feedback(faker.lorem().sentence())
                         .studentExam(studentExam)
                         .build();
+
                 studentExamQuestionRepository.save(studentExamQuestion);
             }
 
@@ -257,10 +270,11 @@ public class SeedController {
             Subject newSubject = Subject.builder()
                     .title(subjects[subject])
                     .duration(subjectDurations[subject])
-                    .description(faker.lorem().paragraph(2))
+                    .description(faker.lorem().paragraph(FAKER_SENTENCE_COUNT))
                     .learningGoals(getRandomLearningGoals())
                     .teacher((getRandomTeacher()))
                     .build();
+
             subjectRepository.save(newSubject);
         }
     }
@@ -268,13 +282,15 @@ public class SeedController {
     private void seedTeachers() {
         boolean infix = true;
 
-        for (int teacher = 0; teacher < SEED_NUMBER_OF_TEACHERS; teacher++) {
+        for (int teacher = 0; teacher < TEACHER_AMOUNT; teacher++) {
             Teacher newTeacher = Teacher.builder()
                     .firstName(faker.name().firstName())
                     .infixName(infix ? "van" : "")
                     .lastName(faker.name().lastName())
                     .build();
+
             teacherRepository.save(newTeacher);
+
             infix = !infix;
         }
     }
@@ -285,13 +301,14 @@ public class SeedController {
                 .password(passwordEncoder.encode("userPW"))
                 .administrator(false)
                 .build();
+
         websiteUserRepository.save(websiteUser);
     }
 
     private void seedCohorts() {
         List<Integer> numberOfStudentsPerCohort = getNumberOfStudentsPerCohort();
 
-        for (int cohort = 0; cohort < SEED_NUMBER_OF_COHORTS; cohort++) {
+        for (int cohort = 0; cohort < COHORT_AMOUNT; cohort++) {
             Cohort newCohort = Cohort.builder()
                     .name(String.valueOf(cohort + 1))
                     .startDate(START_DATE_FIRST_COHORT.plusYears(cohort))
@@ -304,13 +321,12 @@ public class SeedController {
 
     private List<Integer> getNumberOfStudentsPerCohort() {
         List<Integer> numberOfStudentsPerCohort = new ArrayList<>();
-        numberOfStudentsPerCohort.add(MIN_NUMBER_OF_STUDENTS_PER_COHORT);
-        numberOfStudentsPerCohort.add(MAX_NUMBER_OF_STUDENTS_PER_COHORT);
+        numberOfStudentsPerCohort.add(STUDENTS_MIN_PER_COHORT);
+        numberOfStudentsPerCohort.add(STUDENTS_MAX_PER_COHORT);
 
-        for (int i = 2; i < SEED_NUMBER_OF_COHORTS; i++) {
-            numberOfStudentsPerCohort.add(random.nextInt(
-                    MAX_NUMBER_OF_STUDENTS_PER_COHORT - MIN_NUMBER_OF_STUDENTS_PER_COHORT)
-                    + MIN_NUMBER_OF_STUDENTS_PER_COHORT);
+        for (int i = 2; i < COHORT_AMOUNT; i++) {
+            numberOfStudentsPerCohort.add(
+                    random.nextInt(STUDENTS_MAX_PER_COHORT - STUDENTS_MIN_PER_COHORT) + STUDENTS_MIN_PER_COHORT);
         }
 
         return numberOfStudentsPerCohort;
@@ -318,8 +334,9 @@ public class SeedController {
 
     private void updateGrades(StudentExam studentExam, int points) {
         studentExam.setPointsAttained(points);
-        studentExam.setGrade( 1 + 9 * (double) points /
-                (SEED_EXAM_QUESTION_ATTAINABLE_POINTS * SEED_NUMBER_OF_EXAM_QUESTIONS_PER_EXAM));
+        studentExam.setGrade( EXAM_MIN_GRADE + (EXAM_MAX_GRADE - EXAM_MIN_GRADE) *
+                (double) points / (EXAM_QUESTION_POINTS * EXAM_QUESTION_AMOUNT));
+
         studentExamRepository.save(studentExam);
     }
 }

@@ -21,6 +21,10 @@ import java.util.Optional;
 @RequestMapping("/subject")
 @RequiredArgsConstructor
 public class SubjectController {
+    private static final String VIEW_SUBJECT_OVERVIEW = "subject/subjectOverview";
+    private static final String VIEW_SUBJECT_FORM = "subject/subjectForm";
+    private static final String REDIRECT_SUBJECT_OVERVIEW = "redirect:/subject/all";
+
     private final CourseRepository courseRepository;
     private final ExamQuestionRepository examQuestionRepository;
     private final ExamRepository examRepository;
@@ -31,23 +35,23 @@ public class SubjectController {
     private final TeacherRepository teacherRepository;
 
     @GetMapping("/all")
-    private String showSubjectOverview(Model model) {
+    public String showSubjectOverview(Model model) {
         model.addAttribute("allSubjects", subjectRepository.findAll());
 
-        return "subject/subjectOverview";
+        return VIEW_SUBJECT_OVERVIEW;
     }
 
     @GetMapping("/new")
-    private String showSubjectForm(Model model) {
+    public String showSubjectForm(Model model) {
         model.addAttribute("subject", new Subject());
         model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
         model.addAttribute("allTeachers", getAllTeachersSorted());
 
-        return "subject/subjectForm";
+        return VIEW_SUBJECT_FORM;
     }
 
     @GetMapping("/edit/{subjectId}")
-    private String showEditSubjectForm(@PathVariable("subjectId") Long subjectId, Model model) {
+    public String showEditSubjectForm(@PathVariable("subjectId") Long subjectId, Model model) {
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 
         if (optionalSubject.isPresent()) {
@@ -55,23 +59,23 @@ public class SubjectController {
             model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
             model.addAttribute("allTeachers", getAllTeachersSorted());
 
-            return "subject/subjectForm";
+            return VIEW_SUBJECT_FORM;
         }
 
-        return "redirect:/subject/all";
+        return REDIRECT_SUBJECT_OVERVIEW;
     }
 
     @PostMapping("/new")
-    private String saveSubject(@ModelAttribute("subject") Subject subjectToSave, BindingResult result) {
+    public String saveSubject(@ModelAttribute("subject") Subject subjectToSave, BindingResult result) {
         if (!result.hasErrors()) {
             subjectRepository.save(subjectToSave);
         }
 
-        return "redirect:/subject/all";
+        return REDIRECT_SUBJECT_OVERVIEW;
     }
 
     @GetMapping("/delete/{subjectId}")
-    private String deleteSubject(@PathVariable("subjectId") Long subjectId) {
+    public String deleteSubject(@PathVariable("subjectId") Long subjectId) {
         Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
 
         if (optionalSubject.isPresent()) {
@@ -81,10 +85,10 @@ public class SubjectController {
             subjectRepository.deleteById(subjectId);
         }
 
-        return "redirect:/subject/all";
+        return REDIRECT_SUBJECT_OVERVIEW;
     }
 
-    private void deleteExams(Subject subject) {
+    public void deleteExams(Subject subject) {
         for (Exam exam : subject.getExams()) {
             for (StudentExam studentExam : exam.getStudentExams()) {
                 studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
@@ -95,14 +99,14 @@ public class SubjectController {
         }
     }
 
-    private void detachCourses(Subject subject) {
+    public void detachCourses(Subject subject) {
         for (Course course : subject.getCourses()) {
             course.removeSubject(subject);
             courseRepository.save(course);
         }
     }
 
-    private List<Teacher> getAllTeachersSorted() {
+    public List<Teacher> getAllTeachersSorted() {
         List<Teacher> allTeachers = teacherRepository.findAll();
         Collections.sort(allTeachers);
 

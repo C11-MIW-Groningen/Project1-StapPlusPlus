@@ -19,6 +19,9 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentExamQuestion {
+    private static final int INVALID_QUESTION_POINTS = -1;
+    private static final int MINIMUM_POINTS = 0;
+
     @Id @GeneratedValue
     private Long studentExamQuestionId;
 
@@ -28,4 +31,18 @@ public class StudentExamQuestion {
 
     @ManyToOne
     private StudentExam studentExam;
+
+    public int getAttainablePoints() {
+        for (ExamQuestion examQuestion : studentExam.getExam().getExamQuestions()) {
+            if (examQuestion.getQuestionNumber() == questionNumber) {
+                return examQuestion.getAttainablePoints();
+            }
+        }
+
+        return INVALID_QUESTION_POINTS;
+    }
+
+    public int getMinimumPoints() {
+        return MINIMUM_POINTS;
+    }
 }

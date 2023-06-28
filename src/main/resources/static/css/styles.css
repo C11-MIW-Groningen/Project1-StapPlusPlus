@@ -15,6 +15,11 @@ h2 {
     padding-bottom: 2%;
 }
 
+h4 {
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
 .description {
     text-align: center;
     padding-bottom: 5%;
@@ -73,6 +78,14 @@ h2 {
 
 .login-container {
     padding: 6%;
+}
+
+.logout-container {
+    padding-top: 12%;
+}
+
+.student-exam-feedback-input {
+    width: 250%;
 }
 
 #makeITWorkLogo {

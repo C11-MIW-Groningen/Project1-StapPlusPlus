@@ -21,12 +21,10 @@ import java.util.Optional;
 @RequestMapping("/studentExam")
 @RequiredArgsConstructor
 public class StudentExamController {
-    private static final String REDIRECT_EXAM_DETAILS = "redirect:/exam/details/%d";
     private static final String REDIRECT_EXAM_OVERVIEW = "redirect:/exam/all";
     private static final String REDIRECT_EXAM_RESULTS = "redirect:/exam/results/%d";
-    private static final String STUDENT_EXAM_FORM = "exam/studentExamForm";
-
-    private static final int DEFAULT_QUESTION_POINTS_ATTAINED = 5;
+    private static final String VIEW_STUDENT_EXAM_FORM = "studentExam/studentExamForm";
+    private static final String VIEW_STUDENT_EXAM_DETAILS = "studentExam/studentExamDetails";
 
     private final ExamRepository examRepository;
     private final StudentExamRepository studentExamRepository;
@@ -39,16 +37,17 @@ public class StudentExamController {
         if (optionalExam.isPresent()) {
             StudentExam studentExam = new StudentExam();
             studentExam.setExam(optionalExam.get());
+
             studentExamRepository.save(studentExam);
             addStudentExamQuestions(studentExam);
 
             model.addAttribute("studentExam", studentExam);
             model.addAttribute("studentsWithoutExam", getStudentsWithoutExam(optionalExam.get()));
 
-            return STUDENT_EXAM_FORM;
+            return VIEW_STUDENT_EXAM_FORM;
         }
 
-        return String.format(REDIRECT_EXAM_DETAILS, examId);
+        return REDIRECT_EXAM_OVERVIEW;
     }
 
     @GetMapping("/edit/{studentExamId}")
@@ -56,9 +55,13 @@ public class StudentExamController {
         Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
 
         if (optionalStudentExam.isPresent()) {
-            model.addAttribute("studentExam", optionalStudentExam.get());
+            List<Student> studentsWithoutExam = getStudentsWithoutExam(optionalStudentExam.get().getExam());
+            studentsWithoutExam.add(optionalStudentExam.get().getStudent());
 
-            return STUDENT_EXAM_FORM;
+            model.addAttribute("studentExam", optionalStudentExam.get());
+            model.addAttribute("studentsWithoutExam", studentsWithoutExam);
+
+            return VIEW_STUDENT_EXAM_FORM;
         }
 
         return REDIRECT_EXAM_OVERVIEW;
@@ -92,6 +95,19 @@ public class StudentExamController {
         return REDIRECT_EXAM_OVERVIEW;
     }
 
+    @GetMapping("details/{studentExamId}")
+    public String showStudentExamDetails(@PathVariable("studentExamId") Long studentExamId, Model model) {
+        Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
+
+        if (optionalStudentExam.isPresent()) {
+            model.addAttribute("shownStudentExam", optionalStudentExam.get());
+
+            return VIEW_STUDENT_EXAM_DETAILS;
+        }
+
+        return REDIRECT_EXAM_OVERVIEW;
+    }
+
     @GetMapping("/cancel/{studentExamId}")
     public String cancelStudentExam(@PathVariable("studentExamId") Long studentExamId) {
         Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
@@ -100,11 +116,7 @@ public class StudentExamController {
             Exam exam = optionalStudentExam.get().getExam();
 
             if (optionalStudentExam.get().getStudent() == null) {
-                for (StudentExamQuestion studentExamQuestion : optionalStudentExam.get().getStudentExamQuestions()) {
-                    studentExamQuestionRepository.deleteAll(
-                            studentExamQuestion.getStudentExam().getStudentExamQuestions());
-                }
-                studentExamRepository.delete(optionalStudentExam.get());
+                deleteStudentExam(optionalStudentExam.get());
             }
 
             return String.format(REDIRECT_EXAM_RESULTS, exam.getExamId());
@@ -117,11 +129,21 @@ public class StudentExamController {
         for (ExamQuestion examQuestion : studentExam.getExam().getExamQuestions()) {
             StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
             studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
-            studentExamQuestion.setPointsAttained(DEFAULT_QUESTION_POINTS_ATTAINED);
             studentExamQuestion.setStudentExam(studentExam);
             studentExam.getStudentExamQuestions().add(studentExamQuestion);
+            studentExamQuestion.setPointsAttained(studentExamQuestion.getAttainablePoints());
+
             studentExamQuestionRepository.save(studentExamQuestion);
         }
+    }
+
+    private void deleteStudentExam(StudentExam studentExam) {
+        for (StudentExamQuestion studentExamQuestion : studentExam.getStudentExamQuestions()) {
+            studentExamQuestionRepository
+                    .deleteAll(studentExamQuestion.getStudentExam().getStudentExamQuestions());
+        }
+
+        studentExamRepository.delete(studentExam);
     }
 
     private List<Student> getStudentsWithoutExam(Exam exam) {

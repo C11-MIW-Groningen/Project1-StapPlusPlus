@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})">
+    <title th:text="${shownStudentExam.exam.displayExamTitle}"></title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <h4 th:text="${shownStudentExam.exam.displayExamTitle} + ', ' + ${shownStudentExam.exam.displayExamSubtitle}"></h4>
+    <table class="table table-borderless">
+        <tr>
+            <td>Student:</td>
+            <td th:text="${shownStudentExam.student.displayName}"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td th:text="${shownStudentExam.student.schoolEmail}"></td>
+        </tr>
+        <tr>
+            <td>Resultaat:</td>
+            <td th:text="${shownStudentExam.displayGrade}"></td>
+        </tr>
+        <tr>
+            <td>Punten behaald:</td>
+            <td th:text="${shownStudentExam.pointsAttained} + ' / '
+            + ${shownStudentExam.exam.totalAttainablePoints}"></td>
+        </tr>
+        <tr>
+            <td>Docent:</td>
+            <td th:text="${shownStudentExam.exam.subject.teacher.displayName}"></td>
+        </tr>
+        <tr>
+            <td>Cohort:</td>
+            <td th:text="${shownStudentExam.exam.cohort.number}"></td>
+        </tr>
+        <tr>
+            <td>Vak:</td>
+            <td th:text="${shownStudentExam.exam.subject.title}"></td>
+        </tr>
+        <tr>
+            <td>Leerdoelen:</td>
+            <td>
+                <table>
+                    <tr th:each="goal : ${shownStudentExam.exam.subject.learningGoals}">
+                        <td th:text="${goal.title} + ' - ' + ${goal.description}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>Vraag</th>
+                <th>Punten</th>
+                <th class="w-75">Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="question : ${shownStudentExam.studentExamQuestions}">
+                <td th:text="'Vraag ' + ${question.questionNumber}"></td>
+                <td th:text="${question.pointsAttained} + ' / ' + ${question.attainablePoints}"></td>
+                <td th:text="${question.feedback}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+
+<div th:replace="fragments/general :: bottomScripts"></div>
+
+</body>
+</html>

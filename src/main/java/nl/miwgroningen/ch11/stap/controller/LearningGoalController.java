@@ -22,6 +22,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LearningGoalController {
     private static final String REDIRECT_GOAL_OVERVIEW = "redirect:/goal/all";
+    private static final String VIEW_LEARNING_GOAL_OVERVIEW = "learningGoal/learningGoalOverview";
+    private static final String VIEW_LEARNING_GOAL_FORM = "learningGoal/learningGoalForm";
 
     private final LearningGoalRepository learningGoalRepository;
     private final SubjectRepository subjectRepository;
@@ -30,14 +32,14 @@ public class LearningGoalController {
     public String showLearningGoalOverview(Model model) {
         model.addAttribute("allLearningGoals", learningGoalRepository.findAll());
 
-        return "learningGoal/learningGoalOverview";
+        return VIEW_LEARNING_GOAL_OVERVIEW;
     }
 
     @GetMapping("/new")
     public String showLearningGoalForm(Model model) {
         model.addAttribute("learningGoal", new LearningGoal());
 
-        return "learningGoal/learningGoalForm";
+        return VIEW_LEARNING_GOAL_FORM;
     }
 
     @GetMapping("/edit/{learningGoalId}")
@@ -47,7 +49,7 @@ public class LearningGoalController {
         if (optionalLearningGoal.isPresent()) {
             model.addAttribute("learningGoal", optionalLearningGoal.get());
 
-            return "learningGoal/learningGoalForm";
+            return VIEW_LEARNING_GOAL_FORM;
         }
 
         return REDIRECT_GOAL_OVERVIEW;
