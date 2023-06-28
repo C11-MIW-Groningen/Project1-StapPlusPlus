@@ -33,7 +33,6 @@ class PersonTest {
                 () -> assertEquals(expectedNameTeacher, teacher.getDisplayName()));
     }
 
-
     @Test
     @DisplayName("should add a space around infix when present")
     void shouldAddASpaceAroundInfixWhenPresent() {
@@ -45,5 +44,16 @@ class PersonTest {
 
         assertAll(() -> assertEquals(expectedNameStudent, student.getDisplayName()),
                 () -> assertEquals(expectedNameTeacher, teacher.getDisplayName()));
+    }
+
+    @Test
+    @DisplayName("should throw IllegalArgumentException when firstName or lastName is blank")
+    void shouldThrowExceptionWhenNameIsBlank() {
+        assertAll("Blank name validation",
+            () -> assertThrows(IllegalArgumentException.class, () -> student.setFirstName("")),
+            () -> assertThrows(IllegalArgumentException.class, () -> student.setLastName("")),
+            () -> assertThrows(IllegalArgumentException.class, () -> teacher.setFirstName("")),
+            () -> assertThrows(IllegalArgumentException.class, () -> teacher.setLastName(""))
+        );
     }
 }

@@ -20,15 +20,6 @@ class SubjectTest {
         subject = new Subject();
         subject.setDuration(duration);
     }
-
-    @ParameterizedTest
-    @DisplayName("Should throw illegal argument exception")
-    @ValueSource(ints = {0, -1, -100})
-    void shouldThrowIllegalArgumentException(int invalidNumberOfDays) {
-        assertThrows(IllegalArgumentException.class,
-                () -> createSubjectWithDuration(invalidNumberOfDays));
-    }
-
     @Test
     @DisplayName("Should return 1 day")
     void shouldReturn1Day() {
@@ -55,5 +46,12 @@ class SubjectTest {
         createSubjectWithDuration(duration);
 
         assertEquals(expectedString, subject.getDurationString());
+    }
+    @ParameterizedTest
+    @DisplayName("Should throw illegal argument exception")
+    @ValueSource(ints = {0, -1, -100})
+    void shouldThrowIllegalArgumentException(int invalidNumberOfDays) {
+        assertThrows(IllegalArgumentException.class,
+                () -> createSubjectWithDuration(invalidNumberOfDays));
     }
 }
