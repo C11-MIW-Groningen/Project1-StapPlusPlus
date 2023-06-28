@@ -39,28 +39,23 @@ class SubjectTest {
     }
 
     @Test
-    @DisplayName("Should show 2 weeks")
-    void shouldShow2Weeks() {
+    @DisplayName("Should show correct amount of weeks")
+    void shouldShowCorrectAmountOfWeeks() {
         Subject subject1 = createSubjectWithDuration(10);
-        String expectedString = "2 weken";
-
-        Subject subject2 = createSubjectWithDuration(12);
         String expectedString1 = "2 weken";
 
-        assertAll(() -> assertEquals(expectedString, subject1.getDurationString()),
-                () -> assertEquals(expectedString1, subject2.getDurationString()));
-    }
+        Subject subject2 = createSubjectWithDuration(12);
+        String expectedString2 = "2 weken";
 
-    @Test
-    @DisplayName("Should show 3 weeks")
-    void shouldShow3Weeks() {
-        Subject subject1 = createSubjectWithDuration(13);
-        String expectedString = "3 weken";
+        Subject subject3 = createSubjectWithDuration(13);
+        String expectedString3 = "3 weken";
 
-        Subject subject2 = createSubjectWithDuration(17);
-        String expectedString1 = "3 weken";
+        Subject subject4 = createSubjectWithDuration(17);
+        String expectedString4 = "3 weken";
 
-        assertAll(() -> assertEquals(expectedString, subject1.getDurationString()),
-                () -> assertEquals(expectedString1, subject2.getDurationString()));
+        assertAll(() -> assertEquals(expectedString1, subject1.getDurationString()),
+                () -> assertEquals(expectedString2, subject2.getDurationString()),
+                () -> assertEquals(expectedString3, subject3.getDurationString()),
+                () -> assertEquals(expectedString4, subject4.getDurationString()));
     }
 }
