@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 public class StudentExamQuestion {
     private static final int INVALID_QUESTION_POINTS = -1;
+    private static final int MINIMUM_POINTS = 0;
 
     @Id @GeneratedValue
     private Long studentExamQuestionId;
@@ -39,5 +40,9 @@ public class StudentExamQuestion {
         }
 
         return INVALID_QUESTION_POINTS;
+    }
+
+    public int getMinimumPoints() {
+        return MINIMUM_POINTS;
     }
 }
