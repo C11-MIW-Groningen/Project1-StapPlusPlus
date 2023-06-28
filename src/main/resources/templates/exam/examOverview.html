@@ -31,8 +31,8 @@
                 <td>
                     <span th:if="${exam.cohort != null}">
                         <span th:replace="fragments/buttons ::
-                            link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.number})},
-                            'Cohort ' + ${exam.cohort.number})">
+                            link(@{/cohort/details/{cohortId}(cohortId=${exam.cohort.getName})},
+                            'Cohort ' + ${exam.cohort.getName})">
                         </span>
                     </span>
                     <span th:unless="${exam.cohort != null}"></span>

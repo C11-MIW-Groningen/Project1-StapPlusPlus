@@ -28,7 +28,7 @@
             <tr th:each="cohort : ${allCohorts}">
                 <td >
                     <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.cohortId})},
-                    'Cohort ' + ${cohort.number})"></span>
+                    'Cohort ' + ${cohort.getName})"></span>
                 </td>
                 <td><span th:if="${cohort.course != null}">
                         <span th:replace="fragments/buttons ::

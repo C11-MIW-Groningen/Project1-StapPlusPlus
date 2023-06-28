@@ -45,7 +45,7 @@ public class Exam implements Comparable<Exam> {
 
     public String getDisplayExamSubtitle() {
         return String.format("Cohort %s%s",
-                (cohort == null) ? "geen" : cohort.getNumber(),
+                (cohort == null) ? "geen" : cohort.getName(),
                 resit ? " (herkansing)" : "");
     }
 

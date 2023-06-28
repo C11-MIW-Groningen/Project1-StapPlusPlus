@@ -13,23 +13,27 @@
     <form th:action="@{/cohort/new}" method="post" th:object="${cohort}">
         <input type="hidden" th:field="*{cohortId}">
 
-
-            <div class="form-group col-md-4">
-                <label class="form-label">Cohort nummer</label>
-                <input type="text" class="form-control" th:field="*{number}">
-        </div>
         <div class="form-group col-md-4">
-                <label class="form-label">Start Datum</label>
+            <label class="form-label">Cohort nummer of naam
+                <input type="text" class="form-control" th:field="*{name}">
+            </label>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="form-label">Start Datum
                 <input type="date" class="form-control" th:field="*{startDate}">
+            </label>
         </div>
 
         <div class="form-group col-md-4">
-            <label class="form-label">Studierichting</label>
-            <select class="form-control" th:field="*{course}">
-                <option th:each="course : ${allCourses}"
+            <label class="form-label">Studierichting
+                <select class="form-control" th:field="*{course}">
+                    <option th:each="course : ${allCourses}"
                         th:value="${course.courseId}"
                         th:text="${course.name}"></option>
-            </select>
+                </select>
+            </label>
+
         </div>
 
         <!-- to add the student that are already there -->
@@ -52,7 +56,7 @@
 
         <div style="display: flex; align-items: center;">
         <h3>Studenten in dit cohort</h3>
-        <span th:replace="fragments/buttons :: editOnTitle(@{/cohort/details/{number}(number = ${cohort.number})})"></span>
+        <span th:replace="fragments/buttons :: editOnTitle(@{/cohort/details/{name}(name = ${cohort.getName})})"></span>
         </div>
 
         <table class="table">
