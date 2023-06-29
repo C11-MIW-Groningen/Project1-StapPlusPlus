@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Author: Thijs Harleman
- * Created at 13:56 on 12 Jun 2023
- * Purpose: A natural person who follows a course
+ * @author Tristan Meinsma
+ * A natural person who follows a course
  */
 
 @Entity

@@ -14,19 +14,19 @@
         <input type="hidden" th:field="*{courseId}">
 
          <div class="form-group col-md-4">
-             <label class="form-label">
+             <label class="form-label">Studierichting
                  <input type="text" class="form-control" th:field="*{name}">
              </label>
         </div>
 
         <div class="form-group col-md-4">
-                <label class="form-label">
+                <label class="form-label">Afbeelding URL
                     <input type="url" class="form-control" th:field="*{imageUrl}">
                 </label>
         </div>
 
         <div class="form-group col-md-4">
-            <label class="form-label">
+            <label class="form-label">Vakken
                 <select class="form-control" th:field="*{subjects}" multiple>
                     <option th:each="subject : ${allSubjects}"
                             th:value="${subject.subjectId}"
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group col-md-4">
-            <label class="form-label">
+            <label class="form-label">Beschrijving
                 <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
             </label>
         </div>

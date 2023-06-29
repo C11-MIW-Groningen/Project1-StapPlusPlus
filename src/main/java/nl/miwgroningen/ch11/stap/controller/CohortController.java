@@ -97,7 +97,7 @@ public class CohortController {
         if (optionalCohort.isPresent()) {
             model.addAttribute("cohort", optionalCohort.get());
 
-            List<Student> unenrolledStudents = getStudentsSorted();
+            List<Student> unenrolledStudents = getAllStudentsSorted();
             unenrolledStudents.removeAll(optionalCohort.get().getStudents());
 
             model.addAttribute("allUnenrolledStudents", unenrolledStudents);
@@ -138,7 +138,7 @@ public class CohortController {
         return REDIRECT_COHORT_DETAILS + optionalCohort.get().getCohortId();
     }
 
-    private List<Student> getStudentsSorted() {
+    private List<Student> getAllStudentsSorted() {
         List<Student> allStudents = studentRepository.findAll();
         Collections.sort(allStudents);
         return allStudents;

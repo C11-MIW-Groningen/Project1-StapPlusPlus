@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Author: Thijs Harleman
- * Created at 13:57 on 12 Jun 2023
- * Purpose: a natural person who teaches a course
+ * @author Tristan Meinsma
+ * A natural person who teaches a course
  */
 
 @Entity

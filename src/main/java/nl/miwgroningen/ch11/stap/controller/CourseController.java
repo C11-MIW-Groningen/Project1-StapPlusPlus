@@ -7,11 +7,14 @@ import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,6 @@ public class CourseController {
     private static final String REDIRECT_COURSE_DETAILS = "redirect:/course/details/%s";
     private static final String REDIRECT_COURSE_OVERVIEW = "redirect:/course/all";
     private static final String REDIRECT_ROOT = "redirect:/";
-
     private static final String VIEW_COURSE_OVERVIEW = "course/courseOverview";
     private static final String VIEW_COURSE_DETAILS = "course/courseDetails";
     private static final String VIEW_COURSE_FORM = "course/courseForm";
@@ -88,11 +90,27 @@ public class CourseController {
 
     @PostMapping("/course/new")
     public String saveCourse(@ModelAttribute("course") Course courseToSave, BindingResult result) {
+        String imageUrl = courseToSave.getImageUrl();
+
+        try {
+            byte[] imageFormatted = getBase64EncodedImage(imageUrl);
+            courseToSave.setImageFormatted(imageFormatted);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         if (!result.hasErrors()) {
             courseRepository.save(courseToSave);
         }
 
         return String.format(REDIRECT_COURSE_DETAILS, courseToSave.getName().replace(" ", "%20"));
+    }
+
+    public byte[] getBase64EncodedImage(String imageURL) throws IOException {
+        java.net.URL url = new java.net.URL(imageURL);
+        InputStream inputStream = url.openStream();
+
+        return org.apache.commons.io.IOUtils.toByteArray(inputStream);
     }
 
     @GetMapping("/course/delete/{courseId}")
