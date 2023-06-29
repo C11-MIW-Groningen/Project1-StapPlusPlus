@@ -45,7 +45,7 @@ public class SeedController {
     private final LearningGoalRepository learningGoalRepository;
     private final StudentRepository studentRepository;
     private final StudentExamRepository studentExamRepository;
-    private final StudentExamQuestionRepository studentExamQuestionRepository;
+    private final StudentExamAnswerRepository studentExamAnswerRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
     private final WebsiteUserRepository websiteUserRepository;
@@ -63,7 +63,7 @@ public class SeedController {
         seedCohorts();
         seedExams();
         seedStudentExams();
-        seedStudentExamQuestions();
+        seedStudentExamAnswers();
 
         return "redirect:/";
     }
@@ -236,7 +236,7 @@ public class SeedController {
         }
     }
 
-    private void seedStudentExamQuestions() {
+    private void seedStudentExamAnswers() {
         for (StudentExam studentExam : studentExamRepository.findAll()) {
             int totalPoints = 0;
 
@@ -245,14 +245,14 @@ public class SeedController {
                         random.nextInt(EXAM_QUESTION_POINTS + 1));
                 totalPoints += points;
 
-                StudentExamQuestion studentExamQuestion = StudentExamQuestion.builder()
+                StudentExamAnswer studentExamAnswer = StudentExamAnswer.builder()
                         .questionNumber(question + 1)
                         .pointsAttained(points)
                         .feedback(faker.lorem().sentence())
                         .studentExam(studentExam)
                         .build();
 
-                studentExamQuestionRepository.save(studentExamQuestion);
+                studentExamAnswerRepository.save(studentExamAnswer);
             }
 
             updateGrades(studentExam, totalPoints);

@@ -35,7 +35,7 @@ public class ExamController {
     private final ExamRepository examRepository;
     private final ExamQuestionRepository examQuestionRepository;
     private final StudentExamRepository studentExamRepository;
-    private final StudentExamQuestionRepository studentExamQuestionRepository;
+    private final StudentExamAnswerRepository studentExamAnswerRepository;
     private final SubjectRepository subjectRepository;
 
     @GetMapping("/all")
@@ -88,7 +88,7 @@ public class ExamController {
 
         if (optionalExam.isPresent()) {
             for (StudentExam studentExam : optionalExam.get().getStudentExams()) {
-                studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
+                studentExamAnswerRepository.deleteAll(studentExam.getStudentExamAnswers());
                 studentExamRepository.delete(studentExam);
             }
 

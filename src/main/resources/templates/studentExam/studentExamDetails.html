@@ -72,10 +72,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="question : ${shownStudentExam.studentExamQuestions}">
-                <td th:text="'Vraag ' + ${question.questionNumber}"></td>
-                <td th:text="${question.pointsAttained} + ' / ' + ${question.attainablePoints}"></td>
-                <td th:text="${question.feedback}"></td>
+            <tr th:each="answer : ${shownStudentExam.getStudentExamAnswers}">
+                <td th:text="'Vraag ' + ${answer.questionNumber}"></td>
+                <td th:text="${answer.pointsAttained} + ' / ' + ${answer.attainablePoints}"></td>
+                <td th:text="${answer.feedback}"></td>
             </tr>
         </tbody>
     </table>

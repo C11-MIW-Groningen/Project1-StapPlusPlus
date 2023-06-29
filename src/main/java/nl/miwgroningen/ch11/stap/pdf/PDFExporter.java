@@ -7,7 +7,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.LearningGoal;
 import nl.miwgroningen.ch11.stap.model.StudentExam;
-import nl.miwgroningen.ch11.stap.model.StudentExamQuestion;
+import nl.miwgroningen.ch11.stap.model.StudentExamAnswer;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -89,11 +89,11 @@ public class PDFExporter {
             table.addCell(columnName);
         }
 
-        for (StudentExamQuestion studentExamQuestion : studentExam.getStudentExamQuestions()) {
-            table.addCell(String.format("Vraag %d", studentExamQuestion.getQuestionNumber()));
-            table.addCell(String.format("%d / %d", studentExamQuestion.getPointsAttained(),
-                    studentExamQuestion.getAttainablePoints()));
-            table.addCell(studentExamQuestion.getFeedback());
+        for (StudentExamAnswer studentExamAnswer : studentExam.getStudentExamAnswers()) {
+            table.addCell(String.format("Vraag %d", studentExamAnswer.getQuestionNumber()));
+            table.addCell(String.format("%d / %d", studentExamAnswer.getPointsAttained(),
+                    studentExamAnswer.getAttainablePoints()));
+            table.addCell(studentExamAnswer.getFeedback());
         }
 
         return table;
