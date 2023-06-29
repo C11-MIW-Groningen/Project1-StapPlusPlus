@@ -30,7 +30,10 @@ public class Course {
     @ManyToMany
     private List<Subject> subjects;
 
+    @Column(length = 2048)
     private String imageUrl;
+
+    private byte[] imageFormatted;
     private String description;
 
     public void removeSubject(Subject subject) {

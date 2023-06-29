@@ -31,6 +31,8 @@ class SubjectTest {
 
     @ParameterizedTest
     @DisplayName("Should show the correct amount of days")
+
+    // 2 is minimum, 9 is maximum, 5 is somewhere in between
     @ValueSource(ints = {2, 5, 9})
     void shouldShowTheCorrectAmountOfDays(int expectedNumberOfDays) {
         createSubjectWithDuration(expectedNumberOfDays);
@@ -41,6 +43,8 @@ class SubjectTest {
 
     @ParameterizedTest
     @DisplayName("Should show correct amount of weeks")
+
+    // 10 days should show 2 weken, 12  should show 2 weken, etc.
     @CsvSource({"10, 2 weken", "12, 2 weken", "13, 3 weken"})
     void shouldShowCorrectAmountOfWeeks(int duration, String expectedString) {
         createSubjectWithDuration(duration);
@@ -49,7 +53,7 @@ class SubjectTest {
     }
     @ParameterizedTest
     @DisplayName("Should throw illegal argument exception")
-    @ValueSource(ints = {0, -1, -100})
+    @ValueSource(ints = {0, -1, Integer.MIN_VALUE})
     void shouldThrowIllegalArgumentException(int invalidNumberOfDays) {
         assertThrows(IllegalArgumentException.class,
                 () -> createSubjectWithDuration(invalidNumberOfDays));
