@@ -56,8 +56,8 @@ public class PDFExporter {
 
             document.add(title);
             document.add(getExamInfoTable());
-            document.add(getExamQuestionsHeaderTable());
-            document.add(getExamQuestionsTable());
+            document.add(getExamAnswersHeaderTable());
+            document.add(getExamAnswersTable());
         } catch (DocumentException documentException) {
             System.err.println(documentException.getMessage());
         }
@@ -81,13 +81,14 @@ public class PDFExporter {
                 studentExam.getDisplayGrade(),
                 String.format("%s / %s",
                         studentExam.getPointsAttained(), studentExam.getExam().getTotalAttainablePoints()),
-                studentExam.getExam().getSubject().getTeacher().getDisplayName(),
+                (studentExam.getExam().getSubject().getTeacher() == null) ? ""
+                : studentExam.getExam().getSubject().getTeacher().getDisplayName(),
                 studentExam.getExam().getCohort().getName(),
                 studentExam.getExam().getSubject().getTitle(),
                 getLearningGoalsString()};
     }
 
-    private PdfPTable getExamQuestionsHeaderTable() {
+    private PdfPTable getExamAnswersHeaderTable() {
         String[] columnNames = {"Vraag", "Punten", "Feedback"};
 
         PdfPTable table = buildNewTable(QUESTIONS_COLUMN_WIDTHS);
@@ -101,7 +102,7 @@ public class PDFExporter {
         return table;
     }
 
-    private PdfPTable getExamQuestionsTable() {
+    private PdfPTable getExamAnswersTable() {
         PdfPTable table = buildNewTable(QUESTIONS_COLUMN_WIDTHS);
         Font font = FontFactory.getFont(FontFactory.HELVETICA);
 

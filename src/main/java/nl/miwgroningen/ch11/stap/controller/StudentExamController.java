@@ -31,6 +31,7 @@ public class StudentExamController {
     private static final String VIEW_STUDENT_EXAM_DETAILS = "studentExam/studentExamDetails";
 
     private final ExamRepository examRepository;
+    private final StudentRepository studentRepository;
     private final StudentExamRepository studentExamRepository;
     private final StudentExamAnswerRepository studentExamAnswerRepository;
 
@@ -170,8 +171,14 @@ public class StudentExamController {
     }
 
     private List<Student> getStudentsWithoutExam(Exam exam) {
-        List<Student> students = exam.getCohort().getStudents();
+        List<Student> students;
         List<StudentExam> studentExams = exam.getStudentExams();
+
+        if (exam.getCohort() != null) {
+            students = exam.getCohort().getStudents();
+        } else {
+            students = studentRepository.findAll();
+        }
 
         for (StudentExam studentExam : studentExams) {
             students.remove(studentExam.getStudent());
