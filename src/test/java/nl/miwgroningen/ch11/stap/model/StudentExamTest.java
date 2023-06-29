@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Author: Thijs Harleman
  * Created at 09:49 on 26 Jun 2023
- * Purpose:
+ * Purpose: tests if setGrade works correctly
  */
 class StudentExamTest {
     private static final int NUMBER_OF_QUESTIONS = 4;
