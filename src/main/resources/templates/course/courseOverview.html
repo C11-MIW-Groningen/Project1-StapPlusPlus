@@ -14,24 +14,25 @@
     </div>
 
     <table class="table">
-
         <thead class="table-secondary">
-        <tr>
-            <th>Studierichtingen</th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Studierichtingen</th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        <tr th:each="course : ${allCourses}">
-
-            <td >
-                    <span th:replace="fragments/buttons :: link(@{/course/details/{courseName}(courseName=${course.name})},
-                    ${course.name})"></span>
+            <tr th:each="course : ${allCourses}">
+                <td ><span th:replace="fragments/buttons :: link(
+                @{/course/details/{courseName}(courseName=${course.name})},${course.name})"></span>
                 </td>
-            <td><span th:replace="fragments/buttons :: edit(@{/course/edit/{courseId}(courseId=${course.courseId})})"></span></td>
-            <td><span th:replace="fragments/buttons :: delete(@{/course/delete/{courseId}(courseId=${course.courseId})})"></span></td>
-        </tr>
+                <td><span th:replace="fragments/buttons :: edit(
+                @{/course/edit/{courseId}(courseId=${course.courseId})})"></span>
+                </td>
+                <td><span th:replace="fragments/buttons :: delete(
+                @{/course/delete/{courseId}(courseId=${course.courseId})})"></span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

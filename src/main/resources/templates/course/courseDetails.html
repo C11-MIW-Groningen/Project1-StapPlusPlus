@@ -11,43 +11,47 @@
 
     <div style="display: flex; align-items: center;">
         <h2 th:text="${shownCourse.name}"></h2>
-        <span th:replace="fragments/buttons :: editOnTitle(@{/course/edit/{courseId}(courseId=${shownCourse.courseId})})"
+        <span th:replace="fragments/buttons :: editOnTitle(
+        @{/course/edit/{courseId}(courseId=${shownCourse.courseId})})"
         sec:authorize="isAuthenticated()"></span>
     </div>
 
     <table class="table">
         <thead class="table-secondary">
-        <tr>
-            <th>Vak</th>
-            <th sec:authorize="isAuthenticated()">Docent</th>
-            <th>Duur</th>
-            <th>Leerdoelen</th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Vak</th>
+                <th sec:authorize="isAuthenticated()">Docent</th>
+                <th>Duur</th>
+                <th>Leerdoelen</th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        <tr th:each="subject : ${shownCourse.subjects}">
-            <td th:text="${subject.title}"></td>
-            <td><span th:if="${subject.teacher != null}">
-                    <span th:text="${subject.teacher.displayName}" sec:authorize="isAuthenticated()"></span></span>
-                <span th:unless="${subject.teacher != null}"></span>
-            </td>
-            <td th:text="${subject.getDurationString()}"></td>
-            <td>
-                <table>
-                    <tr th:each="goal : ${subject.learningGoals}">
-                        <td th:text="${goal.title}"></td>
-                    </tr>
-                </table>
-            </td>
+            <tr th:each="subject : ${shownCourse.subjects}">
+                <td th:text="${subject.title}"></td>
+                <td><span th:if="${subject.teacher != null}">
+                        <span th:text="${subject.teacher.displayName}" sec:authorize="isAuthenticated()"></span></span>
+                    <span th:unless="${subject.teacher != null}"></span>
+                </td>
+                <td th:text="${subject.getDurationString()}"></td>
+                <td>
+                    <table>
+                        <tr th:each="goal : ${subject.learningGoals}">
+                            <td th:text="${goal.title}"></td>
+                        </tr>
+                    </table>
+                </td>
 
-
-            <td><span th:replace="fragments/buttons :: edit(@{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"
-            sec:authorize="isAuthenticated()"></span></td>
-            <td><span th:replace="fragments/buttons :: delete(@{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
-            subjectId=${subject.subjectId})})" sec:authorize="isAuthenticated()"></span></td>
-        </tr>
+                <td><span th:replace="fragments/buttons :: edit(
+                @{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"
+                sec:authorize="isAuthenticated()"></span>
+                </td>
+                <td><span th:replace="fragments/buttons :: delete(
+                @{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
+                subjectId=${subject.subjectId})})" sec:authorize="isAuthenticated()"></span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

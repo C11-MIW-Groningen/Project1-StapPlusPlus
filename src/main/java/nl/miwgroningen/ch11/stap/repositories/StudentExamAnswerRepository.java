@@ -1,6 +1,6 @@
 package nl.miwgroningen.ch11.stap.repositories;
 
-import nl.miwgroningen.ch11.stap.model.StudentExamQuestion;
+import nl.miwgroningen.ch11.stap.model.StudentExamAnswer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created at 09:50 on 19 Jun 2023
  * Purpose:
  */
-public interface StudentExamQuestionRepository extends JpaRepository<StudentExamQuestion, Long> {
+public interface StudentExamAnswerRepository extends JpaRepository<StudentExamAnswer, Long> {
 }

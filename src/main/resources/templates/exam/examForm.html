@@ -13,15 +13,14 @@
     <form th:action="@{/exam/new}" method="post" th:object="${exam}">
         <input type="hidden" th:field="*{examId}">
 
-
         <div class="form-group col-md-4">
-            <label class="form-label">
+            <label class="form-label">Toets datum
                 <input type="date" class="form-control" th:field="*{examDate}">
             </label>
         </div>
 
         <div class="form-group col-md-4">
-            <label class="form-label">
+            <label class="form-label">Cohort
                 <select class="form-control" th:field="*{cohort}">
                     <option th:each="cohort : ${allCohorts}"
                             th:value="${cohort.cohortId}"
@@ -31,7 +30,7 @@
         </div>
 
         <div class="form-group col-md-4">
-            <label class="form-label">
+            <label class="form-label">Vak
                 <select class="form-control" th:field="*{subject}">
                     <option th:each="subject : ${allSubjects}"
                             th:value="${subject.subjectId}"
@@ -43,7 +42,7 @@
         <br>
 
         <div class="form-check">
-            <label class="form-check-label">
+            <label class="form-check-label">Herkansing
                 <input class="form-check-input" type="checkbox" th:field="*{resit}">
             </label>
         </div>

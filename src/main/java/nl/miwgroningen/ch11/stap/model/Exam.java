@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Exam implements Comparable<Exam> {
+    private static final int INVALID_POINTS = -1;
     @Id @GeneratedValue
     private Long examId;
 
@@ -40,13 +41,11 @@ public class Exam implements Comparable<Exam> {
 
     public String getDisplayExamTitle() {
         return String.format("Tentamen %s", (subject == null) ? "" : subject.getTitle());
-
     }
 
     public String getDisplayExamSubtitle() {
         return String.format("Cohort %s%s",
-                (cohort == null) ? "geen" : cohort.getName(),
-                resit ? " (herkansing)" : "");
+                (cohort == null) ? "geen" : cohort.getName(), resit ? " (herkansing)" : "");
     }
 
     public int getTotalAttainablePoints() {
@@ -60,7 +59,7 @@ public class Exam implements Comparable<Exam> {
             return totalAttainablePoints;
         } else {
             System.err.println("Total points for exam cannot be 0 or less");
-            return -1;
+            return INVALID_POINTS;
         }
     }
 

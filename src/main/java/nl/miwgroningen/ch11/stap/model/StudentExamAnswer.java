@@ -18,12 +18,12 @@ import javax.persistence.ManyToOne;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentExamQuestion {
+public class StudentExamAnswer {
     private static final int INVALID_QUESTION_POINTS = -1;
     private static final int MINIMUM_POINTS = 0;
 
     @Id @GeneratedValue
-    private Long studentExamQuestionId;
+    private Long studentExamAnswerId;
 
     private int questionNumber;
     private int pointsAttained;

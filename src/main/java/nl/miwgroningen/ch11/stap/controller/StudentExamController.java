@@ -32,7 +32,7 @@ public class StudentExamController {
 
     private final ExamRepository examRepository;
     private final StudentExamRepository studentExamRepository;
-    private final StudentExamQuestionRepository studentExamQuestionRepository;
+    private final StudentExamAnswerRepository studentExamAnswerRepository;
 
     @GetMapping("/new/{examId}")
     public String showStudentExamForm(@PathVariable("examId") Long examId, Model model) {
@@ -43,7 +43,7 @@ public class StudentExamController {
             studentExam.setExam(optionalExam.get());
 
             studentExamRepository.save(studentExam);
-            addStudentExamQuestions(studentExam);
+            addStudentExamAnswers(studentExam);
 
             model.addAttribute("studentExam", studentExam);
             model.addAttribute("studentsWithoutExam", getStudentsWithoutExam(optionalExam.get()));
@@ -74,7 +74,7 @@ public class StudentExamController {
     @PostMapping("/new")
     public String saveStudentExam(@ModelAttribute("studentExam") StudentExam studentExamToSave, BindingResult result) {
         if (!result.hasErrors()) {
-            studentExamQuestionRepository.saveAll(studentExamToSave.getStudentExamQuestions());
+            studentExamAnswerRepository.saveAll(studentExamToSave.getStudentExamAnswers());
             studentExamToSave.setPointsAttained();
             studentExamToSave.setGrade();
             studentExamRepository.save(studentExamToSave);
@@ -90,7 +90,7 @@ public class StudentExamController {
         if (optionalStudentExam.isPresent()) {
             Exam exam = optionalStudentExam.get().getExam();
 
-            studentExamQuestionRepository.deleteAll(optionalStudentExam.get().getStudentExamQuestions());
+            studentExamAnswerRepository.deleteAll(optionalStudentExam.get().getStudentExamAnswers());
             studentExamRepository.delete(optionalStudentExam.get());
 
             return String.format(REDIRECT_EXAM_RESULTS, exam.getExamId());
@@ -148,22 +148,22 @@ public class StudentExamController {
         }
     }
 
-    private void addStudentExamQuestions(StudentExam studentExam) {
+    private void addStudentExamAnswers(StudentExam studentExam) {
         for (ExamQuestion examQuestion : studentExam.getExam().getExamQuestions()) {
-            StudentExamQuestion studentExamQuestion = new StudentExamQuestion();
-            studentExamQuestion.setQuestionNumber(examQuestion.getQuestionNumber());
-            studentExamQuestion.setStudentExam(studentExam);
-            studentExam.getStudentExamQuestions().add(studentExamQuestion);
-            studentExamQuestion.setPointsAttained(studentExamQuestion.getAttainablePoints());
+            StudentExamAnswer studentExamAnswer = new StudentExamAnswer();
+            studentExamAnswer.setQuestionNumber(examQuestion.getQuestionNumber());
+            studentExamAnswer.setStudentExam(studentExam);
+            studentExam.getStudentExamAnswers().add(studentExamAnswer);
+            studentExamAnswer.setPointsAttained(studentExamAnswer.getAttainablePoints());
 
-            studentExamQuestionRepository.save(studentExamQuestion);
+            studentExamAnswerRepository.save(studentExamAnswer);
         }
     }
 
     private void deleteStudentExam(StudentExam studentExam) {
-        for (StudentExamQuestion studentExamQuestion : studentExam.getStudentExamQuestions()) {
-            studentExamQuestionRepository
-                    .deleteAll(studentExamQuestion.getStudentExam().getStudentExamQuestions());
+        for (StudentExamAnswer studentExamAnswer : studentExam.getStudentExamAnswers()) {
+            studentExamAnswerRepository
+                    .deleteAll(studentExamAnswer.getStudentExam().getStudentExamAnswers());
         }
 
         studentExamRepository.delete(studentExam);

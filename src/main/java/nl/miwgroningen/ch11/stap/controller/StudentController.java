@@ -5,7 +5,7 @@ import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.model.Student;
 import nl.miwgroningen.ch11.stap.model.StudentExam;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
-import nl.miwgroningen.ch11.stap.repositories.StudentExamQuestionRepository;
+import nl.miwgroningen.ch11.stap.repositories.StudentExamAnswerRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentExamRepository;
 import nl.miwgroningen.ch11.stap.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,7 @@ public class StudentController {
     private final StudentRepository studentRepository;
     private final CohortRepository cohortRepository;
     private final StudentExamRepository studentExamRepository;
-    private final StudentExamQuestionRepository studentExamQuestionRepository;
+    private final StudentExamAnswerRepository studentExamAnswerRepository;
 
     @GetMapping("/all")
     private String showStudentOverview(Model model) {
@@ -90,7 +90,7 @@ public class StudentController {
             }
 
             for (StudentExam studentExam : optionalStudent.get().getStudentExams()) {
-                studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
+                studentExamAnswerRepository.deleteAll(studentExam.getStudentExamAnswers());
                 studentExamRepository.delete(studentExam);
             }
 

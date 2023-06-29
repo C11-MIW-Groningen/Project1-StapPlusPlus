@@ -17,8 +17,7 @@
 
         <table class="table table-borderless w-50">
             <tr>
-                <td>Student:</td>
-                <td><label>
+                <td><label>Student
                     <select th:field="*{student}">
                         <option th:each="student : ${studentsWithoutExam}"
                                 th:value="${student.studentId}"
@@ -30,7 +29,7 @@
 
         <span th:replace="fragments/buttons :: save"></span>
 
-        <a class="btn"
+        <a class="btn btn-light"
            th:href="@{/studentExam/cancel/{studentExamId}(studentExamId=${studentExam.studentExamId})}">Annuleren
         </a>
 
@@ -43,30 +42,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="question, itemStat : ${studentExam.studentExamQuestions}">
-                    <td th:text="'Vraag ' + ${question.questionNumber} + '&emsp;('
-                    + *{studentExamQuestions[__${itemStat.index}__].attainablePoints} + ')'"></td>
+                <tr th:each="answer, itemStat : ${studentExam.getStudentExamAnswers}">
+                    <td th:text="'Vraag ' + ${answer.questionNumber} + '&emsp;('
+                    + *{getStudentExamAnswers[__${itemStat.index}__].attainablePoints} + ')'"></td>
                     <td><label>
                         <input class="form-control border-dark"
-                               type="number" th:min="*{studentExamQuestions[__${itemStat.index}__].minimumPoints}"
-                               th:max="*{studentExamQuestions[__${itemStat.index}__].attainablePoints}"
-                               th:field="*{studentExamQuestions[__${itemStat.index}__].pointsAttained}">
+                               type="number" th:min="*{getStudentExamAnswers[__${itemStat.index}__].minimumPoints}"
+                               th:max="*{getStudentExamAnswers[__${itemStat.index}__].attainablePoints}"
+                               th:field="*{getStudentExamAnswers[__${itemStat.index}__].pointsAttained}">
                     </label></td>
                     <td><label>
                         <input class="form-control border-dark student-exam-feedback-input"
-                               type="text" th:field="*{studentExamQuestions[__${itemStat.index}__].feedback}">
+                               type="text" th:field="*{getStudentExamAnswers[__${itemStat.index}__].feedback}">
                     </label></td>
                     <td type="hidden">
                         <input type="hidden"
-                               th:field="*{studentExamQuestions[__${itemStat.index}__].studentExamQuestionId}">
+                               th:field="*{getStudentExamAnswers[__${itemStat.index}__].getStudentExamAnswerId}">
                     </td>
                     <td type="hidden">
                         <input type="hidden"
-                               th:field="*{studentExamQuestions[__${itemStat.index}__].studentExam}">
+                               th:field="*{getStudentExamAnswers[__${itemStat.index}__].studentExam}">
                     </td>
                     <td type="hidden">
                         <input type="hidden"
-                               th:field="*{studentExamQuestions[__${itemStat.index}__].questionNumber}">
+                               th:field="*{getStudentExamAnswers[__${itemStat.index}__].questionNumber}">
                     </td>
                 </tr>
             </tbody>
@@ -74,7 +73,7 @@
 
         <span th:replace="fragments/buttons :: save"></span>
 
-        <a class="btn"
+        <a class="btn btn-light"
            th:href="@{/studentExam/cancel/{studentExamId}(studentExamId=${studentExam.studentExamId})}">Annuleren
         </a>
     </form>

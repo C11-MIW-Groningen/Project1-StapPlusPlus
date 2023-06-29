@@ -20,43 +20,8 @@ h3 {
     padding-bottom: 2%;
 }
 
-.description {
-    text-align: center;
-    padding-bottom: 5%;
-}
-
-.btn {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.btn-homepage {
-    margin-bottom: 10px;
-    background-color: #ff8f52;
-}
-
-.btn-table {
-    margin: 0;
-}
-
-.btn-new {
-    margin-right: 5%;
-}
-
-.btn-title {
-    margin-left: 20px;
-}
-
-.form-control {
-    margin-bottom: 15px
-}
-
-.navbar {
-    background-color: #eaeaea;
-}
-
-.navbar-frontpage {
-    background-color: #ffffff;
+h4 {
+    padding-bottom: 2%;
 }
 
 .banner {
@@ -72,8 +37,56 @@ h3 {
     text-align: center;
 }
 
+.btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-homepage {
+    margin-bottom: 10px;
+    background-color: #ff8f52;
+}
+
+.btn-new {
+    margin-right: 5%;
+}
+
+.btn-table {
+    margin: 0;
+}
+
+.btn-title {
+    margin-left: 20px;
+}
+
+.course {
+    flex: 50%;
+    margin: 5%;
+}
+
+.description {
+    text-align: center;
+    padding-bottom: 5%;
+}
+.exam-title {
+    display: flex;
+    align-items: center;
+}
+
 .footer {
     background-color: #eaeaea;
+}
+
+.form-control {
+    margin-bottom: 15px
+}
+
+.navbar {
+    background-color: #eaeaea;
+}
+
+.navbar-frontpage {
+    background-color: #ffffff;
 }
 
 .login-container {
@@ -88,15 +101,10 @@ h3 {
     width: 250%;
 }
 
-#makeITWorkLogo {
-    padding-left: 20px;
-}
-
 #courses-overview {
     display: flex;
 }
 
-.course {
-    flex: 50%;
-    margin: 5%;
+#makeITWorkLogo {
+    padding-left: 20px;
 }

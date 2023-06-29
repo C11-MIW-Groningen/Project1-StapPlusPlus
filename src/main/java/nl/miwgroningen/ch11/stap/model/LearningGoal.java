@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Author: Thijs Harleman
  * Created at 09:15 on 13 Jun 2023
- * Purpose: a subject has 1 or more learning goals that can be tested
+ * Purpose: a subject has 0 or more learning goals that can be tested with an exam.
  */
 @Entity
 @Getter @Setter

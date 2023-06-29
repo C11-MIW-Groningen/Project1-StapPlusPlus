@@ -34,7 +34,7 @@ public class StudentExam implements Comparable<StudentExam> {
     private Student student;
 
     @OneToMany(mappedBy = "studentExam")
-    private List<StudentExamQuestion> studentExamQuestions = new ArrayList<>();
+    private List<StudentExamAnswer> studentExamAnswers = new ArrayList<>();
 
     private int pointsAttained;
     private double grade;
@@ -44,7 +44,7 @@ public class StudentExam implements Comparable<StudentExam> {
     }
 
     public void setGrade() {
-        if (!studentExamQuestions.isEmpty()) {
+        if (!studentExamAnswers.isEmpty()) {
             double calculatedGrade = (double) pointsAttained / exam.getTotalAttainablePoints()
                     * (MAXIMUM_GRADE - MINIMUM_GRADE)
                     + MINIMUM_GRADE;
@@ -57,8 +57,8 @@ public class StudentExam implements Comparable<StudentExam> {
 
         int sumPoints = 0;
 
-        for (StudentExamQuestion studentExamQuestion : studentExamQuestions) {
-            sumPoints += studentExamQuestion.getPointsAttained();
+        for (StudentExamAnswer studentExamAnswer : studentExamAnswers) {
+            sumPoints += studentExamAnswer.getPointsAttained();
         }
 
         pointsAttained = sumPoints;

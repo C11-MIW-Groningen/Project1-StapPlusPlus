@@ -30,7 +30,7 @@ public class SubjectController {
     private final ExamRepository examRepository;
     private final LearningGoalRepository learningGoalRepository;
     private final StudentExamRepository studentExamRepository;
-    private final StudentExamQuestionRepository studentExamQuestionRepository;
+    private final StudentExamAnswerRepository studentExamAnswerRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
 
@@ -91,7 +91,7 @@ public class SubjectController {
     public void deleteExams(Subject subject) {
         for (Exam exam : subject.getExams()) {
             for (StudentExam studentExam : exam.getStudentExams()) {
-                studentExamQuestionRepository.deleteAll(studentExam.getStudentExamQuestions());
+                studentExamAnswerRepository.deleteAll(studentExam.getStudentExamAnswers());
                 studentExamRepository.delete(studentExam);
             }
             examQuestionRepository.deleteAll(exam.getExamQuestions());
