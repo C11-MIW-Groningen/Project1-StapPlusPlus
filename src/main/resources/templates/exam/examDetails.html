@@ -8,10 +8,10 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <div class="row" style="display: flex; align-items: center;">
-        <div class="col">
+    <div class="exam-title row">
+        <div class="col col-md-6">
             <h2 th:text="${shownExam.displayExamTitle}"></h2>
-            <h3 th:text="${shownExam.displayExamSubtitle}"></h3>
+            <h4 th:text="${shownExam.displayExamSubtitle}"></h4>
         </div>
         <div class="col">
             <span th:replace="fragments/buttons :: editOnTitle(@{/exam/edit/{examId}(examId=${shownExam.examId})})">
@@ -37,12 +37,12 @@
             <td th:text="${examQuestion.questionNumber}"></td>
             <td th:text="${examQuestion.questionText}"></td>
             <td th:text="${examQuestion.attainablePoints}"></td>
-            <td><span th:replace="fragments/buttons ::
-                edit(@{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})"></span>
+            <td><span th:replace="fragments/buttons :: edit(
+            @{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})"></span>
             </td>
             <td>
-                <span th:replace="fragments/buttons ::
-                delete(@{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})"></span>
+                <span th:replace="fragments/buttons :: delete(
+                @{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})"></span>
             </td>
         </tr>
         </tbody>

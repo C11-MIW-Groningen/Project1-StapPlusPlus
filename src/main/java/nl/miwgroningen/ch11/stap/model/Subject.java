@@ -17,7 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Subject {
+    private static final int BOUND_DAYS_TO_WEEKS = 10;
     private static final float COURSE_DAYS_PER_WEEK = 5f;
+    private static final int SINGLE_DAY = 1;
 
     @Id
     @GeneratedValue
@@ -40,9 +42,9 @@ public class Subject {
     private Teacher teacher;
 
     public String getDurationString() {
-        if (duration == 1) {
+        if (duration == SINGLE_DAY) {
             return "1 dag";
-        } else if (duration < 10) {
+        } else if (duration < BOUND_DAYS_TO_WEEKS) {
             return String.format("%d dagen", duration);
         } else {
             return String.format("%.0f weken", duration / COURSE_DAYS_PER_WEEK);
@@ -62,7 +64,7 @@ public class Subject {
     }
 
     public void setDuration(int duration) {
-        if (duration < 1) {
+        if (duration < SINGLE_DAY) {
             throw new IllegalArgumentException("Duration cannot be shorter than 1 day");
         }
         this.duration = duration;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Author: Thijs Harleman
  * Created at 15:20 on 26 Jun 2023
- * Purpose:
+ * Purpose: handle interactions with the login and logout page
  */
 
 @Controller

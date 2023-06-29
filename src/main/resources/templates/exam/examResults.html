@@ -9,23 +9,23 @@
 
 <div class="container">
     <div class="row">
-        <span class="col">
+        <div class="col">
             <h2 th:text="${shownExam.displayExamTitle}"></h2>
-            <h3 th:text="${shownExam.displayExamSubtitle}"></h3>
-        </span>
-        <span class="col">
-            <span th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
-                <span th:replace="fragments/buttons
-                :: new(@{/studentExam/new/{examId}(examId=${shownExam.examId})})"></span>
-            </span>
-            <span th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
-                <button type="button" disabled="disabled" style="pointer-events: none;"
+            <h4 th:text="${shownExam.displayExamSubtitle}"></h4>
+        </div>
+        <div class="col">
+            <div th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
+                <span th:replace="fragments/buttons :: new(
+                @{/studentExam/new/{examId}(examId=${shownExam.examId})})"></span>
+            </div>
+            <div th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
+                <button type="button" disabled="disabled"
                         class="btn btn-success float-end btn-new" aria-disabled="true">
                     <span th:replace="fragments/icons :: newIcon"></span>
                     <span>Alle studenten toegevoegd</span>
                 </button>
-            </span>
-        </span>
+            </div>
+        </div>
     </div>
 
     <table class="table">
@@ -42,19 +42,19 @@
             <tr th:each="studentExam : ${shownStudentExams}">
                 <td th:if="${studentExam.student} == null">Geen student</td>
                 <td th:unless="${studentExam.student} == null">
-                    <span th:replace="fragments/buttons
-                    :: link(@{/studentExam/details/{studentExamId}(studentExamId=${studentExam.studentExamId})},
+                    <span th:replace="fragments/buttons :: link(
+                    @{/studentExam/details/{studentExamId}(studentExamId=${studentExam.studentExamId})},
                     ${studentExam.student.displayName})"></span>
                 </td>
                 <td th:text="${studentExam.displayGrade}"></td>
                 <td th:text="${studentExam.pointsAttained}"></td>
                 <td>
-                    <span th:replace="fragments/buttons
-                    :: edit(@{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
+                    <span th:replace="fragments/buttons :: edit(
+                    @{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
                 </td>
                 <td>
-                    <span th:replace="fragments/buttons
-                    :: delete(@{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.studentExamId})})">
+                    <span th:replace="fragments/buttons :: delete(
+                    @{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.studentExamId})})">
                     </span>
                 </td>
             </tr>

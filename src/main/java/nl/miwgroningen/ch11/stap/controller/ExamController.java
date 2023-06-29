@@ -43,6 +43,7 @@ public class ExamController {
         List<Exam> allExams = examRepository.findAll();
         Collections.sort(allExams);
         model.addAttribute("allExams", allExams);
+
         return VIEW_EXAM_OVERVIEW;
     }
 
