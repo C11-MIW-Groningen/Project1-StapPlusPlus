@@ -11,13 +11,15 @@
 <div class="container">
     <div class="login-container d-flex justify-content-center">
         <form th:action="@{/login}" method="post">
-            <p>Gebruikersnaam :</p>
             <div>
-                <label><input class="form-control border-dark" type="text" name="username"/></label>
+                <label>Gebruikersnaam
+                    <input class="form-control border-dark" type="text" name="username"/>
+                </label>
             </div>
-            <p>Wachtwoord :</p>
             <div>
-                <label><input class="form-control border-dark" type="password" name="password"/></label>
+                <label>Wachtwoord
+                    <input class="form-control border-dark" type="password" name="password"/>
+                </label>
             </div>
             <div><input class="btn btn-primary" type="submit" value="Log in"/></div>
 

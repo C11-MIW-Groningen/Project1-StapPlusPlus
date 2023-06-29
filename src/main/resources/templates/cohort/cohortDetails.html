@@ -25,13 +25,14 @@
         <input type="hidden" th:field="*{cohort}">
 
         <div class="form-group col-md-4">
-            <label for="authors" class="form-label">Selecteer student</label>
-            <select id="authors" class="form-control" th:field="*{student}">
-                <option th:each="unenrolledStudent : ${allUnenrolledStudents}"
-                        th:value="${unenrolledStudent.studentId}"
-                        th:text="${unenrolledStudent.displayName}">
-                </option>
-            </select>
+            <label for="authors" class="form-label">
+                <select id="authors" class="form-control" th:field="*{student}">
+                    <option th:each="unenrolledStudent : ${allUnenrolledStudents}"
+                            th:value="${unenrolledStudent.studentId}"
+                            th:text="${unenrolledStudent.displayName}">
+                    </option>
+                </select>
+            </label>
         </div>
 
         <span th:replace="/fragments/buttons :: saveCustom('Voeg student toe')"></span>

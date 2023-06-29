@@ -17,8 +17,7 @@
 
         <table class="table table-borderless w-50">
             <tr>
-                <td>Student:</td>
-                <td><label>
+                <td><label>Student
                     <select th:field="*{student}">
                         <option th:each="student : ${studentsWithoutExam}"
                                 th:value="${student.studentId}"
