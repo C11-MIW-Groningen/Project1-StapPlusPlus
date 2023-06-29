@@ -82,8 +82,9 @@ public class PDFExporter {
                 String.format("%s / %s",
                         studentExam.getPointsAttained(), studentExam.getExam().getTotalAttainablePoints()),
                 (studentExam.getExam().getSubject().getTeacher() == null) ? ""
-                : studentExam.getExam().getSubject().getTeacher().getDisplayName(),
-                studentExam.getExam().getCohort().getName(),
+                        : studentExam.getExam().getSubject().getTeacher().getDisplayName(),
+                (studentExam.getExam().getCohort() == null) ? ""
+                        : studentExam.getExam().getCohort().getName(),
                 studentExam.getExam().getSubject().getTitle(),
                 getLearningGoalsString()};
     }
