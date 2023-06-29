@@ -1,13 +1,17 @@
 package nl.miwgroningen.ch11.stap.controller;
 
+import com.lowagie.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.*;
+import nl.miwgroningen.ch11.stap.pdf.PDFExporter;
 import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,7 +99,7 @@ public class StudentExamController {
         return REDIRECT_EXAM_OVERVIEW;
     }
 
-    @GetMapping("details/{studentExamId}")
+    @GetMapping("/details/{studentExamId}")
     public String showStudentExamDetails(@PathVariable("studentExamId") Long studentExamId, Model model) {
         Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
 
@@ -123,6 +127,25 @@ public class StudentExamController {
         }
 
         return REDIRECT_EXAM_OVERVIEW;
+    }
+
+    @GetMapping("/export/{studentExamId}")
+    public void exportStudentExamDetails(@PathVariable("studentExamId") Long studentExamId,
+                                           HttpServletResponse response) throws DocumentException, IOException {
+        Optional<StudentExam> optionalStudentExam = studentExamRepository.findById(studentExamId);
+
+        if (optionalStudentExam.isPresent()) {
+            response.setContentType("application/pdf");
+
+            String headerKey = "Content-Disposition";
+            String headerValue = String.format("attachment; filename=%s_%s.pdf",
+                    optionalStudentExam.get().getExam().getSubject().getTitle().replace(" ", "_"),
+                    optionalStudentExam.get().getStudent().getLastName());
+            response.setHeader(headerKey, headerValue);
+
+            PDFExporter exporter = new PDFExporter(optionalStudentExam.get());
+            exporter.export(response);
+        }
     }
 
     private void addStudentExamQuestions(StudentExam studentExam) {

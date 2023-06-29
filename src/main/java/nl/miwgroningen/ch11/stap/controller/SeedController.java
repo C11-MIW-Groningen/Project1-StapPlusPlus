@@ -126,27 +126,25 @@ public class SeedController {
     }
 
     private void seedCourses() {
-        Course course1 = Course.builder()
-                .name("Software Engineering")
-                .description("In de omscholing Software Engineering leer je softwaresystemen ontwerpen, realiseren " +
-                        "en testen. Je werkt met verschillende programmeertalen en ontwikkelmethoden.")
-                .imageUrl("https://www.dqsglobal.com/var/site/storage/images/_" +
-                        "aliases/cw_large_2x/3/3/4/7/747433-10-ger-DE/f4cb829ab49c-" +
-                        "datensicherheit-explore-dqs-shutterstock_1233182206.jpg")
-                .subjects(subjectRepository.findAll())
-                .build();
+        String[] names = {"Software Engineering", "Functioneel Beheer"};
+        String[] descriptions = {"In de omscholing Software Engineering leer je softwaresystemen ontwerpen, " +
+                "realiseren en testen. Je werkt met verschillende programmeertalen en ontwikkelmethoden.",
+                faker.lorem().paragraph(FAKER_SENTENCE_COUNT)};
+        String[] urls = {"https://www.dqsglobal.com/var/site/storage/images/_aliases/cw_large_" +
+                "2x/3/3/4/7/747433-10-ger-DE/f4cb829ab49c-datensicherheit-explore-dqs-shutterstock_1233182206.jpg",
+                "https://www.inspry.com/wp-content/uploads/" +
+                        "joomla-4-upgrade-vs-wordpress-migration-1-scaled-1-2048x1366.jpg"};
 
-        courseRepository.save(course1);
+        for (int course = 0; course < names.length; course++) {
+            Course newCourse = Course.builder()
+                    .name(names[course])
+                    .description(descriptions[course])
+                    .imageUrl(urls[course])
+                    .subjects(subjectRepository.findAll())
+                    .build();
 
-        Course course2 = Course.builder()
-                .name("Functioneel Beheer")
-                .description(faker.lorem().paragraph(3))
-                .imageUrl("https://www.inspry.com/wp-content/uploads/joomla-4-upgrade-vs-" +
-                        "wordpress-migration-1-scaled-1-2048x1366.jpg")
-                .subjects(subjectRepository.findAll())
-                .build();
-
-        courseRepository.save(course2);
+            courseRepository.save(newCourse);
+        }
     }
 
     private void seedExams() {
