@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.LearningGoal;
 import nl.miwgroningen.ch11.stap.model.StudentExam;
 import nl.miwgroningen.ch11.stap.model.StudentExamAnswer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,8 +29,9 @@ public class PdfExporter {
     private static final float TABLE_WIDTH_PERCENTAGE = 100f;
     private static final int TITLE_FONT_SIZE = 18;
 
-    private final StudentExam studentExam;
+    private static final Logger logger = LogManager.getLogger();
 
+    private final StudentExam studentExam;
     private final PdfPCell cell = new PdfPCell();
 
     private PdfPTable buildNewTable(float[] columnWidths) {
@@ -59,7 +62,7 @@ public class PdfExporter {
             document.add(getExamAnswersHeaderTable());
             document.add(getExamAnswersTable());
         } catch (DocumentException documentException) {
-            System.err.println(documentException.getMessage());
+            logger.debug(documentException.getMessage());
         }
     }
 
