@@ -32,6 +32,7 @@ public class CohortController {
     private static final String COHORT_FORM = "cohort/cohortForm";
     private static final String COHORT_DETAILS = "cohort/cohortDetails";
     private static final String REDIRECT_COHORT_DETAILS = "redirect:/cohort/details/";
+    private static final String COHORT_NEW = "cohort/cohortNew";
 
     private final CohortRepository cohortRepository;
     private final StudentRepository studentRepository;
@@ -49,7 +50,7 @@ public class CohortController {
         model.addAttribute("cohort", new Cohort());
         model.addAttribute("allCourses", courseRepository.findAll());
 
-        return COHORT_FORM;
+        return COHORT_NEW;
     }
 
     @GetMapping("/edit/{cohortId}")

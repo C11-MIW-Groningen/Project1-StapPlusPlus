@@ -89,27 +89,12 @@ public class CourseController {
 
     @PostMapping("/course/new")
     public String saveCourse(@ModelAttribute("course") Course courseToSave, BindingResult result) {
-        String imageUrl = courseToSave.getImageUrl();
-
-        try {
-            byte[] imageFormatted = getBase64EncodedImage(imageUrl);
-            courseToSave.setImageFormatted(imageFormatted);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         if (!result.hasErrors()) {
             courseRepository.save(courseToSave);
         }
 
         return String.format(REDIRECT_COURSE_DETAILS, courseToSave.getName().replace(" ", "%20"));
-    }
-
-    public byte[] getBase64EncodedImage(String imageURL) throws IOException {
-        java.net.URL url = new java.net.URL(imageURL);
-        InputStream inputStream = url.openStream();
-
-        return org.apache.commons.io.IOUtils.toByteArray(inputStream);
     }
 
     @GetMapping("/course/delete/{courseId}")
