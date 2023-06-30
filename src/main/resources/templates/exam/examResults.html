@@ -35,7 +35,7 @@
             <tr>
                 <th>Student</th>
                 <th>Cijfer</th>
-                <th>Punten behaald</th>
+                <th>Punten</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -49,7 +49,7 @@
                     </span>
                 </td>
                 <td th:text="${studentExam.displayGrade}"></td>
-                <td th:text="${studentExam.pointsAttained}"></td>
+                <td th:text="${studentExam.pointsAttained} + ' / ' + ${studentExam.exam.totalAttainablePoints}"></td>
                 <td class="float-end border-white">
                     <span th:replace="fragments/buttons :: delete(
                     @{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.getStudentExamId})})">
