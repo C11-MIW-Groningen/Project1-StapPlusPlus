@@ -16,8 +16,8 @@
         <div class="col">
             <div th:if="${shownExam.cohort != null}">
                 <div th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
-                <span th:replace="fragments/buttons :: new(
-                @{/studentExam/new/{examId}(examId=${shownExam.examId})})"></span>
+                <span th:replace="fragments/buttons :: newCustom(
+                @{/studentExam/new/{examId}(examId=${shownExam.examId})}, 'Voeg nieuw toetsresultaat toe')"></span>
                 </div>
                 <div th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
                     <button type="button" disabled="disabled"
