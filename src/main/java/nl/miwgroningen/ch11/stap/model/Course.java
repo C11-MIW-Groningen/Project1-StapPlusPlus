@@ -33,7 +33,9 @@ public class Course {
     @Column(length = 2048)
     private String imageUrl;
 
-    private byte[] imageFormatted;
+    @OneToOne
+    private Image image;
+
     private String description;
 
     public void removeSubject(Subject subject) {

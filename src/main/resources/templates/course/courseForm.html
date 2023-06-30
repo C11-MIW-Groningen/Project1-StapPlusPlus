@@ -10,7 +10,7 @@
 <div class="container">
     <h2>Studierichting invoer</h2>
 
-    <form th:action="@{/course/new}" method="post" th:object="${course}">
+    <form th:action="@{/course/new}" method="post" th:object="${course}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{courseId}">
 
          <div class="form-group col-md-4">
@@ -26,6 +26,13 @@
         </div>
 
         <div class="form-group col-md-4">
+            <label class="form-label">Upload Afbeelding
+                <input type="file" name="imageFile" accept="image/*">
+            </label>
+
+        </div>
+
+        <div class="form-group col-md-4">
             <label class="form-label">Vakken
                 <select class="form-control" th:field="*{subjects}" multiple>
                     <option th:each="subject : ${allSubjects}"
@@ -36,11 +43,8 @@
         </div>
 
         <div class="form-group col-md-4">
-<<<<<<< HEAD
-            <label class="form-label">Beschrijving
-=======
             <label class="form-label">Omschrijving
->>>>>>> f7c38aae9f6662cddaf16d0ad375b9338795fc35
+
                 <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
             </label>
         </div>
