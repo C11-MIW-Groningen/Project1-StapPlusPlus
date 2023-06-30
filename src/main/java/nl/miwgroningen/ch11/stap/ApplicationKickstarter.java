@@ -33,6 +33,7 @@ public class ApplicationKickstarter implements CommandLineRunner {
             admin.setUsername(DEFAULT_USERNAME_ADMIN);
             admin.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD_ADMIN));
             admin.setAdministrator(true);
+
             websiteUserRepository.save(admin);
             logger.warn("Admin created. Remember to change the password!");
         }
