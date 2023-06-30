@@ -13,21 +13,21 @@
         <form th:action="@{/login}" method="post">
             <div>
                 <label>Gebruikersnaam
-                    <input class="form-control border-dark" type="text" name="username"/>
+                    <input class="form-control" type="text" name="username"/>
                 </label>
             </div>
             <div>
                 <label>Wachtwoord
-                    <input class="form-control border-dark" type="password" name="password"/>
+                    <input class="form-control" type="password" name="password"/>
                 </label>
             </div>
             <div><input class="btn btn-primary" type="submit" value="Log in"/></div>
 
             <p class="text-danger" th:if="${param.error}">
-                Invalide login.
+                Invalide login
             </p>
             <p th:if="${param.logout}">
-                U bent uitgelogd.
+                U bent uitgelogd
             </p>
         </form>
     </div>
