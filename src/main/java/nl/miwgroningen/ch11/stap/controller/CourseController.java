@@ -3,26 +3,20 @@ package nl.miwgroningen.ch11.stap.controller;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.Cohort;
 import nl.miwgroningen.ch11.stap.model.Course;
-import nl.miwgroningen.ch11.stap.model.Image;
 import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
-import nl.miwgroningen.ch11.stap.repositories.ImageRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 
 /**
@@ -41,12 +35,9 @@ public class CourseController {
     private static final String VIEW_COURSE_FORM = "course/courseForm";
     private static final String VIEW_LANDING_PAGE = "general/landingPage";
 
-    private final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
-
     private final CohortRepository cohortRepository;
     private final CourseRepository courseRepository;
     private final SubjectRepository subjectRepository;
-    private final ImageRepository imageRepository;
 
     @GetMapping("/")
     public String showLandingPage(Model model) {
@@ -98,57 +89,28 @@ public class CourseController {
     }
 
     @PostMapping("/course/new")
-    public String saveCourse(@ModelAttribute("course") Course courseToSave,
-                             @RequestParam("imageFile") MultipartFile file,
-                             BindingResult result) {
+    public String saveCourse(@ModelAttribute("course") Course courseToSave, BindingResult result) {
+        String imageUrl = courseToSave.getImageUrl();
+
+        try {
+            byte[] imageFormatted = getBase64EncodedImage(imageUrl);
+            courseToSave.setImageFormatted(imageFormatted);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         if (!result.hasErrors()) {
-            if (!file.isEmpty()) {
-                try {
-                    Image image = saveImage(file);
-                    courseToSave.setImage(image);
-                } catch (IOException exception) {
-                    System.err.println(exception.getMessage());
-                }
-            }
             courseRepository.save(courseToSave);
         }
 
         return String.format(REDIRECT_COURSE_DETAILS, courseToSave.getName().replace(" ", "%20"));
     }
 
+    public byte[] getBase64EncodedImage(String imageURL) throws IOException {
+        java.net.URL url = new java.net.URL(imageURL);
+        InputStream inputStream = url.openStream();
 
-
-    private Image saveImage(MultipartFile file) throws IOException {
-
-        StringBuilder fileName = new StringBuilder();
-        fileName.append(UUID.randomUUID());
-        if (getExtensionByStringHandling(file.getOriginalFilename()).isPresent()) {
-            fileName.append(".").append(getExtensionByStringHandling(file.getOriginalFilename()).get());
-        }
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, fileName.toString());
-        Files.write(fileNameAndPath, file.getBytes());
-
-        Image image = new Image();
-        image.setImageName(fileName.toString());
-        return imageRepository.save(image);
-    }
-
-    private Optional<String> getExtensionByStringHandling(String filename) {
-        return Optional.ofNullable(filename)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
-    }
-
-        public byte[] getBase64BytesEncoding(MultipartFile file) {
-        try {
-            byte[] fileContent = file.getBytes();
-            return Base64.getEncoder().encode(fileContent);
-        } catch (IOException e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace();
-        }
-        return null;
+        return org.apache.commons.io.IOUtils.toByteArray(inputStream);
     }
 
     @GetMapping("/course/delete/{courseId}")
