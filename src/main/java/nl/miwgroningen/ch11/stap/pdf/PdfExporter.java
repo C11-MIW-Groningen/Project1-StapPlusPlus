@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 
 @RequiredArgsConstructor
-public class PDFExporter {
+public class PdfExporter {
     private static final float[] EXAM_INFO_COLUMN_WIDTHS = {3.0f, 9.0f};
     private static final float[] QUESTIONS_COLUMN_WIDTHS = {1.5f, 1.5f, 9.0f};
     private static final int TABLE_SPACING = 10;

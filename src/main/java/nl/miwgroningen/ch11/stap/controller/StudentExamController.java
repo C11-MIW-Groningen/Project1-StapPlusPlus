@@ -3,7 +3,7 @@ package nl.miwgroningen.ch11.stap.controller;
 import com.lowagie.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.*;
-import nl.miwgroningen.ch11.stap.pdf.PDFExporter;
+import nl.miwgroningen.ch11.stap.pdf.PdfExporter;
 import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -144,7 +144,7 @@ public class StudentExamController {
                     optionalStudentExam.get().getStudent().getLastName());
             response.setHeader(headerKey, headerValue);
 
-            PDFExporter exporter = new PDFExporter(optionalStudentExam.get());
+            PdfExporter exporter = new PdfExporter(optionalStudentExam.get());
             exporter.export(response);
         }
     }
