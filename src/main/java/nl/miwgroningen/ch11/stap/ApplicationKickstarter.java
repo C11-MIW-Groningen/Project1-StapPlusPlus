@@ -3,9 +3,11 @@ package nl.miwgroningen.ch11.stap;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.WebsiteUser;
 import nl.miwgroningen.ch11.stap.repositories.WebsiteUserRepository;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Author: Thijs Harleman
@@ -18,6 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationKickstarter implements CommandLineRunner {
     private static final String DEFAULT_USERNAME_ADMIN = "admin";
     private static final String DEFAULT_PASSWORD_ADMIN = "changethis";
+
+    private static final Logger logger = LogManager.getLogger();
+
     private final WebsiteUserRepository websiteUserRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -28,8 +33,9 @@ public class ApplicationKickstarter implements CommandLineRunner {
             admin.setUsername(DEFAULT_USERNAME_ADMIN);
             admin.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD_ADMIN));
             admin.setAdministrator(true);
+
             websiteUserRepository.save(admin);
-            System.err.println("Admin created. Remember to change the password!");
+            logger.warn("Admin created. Remember to change the password!");
         }
     }
 }

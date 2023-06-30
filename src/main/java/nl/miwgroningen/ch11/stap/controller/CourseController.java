@@ -7,7 +7,6 @@ import nl.miwgroningen.ch11.stap.model.Subject;
 import nl.miwgroningen.ch11.stap.repositories.CohortRepository;
 import nl.miwgroningen.ch11.stap.repositories.CourseRepository;
 import nl.miwgroningen.ch11.stap.repositories.SubjectRepository;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

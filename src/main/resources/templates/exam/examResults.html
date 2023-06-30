@@ -9,21 +9,23 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col col-md-8">
             <h2 th:text="${shownExam.displayExamTitle}"></h2>
             <h4 th:text="${shownExam.displayExamSubtitle}"></h4>
         </div>
         <div class="col">
-            <div th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
-                <span th:replace="fragments/buttons :: new(
-                @{/studentExam/new/{examId}(examId=${shownExam.examId})})"></span>
-            </div>
-            <div th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
-                <button type="button" disabled="disabled"
-                        class="btn btn-success float-end btn-new" aria-disabled="true">
-                    <span th:replace="fragments/icons :: newIcon"></span>
-                    <span>Alle studenten toegevoegd</span>
-                </button>
+            <div th:if="${shownExam.cohort != null}">
+                <div th:if="${shownStudentExams.size() < shownExam.cohort.students.size()}">
+                <span th:replace="fragments/buttons :: newCustom(
+                @{/studentExam/new/{examId}(examId=${shownExam.examId})}, 'Voeg nieuw toetsresultaat toe')"></span>
+                </div>
+                <div th:unless="${shownStudentExams.size() < shownExam.cohort.students.size()}">
+                    <button type="button" disabled="disabled"
+                            class="btn btn-success float-end btn-new" aria-disabled="true">
+                        <span th:replace="fragments/icons :: newIcon"></span>
+                        <span>Alle studenten toegevoegd</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -33,28 +35,29 @@
             <tr>
                 <th>Student</th>
                 <th>Cijfer</th>
-                <th>Punten behaald</th>
+                <th>Punten</th>
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="studentExam : ${shownStudentExams}">
-                <td th:if="${studentExam.student} == null">Geen student</td>
+            <tr class="border-bottom" th:each="studentExam : ${shownStudentExams}">
                 <td th:unless="${studentExam.student} == null">
                     <span th:replace="fragments/buttons :: link(
-                    @{/studentExam/details/{studentExamId}(studentExamId=${studentExam.studentExamId})},
-                    ${studentExam.student.displayName})"></span>
+                    @{/studentExam/details/{studentExamId}(studentExamId=${studentExam.getStudentExamId})},
+                    ${studentExam.student.displayName})">
+                    </span>
                 </td>
                 <td th:text="${studentExam.displayGrade}"></td>
-                <td th:text="${studentExam.pointsAttained}"></td>
-                <td>
-                    <span th:replace="fragments/buttons :: edit(
-                    @{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.studentExamId})})"></span>
-                </td>
-                <td>
+                <td th:text="${studentExam.pointsAttained} + ' / ' + ${studentExam.exam.totalAttainablePoints}"></td>
+                <td class="float-end border-white">
                     <span th:replace="fragments/buttons :: delete(
-                    @{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.studentExamId})})">
+                    @{/studentExam/delete/{studentExamId}(studentExamId=${studentExam.getStudentExamId})})">
+                    </span>
+                </td>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: edit(
+                    @{/studentExam/edit/{studentExamId}(studentExamId=${studentExam.getStudentExamId})})">
                     </span>
                 </td>
             </tr>

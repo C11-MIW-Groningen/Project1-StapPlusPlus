@@ -22,15 +22,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="course : ${allCourses}">
-                <td ><span th:replace="fragments/buttons :: link(
-                @{/course/details/{courseName}(courseName=${course.name})},${course.name})"></span>
+            <tr class="border-bottom"th:each="course : ${allCourses}">
+                <td>
+                    <span th:replace="fragments/buttons :: link(
+                    @{/course/details/{courseName}(courseName=${course.name})},${course.name})">
+                    </span>
                 </td>
-                <td><span th:replace="fragments/buttons :: edit(
-                @{/course/edit/{courseId}(courseId=${course.courseId})})"></span>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: delete(
+                    @{/course/delete/{courseId}(courseId=${course.courseId})})">
+                    </span>
                 </td>
-                <td><span th:replace="fragments/buttons :: delete(
-                @{/course/delete/{courseId}(courseId=${course.courseId})})"></span>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: edit(
+                    @{/course/edit/{courseId}(courseId=${course.courseId})})">
+                    </span>
                 </td>
             </tr>
         </tbody>

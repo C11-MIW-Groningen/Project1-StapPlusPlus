@@ -3,7 +3,7 @@ package nl.miwgroningen.ch11.stap.controller;
 import com.lowagie.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import nl.miwgroningen.ch11.stap.model.*;
-import nl.miwgroningen.ch11.stap.pdf.PDFExporter;
+import nl.miwgroningen.ch11.stap.pdf.PdfExporter;
 import nl.miwgroningen.ch11.stap.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +31,7 @@ public class StudentExamController {
     private static final String VIEW_STUDENT_EXAM_DETAILS = "studentExam/studentExamDetails";
 
     private final ExamRepository examRepository;
+    private final StudentRepository studentRepository;
     private final StudentExamRepository studentExamRepository;
     private final StudentExamAnswerRepository studentExamAnswerRepository;
 
@@ -143,7 +144,7 @@ public class StudentExamController {
                     optionalStudentExam.get().getStudent().getLastName());
             response.setHeader(headerKey, headerValue);
 
-            PDFExporter exporter = new PDFExporter(optionalStudentExam.get());
+            PdfExporter exporter = new PdfExporter(optionalStudentExam.get());
             exporter.export(response);
         }
     }
@@ -170,8 +171,14 @@ public class StudentExamController {
     }
 
     private List<Student> getStudentsWithoutExam(Exam exam) {
-        List<Student> students = exam.getCohort().getStudents();
+        List<Student> students;
         List<StudentExam> studentExams = exam.getStudentExams();
+
+        if (exam.getCohort() != null) {
+            students = exam.getCohort().getStudents();
+        } else {
+            students = studentRepository.findAll();
+        }
 
         for (StudentExam studentExam : studentExams) {
             students.remove(studentExam.getStudent());

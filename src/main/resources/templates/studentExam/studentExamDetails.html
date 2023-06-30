@@ -15,7 +15,7 @@
         </div>
         <div class="col">
             <a class="btn btn-primary float-end"
-               th:href="@{/studentExam/export/{studentExamId}(studentExamId=${shownStudentExam.studentExamId})}">
+               th:href="@{/studentExam/export/{studentExamId}(studentExamId=${shownStudentExam.getStudentExamId})}">
                 Exporteer als pdf
             </a>
         </div>
@@ -31,6 +31,10 @@
             <td th:text="${shownStudentExam.student.schoolEmail}"></td>
         </tr>
         <tr>
+            <td>Toetsdatum:</td>
+            <td th:text="${#temporals.format(shownStudentExam.exam.examDate, 'dd-MM-yyyy')}"></td>
+        </tr>
+        <tr>
             <td>Resultaat:</td>
             <td th:text="${shownStudentExam.displayGrade}"></td>
         </tr>
@@ -41,11 +45,15 @@
         </tr>
         <tr>
             <td>Docent:</td>
-            <td th:text="${shownStudentExam.exam.subject.teacher.displayName}"></td>
+            <td th:if="${shownStudentExam.exam.subject.teacher != null}"
+                th:text="${shownStudentExam.exam.subject.teacher.displayName}">
+            </td>
+            <td th:unless="${shownStudentExam.exam.subject.teacher != null}"></td>
         </tr>
         <tr>
             <td>Cohort:</td>
-            <td th:text="${shownStudentExam.exam.cohort.name}"></td>
+            <td th:if="${shownStudentExam.exam.cohort != null}" th:text="${shownStudentExam.exam.cohort.name}"></td>
+            <td th:unless="${shownStudentExam.exam.cohort != null}" th:text="geen"></td>
         </tr>
         <tr>
             <td>Vak:</td>
@@ -63,8 +71,8 @@
         </tr>
     </table>
 
-    <table class="table table-borderless">
-        <thead>
+    <table class="table">
+        <thead class="table-secondary">
             <tr>
                 <th>Vraag</th>
                 <th>Punten</th>

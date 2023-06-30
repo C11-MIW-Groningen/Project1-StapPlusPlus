@@ -1,6 +1,8 @@
 package nl.miwgroningen.ch11.stap.model;
 
 import lombok.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -20,6 +22,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Exam implements Comparable<Exam> {
     private static final int INVALID_POINTS = -1;
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Id @GeneratedValue
     private Long examId;
 
@@ -58,7 +63,7 @@ public class Exam implements Comparable<Exam> {
         if (totalAttainablePoints > 0) {
             return totalAttainablePoints;
         } else {
-            System.err.println("Total points for exam cannot be 0 or less");
+            logger.error("Total points for exam cannot be 0 or less");
             return INVALID_POINTS;
         }
     }

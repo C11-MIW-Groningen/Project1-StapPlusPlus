@@ -9,16 +9,13 @@
 
 <div class="container">
     <div class="exam-title row">
-        <div class="col col-md-6">
+        <div class="col col-md-8">
             <h2 th:text="${shownExam.displayExamTitle}"></h2>
             <h4 th:text="${shownExam.displayExamSubtitle}"></h4>
         </div>
         <div class="col">
-            <span th:replace="fragments/buttons :: editOnTitle(@{/exam/edit/{examId}(examId=${shownExam.examId})})">
-            </span>
-        </div>
-        <div class="col">
-             <span th:replace="fragments/buttons :: new(@{/question/new/{examId}(examId=${shownExam.examId})})"></span>
+             <span th:replace="fragments/buttons :: newCustom(
+             @{/question/new/{examId}(examId=${shownExam.examId})}, 'Voeg nieuwe toetsvraag toe')"></span>
         </div>
     </div>
 
@@ -33,16 +30,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="examQuestion : ${shownExam.examQuestions}">
+        <tr class="border-bottom" th:each="examQuestion : ${shownExam.examQuestions}">
             <td th:text="${examQuestion.questionNumber}"></td>
             <td th:text="${examQuestion.questionText}"></td>
             <td th:text="${examQuestion.attainablePoints}"></td>
-            <td><span th:replace="fragments/buttons :: edit(
-            @{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})"></span>
-            </td>
-            <td>
+            <td class="float-end border-white">
                 <span th:replace="fragments/buttons :: delete(
-                @{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})"></span>
+                @{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})">
+                </span>
+            </td>
+            <td class="float-end border-white">
+                <span th:replace="fragments/buttons :: edit(
+                @{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})">
+                </span>
             </td>
         </tr>
         </tbody>

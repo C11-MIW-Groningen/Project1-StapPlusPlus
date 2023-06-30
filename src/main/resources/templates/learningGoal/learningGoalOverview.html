@@ -17,19 +17,25 @@
         <thead class="table-secondary">
             <tr>
                 <th>Leerdoel</th>
-                <th>Omschrijving</th>
+                <th class="w-50">Omschrijving</th>
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="goal : ${allLearningGoals}">
+            <tr class="border-bottom" th:each="goal : ${allLearningGoals}">
                 <td th:text="${goal.title}"></td>
                 <td th:text="${goal.description}"></td>
-                <td style="width:100px"><span th:replace="fragments/buttons :: edit(
-                @{/goal/edit/{goalId}(goalId=${goal.learningGoalId})})"></span></td>
-                <td style="width:120px"><span th:replace="fragments/buttons :: delete(
-                @{/goal/delete/{goalId}(goalId=${goal.learningGoalId})})"></span></td>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: delete(
+                    @{/goal/delete/{goalId}(goalId=${goal.learningGoalId})})">
+                    </span>
+                </td>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: edit(
+                    @{/goal/edit/{goalId}(goalId=${goal.learningGoalId})})">
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>

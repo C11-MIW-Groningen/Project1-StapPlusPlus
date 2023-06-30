@@ -40,7 +40,7 @@ public class WebsiteUser implements UserDetails {
 
         authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        if (administrator) {
+        if (Boolean.TRUE.equals(administrator)) {
             authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 

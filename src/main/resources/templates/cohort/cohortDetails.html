@@ -50,13 +50,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="student : ${cohort.students}">
+            <tr class="border-bottom" th:each="student : ${cohort.students}">
                 <td th:text="${student.displayName}"></td>
                 <td th:text="${student.privateEmail}"></td>
                 <td th:text="${student.schoolEmail}"></td>
-                <td><span th:replace="/fragments/buttons :: deleteCustom(@{/cohort/unenroll/{cohortId}/{studentId}
-                (cohortId = ${cohort.cohortId}, studentId = ${student.studentId})},
-                'Verwijder uit cohort')"></span></td>
+                <td class="float-end border-white">
+                    <span th:replace="/fragments/buttons :: deleteCustom(
+                    @{/cohort/unenroll/{cohortId}/{studentId}
+                    (cohortId = ${cohort.cohortId}, studentId = ${student.studentId})}, 'Verwijder uit cohort')">
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>
