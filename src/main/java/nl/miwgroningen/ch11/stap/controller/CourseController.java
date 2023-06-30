@@ -19,10 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -50,7 +47,17 @@ public class CourseController {
 
     @GetMapping("/")
     public String showLandingPage(Model model) {
-        model.addAttribute("allCourses", courseRepository.findAll());
+        List<Course> allCourses = courseRepository.findAll();
+        List<String> imageURIs = new ArrayList<>();
+
+        for (Course course : allCourses) {
+            byte[] imageData = course.getImage().getEncodedImage();
+            String base64Image = Base64.getEncoder().encodeToString(imageData);
+            String imageURI = "data:image/jpeg;base64," + base64Image;
+            imageURIs.add(imageURI);
+        }
+        model.addAttribute("allCourses", allCourses);
+        model.addAttribute("imageURIs", imageURIs);
 
         return VIEW_LANDING_PAGE;
     }
@@ -117,8 +124,6 @@ public class CourseController {
         return String.format(REDIRECT_COURSE_DETAILS, courseToSave.getName().replace(" ", "%20"));
     }
 
-
-
     private Image saveImage(MultipartFile file) throws IOException {
 
         StringBuilder fileName = new StringBuilder();
@@ -129,8 +134,11 @@ public class CourseController {
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, fileName.toString());
         Files.write(fileNameAndPath, file.getBytes());
 
+        byte[] encodedImage = getBase64BytesEncoding(file);
+
         Image image = new Image();
         image.setImageName(fileName.toString());
+        image.setEncodedImage(encodedImage);
         return imageRepository.save(image);
     }
 
@@ -140,7 +148,7 @@ public class CourseController {
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 
-        public byte[] getBase64BytesEncoding(MultipartFile file) {
+    public byte[] getBase64BytesEncoding(MultipartFile file) {
         try {
             byte[] fileContent = file.getBytes();
             return Base64.getEncoder().encode(fileContent);
