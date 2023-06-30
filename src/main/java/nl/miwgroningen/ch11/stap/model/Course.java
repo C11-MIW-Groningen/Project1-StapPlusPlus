@@ -17,6 +17,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Course {
+    private static final int MAX_URL_LENGTH = 2048;
+
     @Id
     @GeneratedValue
     private Long courseId;
@@ -30,10 +32,9 @@ public class Course {
     @ManyToMany
     private List<Subject> subjects;
 
-    @Column(length = 2048)
+    @Column(length = MAX_URL_LENGTH)
     private String imageUrl;
 
-    private byte[] imageFormatted;
     private String description;
 
     public void removeSubject(Subject subject) {

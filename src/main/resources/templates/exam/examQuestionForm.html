@@ -15,13 +15,13 @@
         <input type="hidden" th:field="*{exam}">
         <table class="table table-borderless">
             <tr>
-                <td><label>Vraagnummer
-                    <input type="number" th:field="*{questionNumber}">
+                <td><label class="form-label">Vraagnummer
+                    <input class="form-control" type="number" th:field="*{questionNumber}">
                 </label></td>
             </tr>
             <tr>
-                <td><label>Haalbare punten
-                    <input type="number" th:field="*{attainablePoints}">
+                <td><label class="form-label">Haalbare punten
+                    <input class="form-control" type="number" min="1" th:field="*{attainablePoints}">
                 </label></td>
             </tr>
             <tr>

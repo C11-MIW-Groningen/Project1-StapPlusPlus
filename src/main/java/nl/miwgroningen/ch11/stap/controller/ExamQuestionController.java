@@ -36,6 +36,7 @@ public class ExamQuestionController {
         if (optionalExam.isPresent()) {
             ExamQuestion examQuestion = new ExamQuestion();
             examQuestion.setExam(optionalExam.get());
+            examQuestion.setQuestionNumber(optionalExam.get().getExamQuestions().size() + 1);
             examQuestionRepository.save(examQuestion);
             model.addAttribute("examQuestion", examQuestion);
         }
