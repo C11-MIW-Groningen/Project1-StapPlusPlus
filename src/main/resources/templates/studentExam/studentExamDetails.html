@@ -31,6 +31,10 @@
             <td th:text="${shownStudentExam.student.schoolEmail}"></td>
         </tr>
         <tr>
+            <td>Toetsdatum:</td>
+            <td th:text="${#temporals.format(shownStudentExam.exam.examDate, 'dd-MM-yyyy')}"></td>
+        </tr>
+        <tr>
             <td>Resultaat:</td>
             <td th:text="${shownStudentExam.displayGrade}"></td>
         </tr>

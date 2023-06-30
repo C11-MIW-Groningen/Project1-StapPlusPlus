@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Author: Thijs Harleman
@@ -78,9 +79,12 @@ public class PdfExporter {
     }
 
     private String[] getExamInfoTableValues() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         return new String[] {
                 studentExam.getStudent().getDisplayName(),
                 studentExam.getStudent().getSchoolEmail(),
+                studentExam.getExam().getExamDate().format(dateTimeFormatter),
                 studentExam.getDisplayGrade(),
                 String.format("%s / %s",
                         studentExam.getPointsAttained(), studentExam.getExam().getTotalAttainablePoints()),
@@ -124,8 +128,8 @@ public class PdfExporter {
     }
 
     private PdfPTable getExamInfoTable() {
-        String[] rowNames = {"Student:", "Email:", "Resultaat", "Punten behaald:", "Docent:", "Cohort:", "Vak:",
-                "Leerdoelen:"};
+        String[] rowNames = {"Student:", "Email:", "Toetsdatum:", "Resultaat", "Punten behaald:", "Docent:",
+                "Cohort:", "Vak:", "Leerdoelen:"};
         String[] rowValues = getExamInfoTableValues();
 
         PdfPTable table = buildNewTable(EXAM_INFO_COLUMN_WIDTHS);
