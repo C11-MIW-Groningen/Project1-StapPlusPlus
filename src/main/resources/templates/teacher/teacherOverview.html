@@ -20,12 +20,18 @@
             <th></th>
         </tr>
 
-        <tr th:each="teacher : ${allTeachers}">
+        <tr class="border-bottom" th:each="teacher : ${allTeachers}">
             <td th:text="${teacher.displayName}"></td>
-            <td><span th:replace="fragments/buttons :: edit(
-            @{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})})"></span></td>
-            <td><span th:replace="fragments/buttons :: delete(
-            @{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})})"></span></td>
+            <td class="float-end border-white">
+                <span th:replace="fragments/buttons :: delete(
+                @{/teacher/delete/{teacherId}(teacherId=${teacher.teacherId})})">
+                </span>
+            </td>
+            <td class="float-end border-white">
+                <span th:replace="fragments/buttons :: edit(
+                @{/teacher/edit/{teacherId}(teacherId=${teacher.teacherId})})">
+                </span>
+            </td>
         </tr>
     </table>
 </div>

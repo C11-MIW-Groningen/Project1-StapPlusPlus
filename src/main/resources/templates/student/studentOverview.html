@@ -24,7 +24,7 @@
             <th></th>
         </tr>
 
-        <tr th:each="student : ${allStudents}">
+        <tr class="border-bottom" th:each="student : ${allStudents}">
             <td th:text="${student.displayName}"></td>
             <td th:text="${student.privateEmail}"></td>
             <td th:text="${student.schoolEmail}"></td>
@@ -32,14 +32,23 @@
                 <table>
                     <tr th:each="cohort : ${student.getCohorts}">
                         <td>
-                            <span th:replace="fragments/buttons :: link(@{/cohort/details/{number}(number=${cohort.getName})},
-                        'Cohort ' + ${cohort.getName})"></span>
+                            <span th:replace="fragments/buttons :: link(
+                            @{/cohort/details/{number}(number=${cohort.getName})}, 'Cohort ' + ${cohort.getName})">
+                            </span>
                         <td >
                     </tr>
                 </table>
             </td>
-            <td><span th:replace="fragments/buttons :: edit(@{/student/edit/{studentId}(studentId=${student.studentId})})"></span></td>
-            <td><span th:replace="fragments/buttons :: delete(@{/student/delete/{studentId}(studentId=${student.studentId})})"></span></td>
+            <td class="float-end border-white">
+                <span th:replace="fragments/buttons :: delete(
+                @{/student/delete/{studentId}(studentId=${student.studentId})})">
+                </span>
+            </td>
+            <td class="float-end border-white">
+                <span th:replace="fragments/buttons :: edit(
+                @{/student/edit/{studentId}(studentId=${student.studentId})})">
+                </span>
+            </td>
         </tr>
     </table>
 </div>

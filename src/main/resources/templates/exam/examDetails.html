@@ -33,16 +33,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="examQuestion : ${shownExam.examQuestions}">
+        <tr class="border-bottom" th:each="examQuestion : ${shownExam.examQuestions}">
             <td th:text="${examQuestion.questionNumber}"></td>
             <td th:text="${examQuestion.questionText}"></td>
             <td th:text="${examQuestion.attainablePoints}"></td>
-            <td><span th:replace="fragments/buttons :: edit(
-            @{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})"></span>
-            </td>
-            <td>
+            <td class="float-end border-white">
                 <span th:replace="fragments/buttons :: delete(
-                @{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})"></span>
+                @{/question/delete/{questionId}(questionId=${examQuestion.examQuestionId})})">
+                </span>
+            </td>
+            <td class="float-end border-white">
+                <span th:replace="fragments/buttons :: edit(
+                @{/question/edit/{examQuestionId}(examQuestionId=${examQuestion.examQuestionId})})">
+                </span>
             </td>
         </tr>
         </tbody>

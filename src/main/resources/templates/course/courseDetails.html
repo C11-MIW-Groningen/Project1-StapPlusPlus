@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="subject : ${shownCourse.subjects}">
+            <tr class="border-bottom" th:each="subject : ${shownCourse.subjects}">
                 <td th:text="${subject.title}"></td>
                 <td><span th:if="${subject.teacher != null}">
                         <span th:text="${subject.teacher.displayName}" sec:authorize="isAuthenticated()"></span></span>
@@ -43,13 +43,17 @@
                     </table>
                 </td>
 
-                <td><span th:replace="fragments/buttons :: edit(
-                @{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"
-                sec:authorize="isAuthenticated()"></span>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: delete(
+                    @{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
+                    subjectId=${subject.subjectId})})" sec:authorize="isAuthenticated()">
+                    </span>
                 </td>
-                <td><span th:replace="fragments/buttons :: delete(
-                @{/course/remove/{courseId}/{subjectId}(courseId=${shownCourse.courseId},
-                subjectId=${subject.subjectId})})" sec:authorize="isAuthenticated()"></span>
+                <td class="float-end border-white">
+                    <span th:replace="fragments/buttons :: edit(
+                    @{/subject/edit/{subjectId}(subjectId=${subject.subjectId})})"
+                    sec:authorize="isAuthenticated()">
+                    </span>
                 </td>
             </tr>
         </tbody>
